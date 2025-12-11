@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="th" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login | My App</title>
+  <link href="../dist/output.css" rel="stylesheet">
+</head>
+<body class="min-h-screen flex items-center justify-center bg-base-200">
+
+  <div class="card w-96 bg-base-100 shadow-xl">
+    <div class="card-body">
+      <h2 class="text-2xl font-bold text-center mb-4">เข้าสู่ระบบ</h2>
+      
+      <form action="#" method="POST" class="space-y-4">
+        <!-- Email -->
+        <div>
+          <label class="label">
+            <span class="label-text">อีเมล</span>
+          </label>
+          <input type="email" placeholder="you@example.com" class="input input-bordered w-full" required />
+        </div>
+
+        <!-- Password -->
+        <div>
+          <label class="label">
+            <span class="label-text">รหัสผ่าน</span>
+          </label>
+          <input type="password" placeholder="••••••••" class="input input-bordered w-full" required />
+        </div>
+
+        <!-- Remember + Forgot -->
+        <div class="flex items-center justify-between text-sm">
+          <label class="cursor-pointer flex items-center gap-2">
+            <input type="checkbox" class="checkbox checkbox-sm" />
+            <span>จำฉันไว้</span>
+          </label>
+          <a href="#" class="link link-hover">ลืมรหัสผ่าน?</a>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary w-full">เข้าสู่ระบบ</button>
+      </form>
+
+      <!-- Divider -->
+      <div class="divider">หรือ</div>
+
+      <!-- Register -->
+      <p class="text-center text-sm">
+        ยังไม่มีบัญชี? 
+        <a href="#" class="link link-primary">สมัครสมาชิก</a>
+      </p>
+    </div>
+  </div>
+
+</body>
+</html>
