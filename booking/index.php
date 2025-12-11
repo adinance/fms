@@ -48,7 +48,7 @@
             transition: width 0.3s ease, margin 0.3s ease;
             overflow-x: hidden;
             flex-shrink: 0; 
-            overflow-y: auto; /* ทำให้เนื้อหาสามารถเลื่อนได้ */
+            overflow-y: auto; 
         }
         
         #sidebarMenu .nav-link {
@@ -77,14 +77,13 @@
 
         #sidebarMenu .collapsed-toggle {
             cursor: pointer;
-            font-size: 1rem; 
+            font-size: 1.1rem; /* ปรับขนาดหัวข้อ/ไอคอนหลักให้ใหญ่ขึ้นเล็กน้อย */
             font-weight: 600;
             color: var(--text-light);
-            /* ลบ border-bottom ออกตามที่ร้องขอ */
             padding-top: 5px;
             padding-bottom: 5px;
             margin-top: 5px;
-            transition: background-color 0.2s, border-color 0.2s;
+            transition: background-color 0.2s, color 0.2s; /* เพิ่ม color transition */
         }
 
         #sidebarMenu .collapsed-toggle:hover {
@@ -94,6 +93,13 @@
         #sidebarMenu .collapsed-toggle .toggle-icon {
             transition: transform 0.3s ease;
         }
+        
+        /* สไตล์ของ Icon ในโหมดขยาย */
+        #sidebarMenu .collapsed-toggle i:not(.toggle-icon) {
+            margin-right: 8px;
+            width: 20px; 
+            text-align: center;
+        }
 
         #sidebarMenu .collapsed-toggle.collapsed .toggle-icon {
             transform: rotate(-90deg);
@@ -102,13 +108,30 @@
         #sidebarMenu.collapsed {
             width: 60px !important;
         }
+        
+        /* 1. จัดวางองค์ประกอบในโหมดยุบให้อยู่ตรงกลาง */
+        #sidebarMenu.collapsed .collapsed-toggle {
+            text-align: center; /* จัดเนื้อหาให้อยู่ตรงกลาง */
+            padding: 0.5rem 0.5rem !important; /* จัด Padding ให้สมมาตร */
+        }
+        
+        /* 2. ปรับขนาดและจัดวางไอคอนหลักในโหมด collapsed */
+        #sidebarMenu.collapsed .collapsed-toggle i {
+            font-size: 1.2rem; /* ทำให้ไอคอนใหญ่ขึ้นเล็กน้อย */
+            margin-right: 0; /* ลบ margin ด้านขวาออก */
+            width: 30px; /* เพิ่มความกว้างเพื่อช่วยในการจัดวาง */
+            display: inline-block;
+        }
 
         #sidebarMenu.collapsed .nav-link {
             padding: 0.5rem 0.5rem;
         }
         
+        /* 3. ปรับขนาดไอคอนเมนูย่อยในโหมด collapsed */
         #sidebarMenu.collapsed .nav-link i {
             margin-right: 0;
+            font-size: 1.1rem; /* ทำให้ไอคอน nav-link ใหญ่ขึ้นตามหัวข้อเล็กน้อย */
+            width: 30px; /* ปรับให้กว้างขึ้นเพื่อการจัดวางที่ดีขึ้น */
         }
         
         #sidebarMenu.collapsed .nav-link span,
@@ -177,24 +200,35 @@
             z-index: 1000;
         }
 
-        .fab-add { 
+        /* FAB Sidebar Toggle (ใหม่) */
+        .fab-toggle { 
             bottom: 30px; 
+            background-color: #6c757d; 
+            font-size: 20px;
+        }
+        .fab-toggle:hover { background-color: #495057; }
+
+        /* FAB Add (เลื่อนตำแหน่ง) */
+        .fab-add { 
+            bottom: 100px; 
             background-color: #0d6efd;
             font-size: 30px;
         }
         .fab-add:hover { background-color: #0b5ed7; }
         
+        /* Theme Toggle (เลื่อนตำแหน่ง) */
         #themeToggle {
             background-color: #6c757d;
             font-size: 20px;
-            bottom: 100px;
+            bottom: 170px; 
         }
         #themeToggle:hover { background-color: #495057; }
         
+        /* Toggle Table (เลื่อนตำแหน่ง) */
         #toggleTable {
             background-color: #007bff; 
             font-size: 20px;
-            bottom: 170px; 
+            bottom: 240px; 
         }
         #toggleTable:hover { background-color: #0056b3; }
 
@@ -358,7 +392,8 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm py-0 border-bottom">
         <div class="container-fluid">
             <a class="navbar-brand py-2 me-4 d-flex align-items-center" href="#">
-                <img src="https://via.placeholder.com/35x35?text=CMO" alt="CMO Logo" class="me-2 rounded">
+                <img src="images/logo-white.png" alt="CMO Logo" class="me-2 rounded" width="45px">
+                <img src="images/logo-black.png" alt="CMO Logo" class="me-2 rounded" width="45px">
                 <span style="font-size:1.2rem; font-weight:600;">CMO PUBLIC COMPANY LIMITED</span>
             </a>
             
@@ -421,7 +456,7 @@
             
             <a class="h6 mt-2 mb-1 pb-1 collapsed-toggle" 
                 data-bs-toggle="collapse" href="#carMenu" role="button" aria-expanded="true" aria-controls="carMenu">
-                <i class="bi bi-chevron-down toggle-icon me-1"></i>
+                <i class="bi bi-car-front-fill me-1"></i>
                 <span>Car Center</span>
             </a>
             
@@ -433,7 +468,7 @@
 
             <a class="h6 mt-1 mb-1 pb-1 collapsed-toggle"
                 data-bs-toggle="collapse" href="#meetingMenu" role="button" aria-expanded="true" aria-controls="meetingMenu">
-                    <i class="bi bi-chevron-down toggle-icon me-1"></i>
+                    <i class="bi bi-easel-fill me-1"></i>
                     <span>Meeting Room</span>
             </a>
             
@@ -443,12 +478,7 @@
                 <li class="nav-item"><a id="menu-meeting-reserve" href="#" class="nav-link"><i class="bi bi-dot"></i> <span>Meeting Room Reserve</span></a></li>
             </ul>
             
-            <div class="p-2 border-top"> 
-                <button id="sidebarToggle" class="btn btn-sm btn-outline-secondary d-flex justify-content-center align-items-center w-100">
-                    <i class="bi bi-arrow-left-circle-fill"></i>
-                </button>
             </div>
-        </div>
 
         <div id="mainContent" class="flex-grow-1 p-3">
             <div class="container">
@@ -500,9 +530,10 @@
                 </div>
             </div>
             
-            <button class="fab fab-add" data-bs-toggle="modal" data-bs-target="#bookingModal"><i class="bi bi-plus"></i></button>
-            <button id="themeToggle" class="fab"><i class="bi bi-moon"></i></button>
             <button id="toggleTable" class="fab"><i class="bi bi-table"></i></button>
+            <button id="themeToggle" class="fab"><i class="bi bi-moon"></i></button>
+            <button class="fab fab-add" data-bs-toggle="modal" data-bs-target="#bookingModal"><i class="bi bi-plus"></i></button>
+            <button id="sidebarToggle" class="fab fab-toggle"><i class="bi bi-arrow-left-circle-fill"></i></button>
 
         </div>
         </div>
