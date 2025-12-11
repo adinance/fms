@@ -25,7 +25,6 @@
             --border-dark: #333;
         }
 
-        /* กำหนดให้ HTML และ Body ใช้พื้นที่ 100% ของ Viewport */
         html, body {
             height: 100%;
         }
@@ -33,25 +32,23 @@
         body {
             font-family: var(--font-main);
             transition: background-color 0.3s, color 0.3s;
-            display: flex; /* ใช้ flex จัดวาง Navbar และ Main Layout */
+            display: flex;
             flex-direction: column; 
         }
 
         a { text-decoration: none !important; }
         
-        /* Main Layout: ใช้พื้นที่ที่เหลือทั้งหมด และจัดวาง Sidebar/Content แบบ Row */
         #mainLayout {
             flex-grow: 1;
             overflow: hidden; 
         }
 
-        /* --- Sidebar Styles --- */
         #sidebarMenu {
-            width: 280px; /* ความกว้างเริ่มต้น */
+            width: 280px;
             transition: width 0.3s ease, margin 0.3s ease;
-            overflow-x: hidden; /* ซ่อนเนื้อหาที่เกินมาเมื่อย่อ */
+            overflow-x: hidden;
             flex-shrink: 0; 
-            overflow-y: auto; /* ให้เลื่อนได้เฉพาะ Sidebar ถ้าเมนูเยอะ */
+            overflow-y: auto; /* ทำให้เนื้อหาสามารถเลื่อนได้ */
         }
         
         #sidebarMenu .nav-link {
@@ -67,19 +64,33 @@
             text-align: center;
         }
 
-        /* สไตล์สำหรับปุ่มหัวข้อ Collapse */
+        /* ปรับ Transition สำหรับ Collapse/Show ให้สมูทขึ้น */
+        .collapse {
+            transition: height 0.4s ease-in-out !important; 
+        }
+        
+        .collapsing {
+            transition: height 0.4s ease-in-out !important;
+        }
+        /* สิ้นสุดการปรับ Transition */
+
+
         #sidebarMenu .collapsed-toggle {
             cursor: pointer;
             font-size: 1rem; 
-            font-weight: 600; /* ทำให้หัวข้อดูหนาขึ้น */
+            font-weight: 600;
             color: var(--text-light);
-            border-bottom: 1px solid #ccc; 
+            /* ลบ border-bottom ออกตามที่ร้องขอ */
             padding-top: 5px;
             padding-bottom: 5px;
             margin-top: 5px;
+            transition: background-color 0.2s, border-color 0.2s;
+        }
+
+        #sidebarMenu .collapsed-toggle:hover {
+            background-color: #e9ecef; 
         }
         
-        /* หมุนไอคอน Chevron เมื่อเมนูยุบ */
         #sidebarMenu .collapsed-toggle .toggle-icon {
             transition: transform 0.3s ease;
         }
@@ -88,9 +99,8 @@
             transform: rotate(-90deg);
         }
 
-        /* Sidebar Collapsed State (สำหรับเมนูหลัก) */
         #sidebarMenu.collapsed {
-            width: 60px !important; /* ความกว้างเมื่อย่อ */
+            width: 60px !important;
         }
 
         #sidebarMenu.collapsed .nav-link {
@@ -98,19 +108,25 @@
         }
         
         #sidebarMenu.collapsed .nav-link i {
-             margin-right: 0;
+            margin-right: 0;
         }
         
-        /* ซ่อนข้อความ, Label และเส้นคั่นใน Sidebar เมื่อย่อหลัก */
         #sidebarMenu.collapsed .nav-link span,
-        #sidebarMenu.collapsed .collapsed-toggle span, /* ซ่อนข้อความหัวข้อ */
-        #sidebarMenu.collapsed .collapsed-toggle .toggle-icon, /* ซ่อนไอคอน Chevron */
+        #sidebarMenu.collapsed .collapsed-toggle span,
+        #sidebarMenu.collapsed .collapsed-toggle .toggle-icon,
         #sidebarMenu.collapsed .sidebar-label,
         #sidebarMenu.collapsed hr {
             display: none;
         }
+        
+        /* ปรับปรุงการแสดงผลของปุ่มในโหมด collapsed */
+        #sidebarMenu.collapsed .border-top {
+            padding: 0.5rem !important; 
+        }
+        #sidebarMenu.collapsed .border-top .w-100 {
+            width: auto !important;
+        }
 
-        /* ปรับปุ่ม Toggle เมื่อย่อ */
         #sidebarMenu.collapsed #sidebarToggle i {
             transform: rotate(180deg);
             transition: transform 0.3s ease;
@@ -119,9 +135,8 @@
             transition: transform 0.3s ease;
         }
         
-        /* Main Content */
         #mainContent {
-             overflow-y: auto; /* ให้เนื้อหาหลักเลื่อนได้ */
+            overflow-y: auto;
         }
 
         /* CSS สำหรับ Dropdown ซ้อน Dropdown (Sub-Dropdown) */
@@ -137,7 +152,6 @@
             margin-right: 0.1rem;
         }
         
-        /* ... (Mini Calendar specific styles - kept for layout) ... */
         #miniCalendar { max-width: 100%; margin: 20px auto; font-size: 12px !important; }
         #miniCalendar .fc-scroller { overflow: visible !important; }
         #miniCalendar .fc-daygrid-body { max-height: none !important; }
@@ -200,28 +214,28 @@
         body.light-mode .nav-link { color: #000; }
         body.light-mode #sidebarMenu { background-color: #f8f9fa !important; }
         body.light-mode .navbar { background-color: #f8f9fa !important; }
-        body.light-mode #sidebarMenu .collapsed-toggle { color: #000; border-bottom-color: #ccc; }
+        body.light-mode #sidebarMenu .collapsed-toggle { 
+            color: #000; 
+        }
+        body.light-mode #sidebarMenu .border-top { border-color: #e9ecef !important; }
 
-        /* Light Mode: เน้นพื้นหลัง Navbar Active Menu */
+
         body.light-mode .navbar-nav .nav-link.active {
             background-color: #e9ecef !important; 
             color: #0d6efd !important; 
             border-radius: 6px; 
         }
 
-        /* Light Mode: เน้นพื้นหลัง Sidebar Active Menu */
         body.light-mode #sidebarMenu .nav-link.active {
-            background-color: #0d6efd !important; /* สีน้ำเงินหลัก */
+            background-color: #0d6efd !important;
             color: #fff !important; 
             border-radius: 6px;
         }
         
-        /* Light Mode Dropdown Item Styles */
         body.light-mode .dropdown-menu .dropdown-item.active {
-            background-color: #0d6efd !important; /* สีน้ำเงินหลัก */
+            background-color: #0d6efd !important;
             color: #fff !important;
         }
-
 
         body.light-mode .fc-day-today { background-color: #e9ecef !important; border-radius: 50%; }
         body.light-mode .fc-col-header-cell { background-color: #f8f9fa !important; color: #000 !important; }
@@ -232,7 +246,6 @@
             color: var(--text-dark);
         }
         
-        /* Dark Mode for Navbar and Sidebar */
         body.dark-mode .navbar,
         body.dark-mode #sidebarMenu {
             background-color: var(--card-dark) !important;
@@ -246,37 +259,34 @@
         
         body.dark-mode #sidebarMenu .collapsed-toggle {
             color: var(--text-dark);
-            border-bottom-color: var(--border-dark);
+        }
+        body.dark-mode #sidebarMenu .border-top { border-color: var(--border-dark) !important; }
+
+        body.dark-mode #sidebarMenu .collapsed-toggle:hover {
+            background-color: #2a2a2a; 
         }
 
-        /* MODIFIED: เน้นพื้นหลัง Navbar Active Menu ใน Dark Mode */
         body.dark-mode .navbar-nav .nav-link.active {
             background-color: #444 !important; 
             color: #fff !important; 
             border-radius: 6px; 
         }
         
-        /* MODIFIED: เน้นพื้นหลัง Sidebar Active Menu ใน Dark Mode */
         body.dark-mode #sidebarMenu .nav-link.active {
             background-color: #2a2a2a !important; 
             color: #fff !important; 
             border-radius: 6px;
         }
 
-        /* 🔥 NEW FIX: Dropdown Menu Item Styles ใน Dark Mode (ครอบคลุมที่สุด) */
-        
-        /* 1. สีพื้นหลังเมนูและเส้นขอบ */
         body.dark-mode .dropdown-menu {
             background-color: var(--card-dark) !important;
             border-color: var(--border-dark) !important;
         }
 
-        /* 2. สีข้อความของรายการเมนูทั้งหมด */
         body.dark-mode .dropdown-menu .dropdown-item {
             color: var(--text-dark) !important;
         }
 
-        /* 3. สไตล์เมื่อชี้ (Hover) และ Active */
         body.dark-mode .dropdown-menu .dropdown-item:hover,
         body.dark-mode .dropdown-menu .dropdown-item:focus,
         body.dark-mode .dropdown-menu .dropend > .dropdown-toggle:hover,
@@ -284,31 +294,23 @@
         body.dark-mode .dropdown-menu .dropdown-item:active {
             background-color: var(--card-dark) !important; 
             color: #fff !important;
-            background-image: none !important; /* 🔥 สำคัญ: ยกเลิกสีพื้นหลังแบบไล่เฉดของ Bootstrap */
+            background-image: none !important;
         }
         
-        /* 4. สีข้อความของตัว Toggle (เช่น Year) เมื่อ Active/Hover */
         body.dark-mode .dropdown-menu .dropdown-item.dropdown-toggle {
             color: var(--text-dark) !important;
         }
         body.dark-mode .dropdown-menu .dropdown-item.dropdown-toggle:hover,
         body.dark-mode .dropdown-menu .dropdown-item.dropdown-toggle.active {
-            color: #fff !important; /* ข้อความขาวเมื่อ Active/Hover */
+            color: #fff !important;
         }
         
-        /* 🔥 NEW FIX: เปลี่ยนสีพื้นหลังของ Dropdown Toggle (Year) เมื่อ Active ให้เป็นสีเทาเข้ม */
-        /* ถ้าต้องการให้ Year เป็นสีน้ำเงินหลักเมื่อ Active, ลบกฎนี้ออก */
-        /* แต่ถ้าต้องการให้ Year เป็นสีเทาเข้มเมื่อ Active และสีน้ำเงินเฉพาะเมื่อ Hover หรือเมนูย่อย Active ให้คงไว้ */
-        /* ปัจจุบันเรากำหนดให้ Year เป็นสีน้ำเงินเมื่อ Active/Hover/เลือกแล้ว ตามกฎข้างบน */
-
         body.dark-mode .card {
             background-color: var(--card-dark) !important;
             border-color: var(--border-dark) !important;
             color: var(--text-dark) !important;
         }
         
-        /* ... (Dark Mode CSS สำหรับ FullCalendar และ Datatables อื่น ๆ เหมือนเดิม) ... */
-
         body.dark-mode #calendar { background: var(--card-dark); border-color: var(--border-dark); }
         body.dark-mode .fc-multimonth-month,
         body.dark-mode .fc-multimonth-header-table thead th,
@@ -418,21 +420,21 @@
         <div id="sidebarMenu" class="d-flex flex-column flex-shrink-0 bg-light border-end p-2 collapsed">
             
             <a class="h6 mt-2 mb-1 pb-1 collapsed-toggle" 
-               data-bs-toggle="collapse" href="#carMenu" role="button" aria-expanded="true" aria-controls="carMenu">
+                data-bs-toggle="collapse" href="#carMenu" role="button" aria-expanded="true" aria-controls="carMenu">
                 <i class="bi bi-chevron-down toggle-icon me-1"></i>
                 <span>Car Center</span>
             </a>
             
-            <ul id="carMenu" class="nav nav-pills flex-column mb-auto collapse show">
+            <ul id="carMenu" class="nav nav-pills flex-column collapse show">
                 <li class="nav-item"><a id="menu-car-center" href="#" class="nav-link"><i class="bi bi-dot"></i> <span>Car Center</span></a></li>
                 <li class="nav-item"><a id="menu-car-calendar" href="#" class="nav-link"><i class="bi bi-dot"></i> <span>Car Center Calendar</span></a></li>
                 <li class="nav-item"><a id="menu-car-reserve" href="#" class="nav-link"><i class="bi bi-dot"></i> <span>Car Center Reserve</span></a></li>
             </ul>
 
-            <a class="h6 mt-3 mb-1 pb-1 collapsed-toggle"
-               data-bs-toggle="collapse" href="#meetingMenu" role="button" aria-expanded="true" aria-controls="meetingMenu">
-                   <i class="bi bi-chevron-down toggle-icon me-1"></i>
-                 <span>Meeting Room</span>
+            <a class="h6 mt-1 mb-1 pb-1 collapsed-toggle"
+                data-bs-toggle="collapse" href="#meetingMenu" role="button" aria-expanded="true" aria-controls="meetingMenu">
+                    <i class="bi bi-chevron-down toggle-icon me-1"></i>
+                    <span>Meeting Room</span>
             </a>
             
             <ul id="meetingMenu" class="nav nav-pills flex-column mb-auto collapse show">
@@ -441,10 +443,11 @@
                 <li class="nav-item"><a id="menu-meeting-reserve" href="#" class="nav-link"><i class="bi bi-dot"></i> <span>Meeting Room Reserve</span></a></li>
             </ul>
             
-            <hr>
-            <button id="sidebarToggle" class="btn btn-sm btn-outline-secondary d-flex justify-content-center align-items-center">
-                <i class="bi bi-arrow-left-circle-fill"></i>
-            </button>
+            <div class="p-2 border-top"> 
+                <button id="sidebarToggle" class="btn btn-sm btn-outline-secondary d-flex justify-content-center align-items-center w-100">
+                    <i class="bi bi-arrow-left-circle-fill"></i>
+                </button>
+            </div>
         </div>
 
         <div id="mainContent" class="flex-grow-1 p-3">
@@ -580,7 +583,6 @@
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
 <script src="https://cdn.datatables.net/2.1.4/js/dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/2.1.4/js/dataTables.bootstrap5.min.js"></script>
-
 <script>
 document.addEventListener("DOMContentLoaded", function() {
     const roomColors = { "Room A": "#0d6efd", "Room B": "#198754", "Room C": "#fd7e14" };
@@ -588,7 +590,6 @@ document.addEventListener("DOMContentLoaded", function() {
     let isTableVisible = localStorage.getItem("isTableVisible") !== "false"; 
     let isSidebarCollapsed = localStorage.getItem("isSidebarCollapsed") === "true"; 
     
-    // Keys สำหรับบันทึกสถานะ
     const ACTIVE_MENU_KEY = 'activeMenuId';
     const NAVBAR_ACTIVE_KEY = 'navbarActiveId'; 
     const CAR_MENU_STATE = 'carMenuState';
@@ -596,7 +597,6 @@ document.addEventListener("DOMContentLoaded", function() {
     
     let calendar, miniCal, table;
     
-    // (สมมติว่าคุณมีไฟล์ data.json อยู่ใน Root Directory ที่มีข้อมูลการจองล่าสุด)
     const DATA_URL = "data.json"; 
 
     initTheme();
@@ -606,13 +606,10 @@ document.addEventListener("DOMContentLoaded", function() {
     initNavbarActiveMenu();
     initPickers();
     initCalendars();
-    initTable();
-    loadRoomFilterState(); 
+    initTable(); 
     initEventHandlers();
     
-    // ----------------------------------------------------------------------
-    // 🔥 NEW/MODIFIED: ฟังก์ชันจัดการ Active Menu, Sidebar, Theme, Table (เหมือนเดิม)
-    // ----------------------------------------------------------------------
+    const getStartDay = (datetime) => datetime ? datetime.substring(0, 10) : "";
 
     function initNavbarActiveMenu() {
         const defaultNavbarId = 'nav-report-current-year';
@@ -710,8 +707,10 @@ document.addEventListener("DOMContentLoaded", function() {
         localStorage.setItem("roomFilterStates", JSON.stringify(roomStates));
     }
 
-    function loadRoomFilterState() {
+    function loadRoomFilterState(applyFilterToTable = false) {
         const savedRoomStates = localStorage.getItem("roomFilterStates");
+        let selectedRooms = [];
+        
         if (savedRoomStates) { 
             try {
                 const roomStates = JSON.parse(savedRoomStates);
@@ -719,6 +718,9 @@ document.addEventListener("DOMContentLoaded", function() {
                     const roomName = $(this).val();
                     if (roomStates.hasOwnProperty(roomName)) {
                         $(this).prop("checked", roomStates[roomName]);
+                        if (roomStates[roomName]) {
+                            selectedRooms.push(roomName);
+                        }
                     }
                 });
             } catch (e) {
@@ -726,7 +728,13 @@ document.addEventListener("DOMContentLoaded", function() {
                 localStorage.removeItem("roomFilterStates"); 
             }
         }
-        applyRoomFilter(true); 
+        
+        applyRoomFilter(false); 
+
+        if (applyFilterToTable && table) {
+            let searchVal = selectedRooms.length === 0 ? "^$" : selectedRooms.join("|");
+            table.column(0).search(searchVal, true, false).draw();
+        }
     }
 
     function initTheme() {
@@ -768,78 +776,55 @@ document.addEventListener("DOMContentLoaded", function() {
     
     function initPickers() {
         flatpickr("#meeting_date", { dateFormat: "Y-m-d" });
-        // ใช้ "H:i:s" เพื่อรองรับ Time Format ที่มีใน JSON
         flatpickr("#start_time", { enableTime: true, noCalendar: true, dateFormat: "H:i:s" }); 
         flatpickr("#end_time", { enableTime: true, noCalendar: true, dateFormat: "H:i:s" });
     }
 
-    // ----------------------------------------------------------------------
-    // 🔥 MODIFIED: ฟังก์ชัน Map Event Data (รองรับ 3 วัน)
-    // ----------------------------------------------------------------------
     function mapEventData(e) {
-        let eventStart, eventEnd;
-        let isMultiDay = false;
-        
-        // ตรวจสอบ Event ID 6 หรือ Event ที่มีการจองข้ามวัน (จากฟิลด์ time ที่มีทั้งวันที่และเวลา)
-        if (e.id === "6" || (e.time && e.time.includes('2025-'))) {
-            // สำหรับ Event 3 วันเต็ม (id: "6")
-            const timeParts = e.time.split(' - ');
-            if (timeParts.length === 2 && timeParts[0].includes('2025') && timeParts[1].includes('2025')) {
-                // แปลงเป็น ISO 8601 Format (YYYY-MM-DDTHH:MM:SS)
-                eventStart = timeParts[0].trim().replace(/\s/g, 'T');
-                eventEnd = timeParts[1].trim().replace(/\s/g, 'T');
-                isMultiDay = true;
-            } else {
-                // กรณีข้ามคืน (ถ้ามี)
-                eventStart = e.meeting_date + "T" + e.start_time;
-                // ในโค้ดนี้ FullCalendar จะคำนวณการข้ามคืนให้เองหาก end_time น้อยกว่า start_time
-                eventEnd = e.meeting_date + "T" + e.end_time;
-            }
-        } else {
-            // Event ปกติ
-            eventStart = e.meeting_date + "T" + e.start_time;
-            eventEnd = e.meeting_date + "T" + e.end_time;
-        }
+        const isMultiDay = (e.start && e.end) && (getStartDay(e.start) !== getStartDay(e.end)); 
 
         return {
             id: e.id,
             title: e.title + " (" + e.room + ")",
-            start: eventStart, 
-            end: eventEnd, 
+            start: e.start, 
+            end: e.end, 
             extendedProps: e,
             color: roomColors[e.room],
             
-            // ตั้งค่า allDay เป็น true หากเป็น Event หลายวัน (เพื่อให้แสดงเต็มวันใน DayGrid)
             allDay: isMultiDay,
-            display: isMultiDay ? 'block' : 'auto', 
+            display: 'auto', 
             
-            // ปิดการแก้ไขบนปฏิทินสำหรับ Event หลายวัน
             startEditable: !isMultiDay,
             durationEditable: !isMultiDay 
         };
     }
 
-    // ----------------------------------------------------------------------
-    // 🔥 MODIFIED: ฟังก์ชัน Show Event Details (แสดงข้อมูลใหม่และจัดการ id 6)
-    // ----------------------------------------------------------------------
     function showEventDetails(info) {
         let data = info.event.extendedProps;
         
-        // กำหนดการแสดงวันที่และเวลา
-        let dateDisplay = data.meeting_date || "-";
-        let timeDisplay = data.time || (data.start_time + " - " + data.end_time) || "-";
+        const formatTime = (datetime) => datetime ? datetime.substring(11) : "-";
         
-        if (data.id === "6") {
-            // กรณี ID 6 จอง 3 วัน
-            dateDisplay = "2025-12-20 ถึง 2025-12-22"; 
-            timeDisplay = data.time; // ใช้ฟิลด์ time ที่ระบุช่วงวันที่ชัดเจน
+        const startDate = getStartDay(data.start);
+        const startTime = formatTime(data.start);
+        const endDate = getStartDay(data.end);
+        const endTime = formatTime(data.end);
+        
+        const isMultiDay = (startDate !== endDate);
+        
+        let dateDisplay, timeDisplay;
+        
+        if (isMultiDay) {
+            dateDisplay = `${startDate} ถึง ${endDate}`;
+            timeDisplay = `${startTime} - ${endTime}`;
+        } else {
+            dateDisplay = startDate;
+            timeDisplay = `${startTime} - ${endTime}`;
         }
         
-        // สร้าง Modal Body ใหม่เพื่อแสดงข้อมูลทั้งหมด
         const modalBody = document.querySelector("#detailModal .modal-body");
         modalBody.innerHTML = `
             <div class="mb-2"><b>ห้อง:</b> <span id="d_room">${data.room || "-"}</span></div>
-            <div class="mb-2"><b>ชื่อการประชุม:</b> <span id="d_title">${data.title || "-"}</span></div>
+            <div class="mb-2"><b>ชื่อการประชุม:</b> <span id="d_title">${data.title.replace(` (${data.room})`, '') || "-"}</span></div>
             <div class="mb-2"><b>หัวข้อ:</b> <span id="d_subject">${data.subject || "-"}</span></div>
             <div class="mb-2"><b>วันที่:</b> <span id="d_date">${dateDisplay}</span></div>
             <div class="mb-2"><b>เวลา:</b> <span id="d_time_range">${timeDisplay}</span></div>
@@ -866,8 +851,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 listMonth: 'ทั้งเดือน', multiMonthYear: '12 เดือน'
             },
             timeZone: 'local',
-            // โหลดข้อมูลจาก data.json
-            events: (info, success) => $.getJSON(DATA_URL, res => success(res.data.map(mapEventData))),
+            events: (info, success) => $.getJSON(DATA_URL, res => success(res.map(mapEventData))),
             eventClick: showEventDetails
         });
 
@@ -877,8 +861,7 @@ document.addEventListener("DOMContentLoaded", function() {
             contentHeight: "auto",
             expandRows: true,
             headerToolbar: { left: "", center: "title", right: "prev,next" },
-            // โหลดข้อมูลจาก data.json
-            events: (info, success) => $.getJSON(DATA_URL, res => success(res.data.map(mapEventData))),
+            events: (info, success) => $.getJSON(DATA_URL, res => success(res.map(mapEventData))),
             eventClick: showEventDetails,
             selectable: true,
             dateClick: info => calendar.gotoDate(info.dateStr)
@@ -890,39 +873,30 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function initTable() {
         table = $("#bookingTable").DataTable({
-            ajax: DATA_URL,
+            ajax: {
+                url: DATA_URL,
+                dataSrc: "" 
+            },
             columns: [
                 { data: "room" }, 
                 { data: "title" }, 
                 { data: "start" },
                 { data: "end" }, 
                 { data: "booked_by" }
-            ]
+            ],
+            // เปิดใช้งานการจดจำสถานะ
+            stateSave: true 
         });
+        
         applyTableVisibility(isTableVisible);
+
+        // เมื่อ Datatable โหลดเสร็จแล้ว ให้โหลดและกรองตามสถานะ Checkbox ที่จำไว้
+        table.on('init', function() {
+            loadRoomFilterState(true); 
+        });
     }
 
-//     function initTable() {
-//     table = $("#bookingTable").DataTable({
-//         ajax: {
-//             url: DATA_URL,
-//             dataSrc: "data" // บอกให้ Datatables อ่าน Array ข้อมูลจาก obj.data
-//         },
-//         // 2. ตรวจสอบ Columns ให้แน่ใจว่าตรงกับ Key ใน JSON
-//         columns: [
-//             { data: "room" }, 
-//             { data: "title" }, 
-//             { data: "start" },
-//             { data: "end" },
-//             { data: "booked_by" }
-//         ],
-//         language: { url: "//cdn.datatables.net/plug-ins/2.0.0/i18n/th.json" } // ภาษาไทย
-//     });
-//     applyTableVisibility(isTableVisible);
-// }
-
     function initEventHandlers() {
-        // Sidebar Toggle Handler (หลัก)
         $("#sidebarToggle").on("click", function() {
             isSidebarCollapsed = !isSidebarCollapsed;
             localStorage.setItem("isSidebarCollapsed", isSidebarCollapsed);
@@ -933,7 +907,6 @@ document.addEventListener("DOMContentLoaded", function() {
             }, 300); 
         });
         
-        // Handler สำหรับจดจำสถานะการยุบ/ขยายของเมนูย่อย
         $('#carMenu').on('hidden.bs.collapse', function () {
             localStorage.setItem(CAR_MENU_STATE, 'false');
         });
@@ -948,7 +921,6 @@ document.addEventListener("DOMContentLoaded", function() {
             localStorage.setItem(MEETING_MENU_STATE, 'true');
         });
         
-        // Handler สำหรับการคลิกเมนูย่อยทั้งหมด (Active Menu)
         $("#sidebarMenu .nav-link").on("click", function(e) {
             e.preventDefault(); 
             $("#sidebarMenu .nav-link").removeClass("active").removeAttr("aria-current");
@@ -956,7 +928,6 @@ document.addEventListener("DOMContentLoaded", function() {
             localStorage.setItem(ACTIVE_MENU_KEY, this.id);
         });
         
-        // 🔥 NEW: Handler สำหรับการคลิกเมนูใน Navbar Dropdown
         $('.navbar-nav .dropdown-item').on('click', function(e) {
             e.preventDefault();
             const clickedId = $(this).attr('id');
@@ -969,7 +940,6 @@ document.addEventListener("DOMContentLoaded", function() {
             localStorage.setItem(NAVBAR_ACTIVE_KEY, clickedId);
         });
         
-        // 🔥 NEW: Handler สำหรับ Nested Dropdown (Reporting > Year)
         $('.dropend').on('mouseenter', function() {
             var $el = $(this);
             var $menu = $el.find('.dropdown-menu');
@@ -985,25 +955,20 @@ document.addEventListener("DOMContentLoaded", function() {
         });
 
         
-        // MODIFIED: Room Filter Handlers
-        $("#checkAllRooms").on("change", function() {
-            $(".room-filter").prop("checked", $(this).is(":checked"));
-            applyRoomFilter(false);
-            filterDataTableByRooms();
-            saveRoomFilterState(); 
-        });
-
         $(".room-filter").on("change", function() {
             $("#checkAllRooms").prop("checked", $(".room-filter").length === $(".room-filter:checked").length);
+            
             applyRoomFilter(false);
             filterDataTableByRooms();
             saveRoomFilterState();
         });
-
-        $("#bookingTable").on("search.dt", function() {
+        
+        // เมื่อมีการวาดตาราง (Search, Paging, Sort) ให้ซิงค์กับ Calendar
+        table.on("draw.dt", function() {
             syncCalendarWithDataTable();
             updateRoomFilterByTable();
         });
+
 
         $("#bookingForm").on("submit", handleBookingSubmit);
 
@@ -1023,7 +988,6 @@ document.addEventListener("DOMContentLoaded", function() {
         let selectedRooms = $(".room-filter:checked").map(function() { return this.value; }).get();
         let searchVal = selectedRooms.length === 0 ? "^$" : selectedRooms.join("|");
         table.column(0).search(searchVal, true, false).draw();
-        syncCalendarWithDataTable();
     }
 
     function applyRoomFilter(updateTable = true) {
@@ -1034,7 +998,7 @@ document.addEventListener("DOMContentLoaded", function() {
         miniCal.getEvents().forEach(evt => evt.setProp("display", filterFunc(evt)));
 
         if (updateTable) {
-            table.column(0).search(selectedRooms.join("|"), true, false).draw();
+            filterDataTableByRooms();
         }
     }
 
@@ -1046,35 +1010,33 @@ document.addEventListener("DOMContentLoaded", function() {
         miniCal.getEvents().forEach(evt => evt.setProp("display", syncFunc(evt)));
     }
 
+    let isTableSyncing = false;
     function updateRoomFilterByTable() {
+        if (isTableSyncing) return; 
+        
         let visibleData = table.rows({ search: "applied" }).data().toArray();
         let rooms = [...new Set(visibleData.map(item => item.room))];
         
-        $(".room-filter").each(function() { this.checked = rooms.includes(this.value); });
+        if (table.search() === '' && table.column(0).search() === '') {
+             
+        } else {
+            isTableSyncing = true;
+            $(".room-filter").each(function() { 
+                this.checked = rooms.includes(this.value); 
+            });
+            isTableSyncing = false;
+        }
     }
 
     function handleBookingSubmit(e) {
         e.preventDefault();
-        // ในสถานการณ์จริง: ส่งข้อมูลไปที่ Backend และรอการตอบกลับ
-        // $.post("add_booking.php", $(this).serialize(), function() {
-            bootstrap.Modal.getInstance(document.getElementById("bookingModal")).hide();
-            $("#bookingForm")[0].reset();
-            
-            // เนื่องจากไม่มี Backend จริง, เราจึงจำลองการ Reload ข้อมูล
-            // ในสถานการณ์จริง ควรใช้ table.ajax.reload()
-            console.log("Booking simulated. Please refresh manually if using static data.json.");
-            
-            // Force reload data for demonstration purposes (ถ้าข้อมูลถูกอัพเดตใน data.json)
-            table.ajax.reload(null, false); // Reload data, keep current page
-            
-            // ต้องดึงข้อมูลใหม่ทั้งหมดและอัปเดตปฏิทินด้วย
-            // Note: FullCalendar Events source ถูกตั้งค่าเป็น AJAX, 
-            // การเรียก .refetchEvents() น่าจะทำงาน แต่ในโค้ดนี้เราจะใช้การ Remove/Add Event ตาม Datatable
-            
-            // เนื่องจากเราไม่มี Backend จริงที่จะอัปเดต data.json ให้
-            // เราจะข้ามส่วนนี้ไปก่อนและสันนิษฐานว่าการกด Submit จะเพิ่มข้อมูลใหม่ให้ Datatable และ Calendar
-            
-        // });
+        
+        bootstrap.Modal.getInstance(document.getElementById("bookingModal")).hide();
+        $("#bookingForm")[0].reset();
+        
+        console.log("Booking simulated. Please refresh manually if using static data.json.");
+        
+        table.ajax.reload(null, false);
     }
 });
 </script>
