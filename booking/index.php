@@ -448,8 +448,8 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm py-0 border-bottom">
         <div class="container-fluid">
             <a class="navbar-brand py-2 me-4 d-flex align-items-center" href="#">
-                <img src="images/logo-white.png" alt="CMO Logo" class="me-2 rounded" width="45px">
-                <img src="images/logo-black.png" alt="CMO Logo" class="me-2 rounded" width="45px">
+                <img src="images/logo-white.png" alt="CMO Logo" class="me-2 rounded d-none d-md-block dark-mode-logo" width="45px" style="display: none;">
+                <img src="images/logo-black.png" alt="CMO Logo" class="me-2 rounded light-mode-logo" width="45px">
                 <span style="font-size:1.2rem; font-weight:600;">CMO PUBLIC COMPANY LIMITED</span>
             </a>
             
@@ -534,7 +534,7 @@
                 <li class="nav-item"><a id="menu-meeting-reserve" href="#" class="nav-link"><i class="bi bi-dot"></i> <span>Meeting Room Reserve</span></a></li>
             </ul>
             
-            </div>
+        </div>
 
         <div id="mainContent" class="flex-grow-1 p-3">
             <div class="container">
@@ -555,42 +555,34 @@
                             <div id="miniCalendar"></div>
                         </div>
 
-                        <!-- <div class="card p-3 mb-3 shadow">
+                        <div class="card p-3 mb-3 shadow">
                             <label>เลือกห้องที่ต้องการแสดง</label>
                             <hr class="my-1">
-                            <label><input type="checkbox" class="room-filter ms-2 me-1" value="Room A" checked> Room A</label>
-                            <label><input type="checkbox" class="room-filter ms-2 me-1" value="Room B" checked> Room B</label>
-                            <label><input type="checkbox" class="room-filter ms-2 me-1" value="Room C" checked> Room C</label>
-                        </div> -->
-
-                        <div class="card p-3 mb-3 shadow">
-    <label>เลือกห้องที่ต้องการแสดง</label>
-    <hr class="my-1">
-    <div class="form-check">
-        <input type="checkbox" class="form-check-input room-filter ms-1" id="filter_room_1" value="Meeting 1" checked>
-        <label class="form-check-label" for="filter_room_1"> Meeting 1</label>
-    </div>
-    <div class="form-check">
-        <input type="checkbox" class="form-check-input room-filter ms-1" id="filter_room_2" value="Meeting 2" checked>
-        <label class="form-check-label" for="filter_room_2"> Meeting 2</label>
-    </div>
-    <div class="form-check">
-        <input type="checkbox" class="form-check-input room-filter ms-1" id="filter_room_3" value="Meeting 3" checked>
-        <label class="form-check-label" for="filter_room_3"> Meeting 3</label>
-    </div>
-    <div class="form-check">
-        <input type="checkbox" class="form-check-input room-filter ms-1" id="filter_room_4" value="Training Room 1 (Floor 3)" checked>
-        <label class="form-check-label" for="filter_room_4"> Training Room 1 (Floor 3)</label>
-    </div>
-    <div class="form-check">
-        <input type="checkbox" class="form-check-input room-filter ms-1" id="filter_room_5" value="Training Room 3 (Floor 1)" checked>
-        <label class="form-check-label" for="filter_room_5"> Training Room 3 (Floor 1)</label>
-    </div>
-    <div class="form-check">
-        <input type="checkbox" class="form-check-input room-filter ms-1" id="filter_room_6" value="ห้องปูน (Floor 3)" checked>
-        <label class="form-check-label" for="filter_room_6"> ห้องปูน (Floor 3)</label>
-    </div>
-</div>
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input room-filter ms-1" id="filter_room_1" value="Meeting 1" checked>
+                                <label class="form-check-label" for="filter_room_1"> Meeting 1</label>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input room-filter ms-1" id="filter_room_2" value="Meeting 2" checked>
+                                <label class="form-check-label" for="filter_room_2"> Meeting 2</label>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input room-filter ms-1" id="filter_room_3" value="Meeting 3" checked>
+                                <label class="form-check-label" for="filter_room_3"> Meeting 3</label>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input room-filter ms-1" id="filter_room_4" value="Training Room 1 (Floor 3)" checked>
+                                <label class="form-check-label" for="filter_room_4"> Training Room 1 (Floor 3)</label>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input room-filter ms-1" id="filter_room_5" value="Training Room 3 (Floor 1)" checked>
+                                <label class="form-check-label" for="filter_room_5"> Training Room 3 (Floor 1)</label>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input room-filter ms-1" id="filter_room_6" value="ห้องปูน (Floor 3)" checked>
+                                <label class="form-check-label" for="filter_room_6"> ห้องปูน (Floor 3)</label>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -621,7 +613,7 @@
             <button id="sidebarToggle" class="fab fab-toggle"><i class="bi bi-arrow-left-circle-fill"></i></button>
 
         </div>
-        </div>
+    </div>
 
     <div class="modal fade" id="bookingModal" tabindex="-1">
         <div class="modal-dialog">
@@ -717,9 +709,9 @@ document.addEventListener("DOMContentLoaded", function() {
         "Meeting 1": "#0d6efd", 
         "Meeting 2": "#198754", 
         "Meeting 3": "#fd7e14",
-        "Training Room 1 (Floor 3)": "#6f42c1", // สีม่วง
-        "Training Room 3 (Floor 1)": "#dc3545", // สีแดง
-        "ห้องปูน (Floor 3)": "#20c997"         // สีเขียวอ่อน
+        "Training Room 1 (Floor 3)": "#6f42c1", 
+        "Training Room 3 (Floor 1)": "#dc3545", 
+        "ห้องปูน (Floor 3)": "#20c997" 
     };
     let darkMode = localStorage.getItem("darkMode") === "true";
     let isTableVisible = localStorage.getItem("isTableVisible") !== "false"; 
@@ -740,7 +732,7 @@ document.addEventListener("DOMContentLoaded", function() {
     initActiveMenu(); 
     initNavbarActiveMenu();
     initPickers();
-    initCalendars();
+    initCalendars(); // 📌 แก้ไขส่วนนี้แล้ว
     initTable(); 
     initEventHandlers();
     
@@ -864,6 +856,7 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         }
         
+        // ใช้ applyRoomFilter เพื่อซิงค์ Calendar
         applyRoomFilter(false); 
 
         if (applyFilterToTable && table) {
@@ -889,10 +882,14 @@ document.addEventListener("DOMContentLoaded", function() {
             body.classList.add("dark-mode");
             body.classList.remove("light-mode");
             toggleBtn.innerHTML = '<i class="bi bi-sun"></i>';
+            $('.light-mode-logo').hide();
+            $('.dark-mode-logo').show();
         } else {
             body.classList.add("light-mode");
             body.classList.remove("dark-mode");
             toggleBtn.innerHTML = '<i class="bi bi-moon"></i>';
+            $('.dark-mode-logo').hide();
+            $('.light-mode-logo').show();
         }
     }
 
@@ -914,12 +911,12 @@ document.addEventListener("DOMContentLoaded", function() {
         const fpConfig = { 
         dateFormat: "Y-m-d", 
         onOpen: (selectedDates, dateStr, instance) => {
-                // เพิ่มคลาส dark-mode ถ้า body อยู่ใน dark-mode
-                if (document.body.classList.contains('dark-mode')) {
-                    instance.calendarContainer.classList.add('dark-mode');
-                } else {
-                    instance.calendarContainer.classList.remove('dark-mode');
-                }
+            // เพิ่มคลาส dark-mode ถ้า body อยู่ใน dark-mode
+            if (document.body.classList.contains('dark-mode')) {
+                instance.calendarContainer.classList.add('dark-mode');
+            } else {
+                instance.calendarContainer.classList.remove('dark-mode');
+            }
             }
         };
         
@@ -929,6 +926,13 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function mapEventData(e) {
+        // หากไม่มีเวลาสิ้นสุดหรือเวลาเริ่มต้นกำหนด, ให้ถือว่าเป็น allDay
+        const isAllDay = !e.start.includes('T') && !e.end.includes('T');
+        
+        // ถ้าเป็น AllDay, FullCalendar จะจัดการ End date ให้เป็นเที่ยงคืนของวันถัดไปโดยอัตโนมัติ
+        // สำหรับการจองห้องประชุมควรใช้เวลาเริ่มและเวลาสิ้นสุด
+        
+        // ตรวจสอบว่าเป็นกิจกรรมหลายวันหรือไม่ (เช่น 2025-12-10T09:00:00 vs 2025-12-11T09:00:00)
         const isMultiDay = (e.start && e.end) && (getStartDay(e.start) !== getStartDay(e.end)); 
 
         return {
@@ -939,18 +943,18 @@ document.addEventListener("DOMContentLoaded", function() {
             extendedProps: e,
             color: roomColors[e.room],
             
-            allDay: isMultiDay,
+            allDay: isAllDay, // ใช้ allDay จากข้อมูลจริง หากมี
             display: 'auto', 
             
-            startEditable: !isMultiDay,
-            durationEditable: !isMultiDay 
+            startEditable: false, // ปิดการแก้ไข
+            durationEditable: false // ปิดการแก้ไข
         };
     }
 
     function showEventDetails(info) {
         let data = info.event.extendedProps;
         
-        const formatTime = (datetime) => datetime ? datetime.substring(11) : "-";
+        const formatTime = (datetime) => datetime ? datetime.substring(11).substring(0, 5) : "-"; // แสดงแค่ HH:mm
         
         const startDate = getStartDay(data.start);
         const startTime = formatTime(data.start);
@@ -973,7 +977,8 @@ document.addEventListener("DOMContentLoaded", function() {
         modalBody.innerHTML = `
             <div class="mb-2"><b>ห้อง:</b> <span id="d_room">${data.room || "-"}</span></div>
             <div class="mb-2"><b>ชื่อการประชุม:</b> <span id="d_title">${data.title.replace(` (${data.room})`, '') || "-"}</span></div>
-            <div class="mb-2"><b>หัวข้อ:</b> <span id="d_subject">${data.subject || "-"}</span></div> <div class="mb-2"><b>วันที่:</b> <span id="d_date">${dateDisplay}</span></div>
+            <div class="mb-2"><b>หัวข้อ:</b> <span id="d_subject">${data.subject || "-"}</span></div> 
+            <div class="mb-2"><b>วันที่:</b> <span id="d_date">${dateDisplay}</span></div>
             <div class="mb-2"><b>เวลา:</b> <span id="d_time_range">${timeDisplay}</span></div>
             <div class="mb-2"><b>ผู้จอง:</b> <span id="d_booked">${data.booked_by || "-"}</span></div>
             <div class="mb-2"><b>เวลาที่จองระบบ:</b> <span id="d_booked_time">${data.booked_time || "-"}</span></div>
@@ -983,6 +988,19 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function initCalendars() {
+        // **การแก้ไข: ใช้ Event Source Object เพื่อรับประกันการโหลดข้อมูลในการ Render ครั้งแรก**
+        const eventSourceConfig = {
+            url: DATA_URL,
+            method: 'GET',
+            failure: function() {
+                console.error("Failed to fetch events from data.json");
+            },
+            // ใช้ success callback เพื่อ map ข้อมูลจาก JSON เป็นรูปแบบ Event ที่ต้องการ
+            success: function(rawEvents) {
+                return rawEvents.map(mapEventData);
+            }
+        };
+
         calendar = new FullCalendar.Calendar(document.getElementById("calendar"), {
             themeSystem: 'bootstrap5',
             initialView: "dayGridMonth",
@@ -997,7 +1015,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 listMonth: 'ทั้งเดือน', multiMonthYear: '12 เดือน'
             },
             timeZone: 'local',
-            events: (info, success) => $.getJSON(DATA_URL, res => success(res.map(mapEventData))),
+            events: eventSourceConfig, // ใช้ Object Config
             eventClick: showEventDetails
         });
 
@@ -1007,7 +1025,7 @@ document.addEventListener("DOMContentLoaded", function() {
             contentHeight: "auto",
             expandRows: true,
             headerToolbar: { left: "", center: "title", right: "prev,next" },
-            events: (info, success) => $.getJSON(DATA_URL, res => success(res.map(mapEventData))),
+            events: eventSourceConfig, // ใช้ Object Config
             eventClick: showEventDetails,
             selectable: true,
             dateClick: info => calendar.gotoDate(info.dateStr)
@@ -1018,6 +1036,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function initTable() {
+        // ดึงข้อมูลและสร้างตาราง
         table = $("#bookingTable").DataTable({
             ajax: {
                 url: DATA_URL,
@@ -1026,8 +1045,20 @@ document.addEventListener("DOMContentLoaded", function() {
             columns: [
                 { data: "room" }, 
                 { data: "title" }, 
-                { data: "start" },
-                { data: "end" }, 
+                { 
+                    data: "start",
+                    render: function (data, type, row) {
+                        return data.substring(0, 10); // แสดงแค่วันที่
+                    }
+                },
+                { 
+                    data: "end",
+                    render: function (data, type, row) {
+                        const startTime = row.start.substring(11, 16);
+                        const endTime = data.substring(11, 16);
+                        return `${startTime} - ${endTime}`; // แสดงช่วงเวลา HH:mm - HH:mm
+                    }
+                }, 
                 { data: "booked_by" }
             ],
             // เปิดใช้งานการจดจำสถานะ
@@ -1086,26 +1117,27 @@ document.addEventListener("DOMContentLoaded", function() {
             localStorage.setItem(NAVBAR_ACTIVE_KEY, clickedId);
         });
         
+        // Dropdown Sub-menu on Hover (for desktop)
         $('.dropend').on('mouseenter', function() {
             var $el = $(this);
             var $menu = $el.find('.dropdown-menu');
             $menu.addClass('show'); 
             if ($menu.offset().left + $menu.width() > $(window).width()) {
+                // ถ้าเมนูจะล้นขวา ให้แสดงทางซ้าย
                 $menu.removeClass('dropdown-menu-end').addClass('dropdown-menu-start');
             }
         }).on('mouseleave', function() {
             var $el = $(this);
             var $menu = $el.find('.dropdown-menu');
             $menu.removeClass('show');
+            // รีเซ็ตคลาสเมื่อเมาส์ออก (เพื่อให้เปิดครั้งถัดไปถูกต้อง)
             $menu.removeClass('dropdown-menu-start').addClass('dropdown-menu-end');
         });
 
         
         $(".room-filter").on("change", function() {
-            $("#checkAllRooms").prop("checked", $(".room-filter").length === $(".room-filter:checked").length);
-            
-            applyRoomFilter(false);
-            filterDataTableByRooms();
+            applyRoomFilter(false); // ซิงค์ Calendar ก่อน
+            filterDataTableByRooms(); // กรองตาราง
             saveRoomFilterState();
         });
         
@@ -1125,6 +1157,7 @@ document.addEventListener("DOMContentLoaded", function() {
             localStorage.setItem("isTableVisible", newState);
 
             if (newState) {
+                // ถ้าตารางถูกเปิด ให้วาดใหม่เพื่อรีเฟรชข้อมูล/สถานะ
                 table.draw(false); 
             }
         });
@@ -1132,6 +1165,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function filterDataTableByRooms() {
         let selectedRooms = $(".room-filter:checked").map(function() { return this.value; }).get();
+        // ใช้ Regex เพื่อค้นหาห้องที่เลือก หรือค้นหาสตริงว่าง (non-existent room name) หากไม่มีห้องใดถูกเลือก
         let searchVal = selectedRooms.length === 0 ? "^$" : selectedRooms.join("|");
         table.column(0).search(searchVal, true, false).draw();
     }
@@ -1140,6 +1174,7 @@ document.addEventListener("DOMContentLoaded", function() {
         let selectedRooms = $(".room-filter:checked").map(function() { return this.value; }).get();
         const filterFunc = evt => selectedRooms.includes(evt.extendedProps.room) ? "auto" : "none";
         
+        // FullCalendar Filter
         calendar.getEvents().forEach(evt => evt.setProp("display", filterFunc(evt)));
         miniCal.getEvents().forEach(evt => evt.setProp("display", filterFunc(evt)));
 
@@ -1149,61 +1184,63 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function syncCalendarWithDataTable() {
+        // รับ id ของรายการที่แสดงผลในตารางหลังการกรอง/ค้นหา
         let visibleIds = table.rows({ search: "applied" }).data().toArray().map(item => String(item.id));
         const syncFunc = evt => visibleIds.includes(String(evt.id)) ? "auto" : "none";
 
+        // ซ่อน Event ใน Calendar ที่ไม่อยู่ในตาราง
         calendar.getEvents().forEach(evt => evt.setProp("display", syncFunc(evt)));
         miniCal.getEvents().forEach(evt => evt.setProp("display", syncFunc(evt)));
     }
 
     let isTableSyncing = false;
     function updateRoomFilterByTable() {
+        // ฟังก์ชันนี้ป้องกันการ Loop ระหว่าง Datatable search และ Room filter Checkbox
         if (isTableSyncing) return; 
         
         let visibleData = table.rows({ search: "applied" }).data().toArray();
-        let rooms = [...new Set(visibleData.map(item => item.room))];
+        let rooms = [...new Set(visibleData.map(item => item.room))]; // ห้องที่แสดงอยู่ในตารางปัจจุบัน
         
         if (table.search() === '' && table.column(0).search() === '') {
-             
+             // ถ้าไม่มีการค้นหาใด ๆ เลย ให้ใช้ค่าเดิมจาก Local Storage
+             loadRoomFilterState(false);
         } else {
+            // ถ้ามีการค้นหา/กรองเกิดขึ้น ให้ซิงค์ Checkbox ตามผลลัพธ์ของตาราง
             isTableSyncing = true;
             $(".room-filter").each(function() { 
                 this.checked = rooms.includes(this.value); 
             });
+            saveRoomFilterState();
             isTableSyncing = false;
         }
     }
 
-    // function handleBookingSubmit(e) {
-    //     e.preventDefault();
-        
-    //     bootstrap.Modal.getInstance(document.getElementById("bookingModal")).hide();
-    //     $("#bookingForm")[0].reset();
-        
-    //     console.log("Booking simulated. Please refresh manually if using static data.json.");
-        
-    //     table.ajax.reload(null, false);
-    // }
-
     function handleBookingSubmit(e) {
         e.preventDefault();
         
-        // **ส่วนที่เพิ่ม/ปรับปรุงเพื่อดึงข้อมูลใหม่**
         const formData = new FormData(e.target);
         const bookingData = Object.fromEntries(formData.entries());
 
-        console.log("New Booking Data Submitted:", bookingData);
-        // End of new/updated section
+        // จำลองการจอง (ในระบบจริงต้องส่งไป Server)
+        console.log("New Booking Data Submitted (Simulated):", bookingData);
+        alert(`จองห้อง "${bookingData.room}" สำเร็จ! (Title: ${bookingData.title})`);
         
         bootstrap.Modal.getInstance(document.getElementById("bookingModal")).hide();
         $("#bookingForm")[0].reset();
         
-        console.log("Booking simulated. Please refresh manually if using static data.json.");
-        
-        // ในระบบจริง คุณจะส่ง bookingData ไปยัง Server ที่นี่
-        // แล้วค่อยเรียก reload() เมื่อสำเร็จ
-
-        table.ajax.reload(null, false);
+        // ในระบบจริง เมื่อ Server ตอบกลับสำเร็จ ค่อยเรียก reload
+        // ในโค้ดตัวอย่างนี้จะ reload เพื่อให้แสดงข้อมูลใหม่ (ถ้า data.json ถูกอัปเดต)
+        table.ajax.reload(function() {
+             // เมื่อตารางโหลดเสร็จ ให้รีเฟรช Calendar
+            calendar.refetchEvents();
+            miniCal.refetchEvents();
+            
+            // นำไปยังวันที่เพิ่งจอง
+            calendar.gotoDate(bookingData.meeting_date);
+            
+            // กรองตารางใหม่เผื่อมีการเลือก Filter อยู่
+            filterDataTableByRooms();
+        }, false);
     }
 });
 </script>
