@@ -344,6 +344,62 @@
             border-color: var(--border-dark) !important;
             color: var(--text-dark) !important;
         }
+
+        /* --- Dark Mode Styles for Modals & Forms --- */
+        body.dark-mode .modal-content {
+            background-color: var(--card-dark) !important;
+            color: var(--text-dark) !important;
+        }
+
+        body.dark-mode .modal-header,
+        body.dark-mode .modal-footer {
+            border-color: var(--border-dark) !important;
+        }
+
+        body.dark-mode .btn-close {
+            filter: invert(1) grayscale(100%) brightness(200%); /* ทำให้ไอคอนปิดเป็นสีขาว */
+        }
+        
+        /* แก้ไข Input, Select, Textarea ภายใน Modal ให้เป็น Dark Mode ด้วย */
+        body.dark-mode .form-control,
+        body.dark-mode .form-select {
+            background-color: #2a2a2a !important; /* พื้นหลังมืดกว่าการ์ดเล็กน้อย */
+            color: var(--text-dark) !important;
+            border-color: #555 !important;
+        }
+
+        body.dark-mode .form-control:focus,
+        body.dark-mode .form-select:focus {
+            background-color: #2a2a2a !important;
+            color: var(--text-dark) !important;
+            border-color: #0d6efd !important; /* ให้มีเส้นขอบสีน้ำเงินเมื่อโฟกัส */
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        }
+        
+        /* แก้ไข Flatpickr Input ใน Dark Mode (ถ้าต้องการ) */
+        body.dark-mode .flatpickr-input {
+            background-color: #2a2a2a !important; 
+            color: var(--text-dark) !important;
+            border-color: #555 !important;
+        }
+        
+        /* Flatpickr Calendar Theme (ภายนอก Modal) */
+        .flatpickr-calendar.open.dark-mode {
+            background: var(--bg-dark);
+            border: 1px solid var(--border-dark);
+        }
+        .flatpickr-calendar.open.dark-mode .flatpickr-day,
+        .flatpickr-calendar.open.dark-mode .flatpickr-months .flatpickr-month {
+            color: var(--text-dark);
+        }
+        .flatpickr-calendar.open.dark-mode .flatpickr-day.selected,
+        .flatpickr-calendar.open.dark-mode .flatpickr-day.selected:hover {
+            background: #0d6efd;
+            border-color: #0d6efd;
+        }
+        .flatpickr-calendar.open.dark-mode .flatpickr-day.today {
+            border-color: #0d6efd;
+        }
         
         body.dark-mode #calendar { background: var(--card-dark); border-color: var(--border-dark); }
         body.dark-mode .fc-multimonth-month,
@@ -499,13 +555,42 @@
                             <div id="miniCalendar"></div>
                         </div>
 
-                        <div class="card p-3 mb-3 shadow">
+                        <!-- <div class="card p-3 mb-3 shadow">
                             <label>เลือกห้องที่ต้องการแสดง</label>
                             <hr class="my-1">
                             <label><input type="checkbox" class="room-filter ms-2 me-1" value="Room A" checked> Room A</label>
                             <label><input type="checkbox" class="room-filter ms-2 me-1" value="Room B" checked> Room B</label>
                             <label><input type="checkbox" class="room-filter ms-2 me-1" value="Room C" checked> Room C</label>
-                        </div>
+                        </div> -->
+
+                        <div class="card p-3 mb-3 shadow">
+    <label>เลือกห้องที่ต้องการแสดง</label>
+    <hr class="my-1">
+    <div class="form-check">
+        <input type="checkbox" class="form-check-input room-filter ms-1" id="filter_room_1" value="Meeting 1" checked>
+        <label class="form-check-label" for="filter_room_1"> Meeting 1</label>
+    </div>
+    <div class="form-check">
+        <input type="checkbox" class="form-check-input room-filter ms-1" id="filter_room_2" value="Meeting 2" checked>
+        <label class="form-check-label" for="filter_room_2"> Meeting 2</label>
+    </div>
+    <div class="form-check">
+        <input type="checkbox" class="form-check-input room-filter ms-1" id="filter_room_3" value="Meeting 3" checked>
+        <label class="form-check-label" for="filter_room_3"> Meeting 3</label>
+    </div>
+    <div class="form-check">
+        <input type="checkbox" class="form-check-input room-filter ms-1" id="filter_room_4" value="Training Room 1 (Floor 3)" checked>
+        <label class="form-check-label" for="filter_room_4"> Training Room 1 (Floor 3)</label>
+    </div>
+    <div class="form-check">
+        <input type="checkbox" class="form-check-input room-filter ms-1" id="filter_room_5" value="Training Room 3 (Floor 1)" checked>
+        <label class="form-check-label" for="filter_room_5"> Training Room 3 (Floor 1)</label>
+    </div>
+    <div class="form-check">
+        <input type="checkbox" class="form-check-input room-filter ms-1" id="filter_room_6" value="ห้องปูน (Floor 3)" checked>
+        <label class="form-check-label" for="filter_room_6"> ห้องปูน (Floor 3)</label>
+    </div>
+</div>
                     </div>
                 </div>
 
@@ -537,6 +622,7 @@
 
         </div>
         </div>
+
     <div class="modal fade" id="bookingModal" tabindex="-1">
         <div class="modal-dialog">
             <form id="bookingForm" class="modal-content">
@@ -546,34 +632,45 @@
                 </div>
                 <div class="modal-body">
                     <div class="mb-2">
-                        <label>ห้องประชุม</label>
-                        <select name="room" class="form-select" required>
-                            <option value="Room A">Room A</option>
-                            <option value="Room B">Room B</option>
-                            <option value="Room C">Room C</option>
-                        </select>
-                    </div>
-                    <div class="mb-2">
-                        <label>ชื่อการประชุม</label>
+                        <label>ชื่อการประชุม (Title)</label>
                         <input type="text" name="title" class="form-control" required />
                     </div>
                     <div class="mb-2">
-                        <label>วันที่</label>
+                        <label>ห้องประชุม (Room)</label>
+                        <select name="room" class="form-select" required>
+                            <option value="Meeting 1">Meeting 1</option>
+                            <option value="Meeting 2">Meeting 2</option>
+                            <option value="Meeting 3">Meeting 3</option>
+                            <option value="Training Room 1 (Floor 3)">Training Room 1 (Floor 3)</option>
+                            <option value="Training Room 3 (Floor 1)">Training Room 3 (Floor 1)</option>
+                            <option value="ห้องปูน (Floor 3)">ห้องปูน (Floor 3)</option>
+                        </select>
+                    </div>
+                    <div class="mb-2">
+                        <label>หัวข้อ/รายละเอียด (Subject)</label>
+                        <input type="text" name="subject" class="form-control" required />
+                    </div>
+                    <div class="mb-2">
+                        <label>วันที่ (Date)</label>
                         <input type="text" id="meeting_date" name="meeting_date" class="form-control" required />
                     </div>
                     <div class="row">
                         <div class="col">
-                            <label>เวลาเริ่ม</label>
+                            <label>เวลาเริ่ม (Start)</label>
                             <input type="text" id="start_time" name="start_time" class="form-control" required />
                         </div>
                         <div class="col">
-                            <label>เวลาสิ้นสุด</label>
+                            <label>เวลาสิ้นสุด (End)</label>
                             <input type="text" id="end_time" name="end_time" class="form-control" required />
                         </div>
                     </div>
                     <div class="mt-2">
-                        <label>ผู้จอง</label>
+                        <label>ผู้จอง (Booked By)</label>
                         <input type="text" name="booked_by" class="form-control" required />
+                    </div>
+                    <div class="mt-2">
+                        <label>หมายเหตุ (Note)</label>
+                        <textarea name="note" class="form-control" rows="2"></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -616,7 +713,14 @@
 <script src="https://cdn.datatables.net/2.1.4/js/dataTables.bootstrap5.min.js"></script>
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-    const roomColors = { "Room A": "#0d6efd", "Room B": "#198754", "Room C": "#fd7e14" };
+    const roomColors = { 
+        "Meeting 1": "#0d6efd", 
+        "Meeting 2": "#198754", 
+        "Meeting 3": "#fd7e14",
+        "Training Room 1 (Floor 3)": "#6f42c1", // สีม่วง
+        "Training Room 3 (Floor 1)": "#dc3545", // สีแดง
+        "ห้องปูน (Floor 3)": "#20c997"         // สีเขียวอ่อน
+    };
     let darkMode = localStorage.getItem("darkMode") === "true";
     let isTableVisible = localStorage.getItem("isTableVisible") !== "false"; 
     let isSidebarCollapsed = localStorage.getItem("isSidebarCollapsed") === "true"; 
@@ -806,6 +910,19 @@ document.addEventListener("DOMContentLoaded", function() {
     }
     
     function initPickers() {
+
+        const fpConfig = { 
+        dateFormat: "Y-m-d", 
+        onOpen: (selectedDates, dateStr, instance) => {
+                // เพิ่มคลาส dark-mode ถ้า body อยู่ใน dark-mode
+                if (document.body.classList.contains('dark-mode')) {
+                    instance.calendarContainer.classList.add('dark-mode');
+                } else {
+                    instance.calendarContainer.classList.remove('dark-mode');
+                }
+            }
+        };
+        
         flatpickr("#meeting_date", { dateFormat: "Y-m-d" });
         flatpickr("#start_time", { enableTime: true, noCalendar: true, dateFormat: "H:i:s" }); 
         flatpickr("#end_time", { enableTime: true, noCalendar: true, dateFormat: "H:i:s" });
@@ -856,13 +973,11 @@ document.addEventListener("DOMContentLoaded", function() {
         modalBody.innerHTML = `
             <div class="mb-2"><b>ห้อง:</b> <span id="d_room">${data.room || "-"}</span></div>
             <div class="mb-2"><b>ชื่อการประชุม:</b> <span id="d_title">${data.title.replace(` (${data.room})`, '') || "-"}</span></div>
-            <div class="mb-2"><b>หัวข้อ:</b> <span id="d_subject">${data.subject || "-"}</span></div>
-            <div class="mb-2"><b>วันที่:</b> <span id="d_date">${dateDisplay}</span></div>
+            <div class="mb-2"><b>หัวข้อ:</b> <span id="d_subject">${data.subject || "-"}</span></div> <div class="mb-2"><b>วันที่:</b> <span id="d_date">${dateDisplay}</span></div>
             <div class="mb-2"><b>เวลา:</b> <span id="d_time_range">${timeDisplay}</span></div>
             <div class="mb-2"><b>ผู้จอง:</b> <span id="d_booked">${data.booked_by || "-"}</span></div>
             <div class="mb-2"><b>เวลาที่จองระบบ:</b> <span id="d_booked_time">${data.booked_time || "-"}</span></div>
-            <div class="mb-2"><b>หมายเหตุ:</b> <span id="d_note">${data.note || "-"}</span></div>
-        `;
+            <div class="mb-2"><b>หมายเหตุ:</b> <span id="d_note">${data.note || "-"}</span></div> `;
 
         new bootstrap.Modal(document.getElementById("detailModal")).show();
     }
@@ -1059,14 +1174,35 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
+    // function handleBookingSubmit(e) {
+    //     e.preventDefault();
+        
+    //     bootstrap.Modal.getInstance(document.getElementById("bookingModal")).hide();
+    //     $("#bookingForm")[0].reset();
+        
+    //     console.log("Booking simulated. Please refresh manually if using static data.json.");
+        
+    //     table.ajax.reload(null, false);
+    // }
+
     function handleBookingSubmit(e) {
         e.preventDefault();
+        
+        // **ส่วนที่เพิ่ม/ปรับปรุงเพื่อดึงข้อมูลใหม่**
+        const formData = new FormData(e.target);
+        const bookingData = Object.fromEntries(formData.entries());
+
+        console.log("New Booking Data Submitted:", bookingData);
+        // End of new/updated section
         
         bootstrap.Modal.getInstance(document.getElementById("bookingModal")).hide();
         $("#bookingForm")[0].reset();
         
         console.log("Booking simulated. Please refresh manually if using static data.json.");
         
+        // ในระบบจริง คุณจะส่ง bookingData ไปยัง Server ที่นี่
+        // แล้วค่อยเรียก reload() เมื่อสำเร็จ
+
         table.ajax.reload(null, false);
     }
 });
