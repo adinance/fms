@@ -8,7 +8,6 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
-    <link href="https://cdn.datatables.net/buttons/3.0.0/css/buttons.bootstrap5.min.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet" />
     <link href="https://cdn.datatables.net/2.1.4/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
@@ -46,7 +45,7 @@
 
         #mainLayout {
             flex-grow: 1;
-            overflow: visible;
+            overflow: hidden;
         }
 
         #sidebarMenu {
@@ -57,8 +56,6 @@
             overflow-y: auto;
         }
 
-        /* 🚩 START: Sidebar/Menu Alignment Fixes */
-
         #sidebarMenu .nav-link {
             white-space: nowrap;
             overflow: hidden;
@@ -66,16 +63,17 @@
             padding-left: 0.5rem;
         }
 
-        /* NEW: สำหรับโหมดขยาย (กำหนดค่ามาตรฐานของไอคอน) */
-        #sidebarMenu:not(.collapsed) .nav-link i {
+        #sidebarMenu .nav-link i {
+            /* margin-right: 8px;
+            width: 20px;
+            text-align: center; */
             width: 22px;
             margin-right: 8px;
-            text-align: center;
             font-size: 1rem;
-            display: inline-block;
-            /* ให้ไอคอนอยู่บรรทัดเดียวกับข้อความ */
+            text-align: center;
         }
 
+        /* ปรับ Transition สำหรับ Collapse/Show ให้สมูทขึ้น */
         .collapse {
             transition: height 0.4s ease-in-out !important;
         }
@@ -84,15 +82,20 @@
             transition: height 0.4s ease-in-out !important;
         }
 
+        /* สิ้นสุดการปรับ Transition */
+
+
         #sidebarMenu .collapsed-toggle {
             cursor: pointer;
             font-size: 1.1rem;
+            /* ปรับขนาดหัวข้อ/ไอคอนหลักให้ใหญ่ขึ้นเล็กน้อย */
             font-weight: 600;
             color: var(--text-light);
             padding-top: 5px;
             padding-bottom: 5px;
             margin-top: 5px;
             transition: background-color 0.2s, color 0.2s;
+            /* เพิ่ม color transition */
         }
 
         #sidebarMenu .collapsed-toggle:hover {
@@ -103,7 +106,7 @@
             transition: transform 0.3s ease;
         }
 
-        /* สไตล์ของ Icon ในโหมดขยาย (เมนูหลัก/หัวข้อ) */
+        /* สไตล์ของ Icon ในโหมดขยาย */
         #sidebarMenu .collapsed-toggle i:not(.toggle-icon) {
             margin-right: 8px;
             width: 20px;
@@ -118,37 +121,36 @@
             width: 60px !important;
         }
 
-        /* 1. จัดวางองค์ประกอบในโหมดยุบให้อยู่ตรงกลาง (เมนูหลัก/หัวข้อ) */
+        /* 1. จัดวางองค์ประกอบในโหมดยุบให้อยู่ตรงกลาง */
         #sidebarMenu.collapsed .collapsed-toggle {
             text-align: center;
+            /* จัดเนื้อหาให้อยู่ตรงกลาง */
             padding: 0.5rem 0.5rem !important;
+            /* จัด Padding ให้สมมาตร */
         }
 
         /* 2. ปรับขนาดและจัดวางไอคอนหลักในโหมด collapsed */
         #sidebarMenu.collapsed .collapsed-toggle i {
             font-size: 1.2rem;
+            /* ทำให้ไอคอนใหญ่ขึ้นเล็กน้อย */
             margin-right: 0;
+            /* ลบ margin ด้านขวาออก */
             width: 30px;
+            /* เพิ่มความกว้างเพื่อช่วยในการจัดวาง */
             display: inline-block;
         }
 
-        /* 3. ปรับเมนูย่อยในโหมด collapsed ให้อยู่ตรงกลาง */
         #sidebarMenu.collapsed .nav-link {
             padding: 0.5rem 0.5rem;
-            text-align: center;
-            /* 🚩 FIX: จัดเนื้อหา nav-link ให้อยู่ตรงกลาง */
         }
 
-        /* 4. ปรับขนาดไอคอนเมนูย่อยในโหมด collapsed ให้อยู่ตรงกลาง */
+        /* 3. ปรับขนาดไอคอนเมนูย่อยในโหมด collapsed */
         #sidebarMenu.collapsed .nav-link i {
             margin-right: 0;
             font-size: 1.1rem;
-            width: 100%;
-            /* 🚩 FIX: ให้ไอคอนใช้ความกว้างเต็มที่ */
-            display: block;
-            /* 🚩 FIX: ให้ไอคอนอยู่บรรทัดแยกจากข้อความ (ซึ่งซ่อนอยู่) */
-            text-align: center;
-            /* 🚩 FIX: บังคับไอคอนให้อยู่ตรงกลาง */
+            /* ทำให้ไอคอน nav-link ใหญ่ขึ้นตามหัวข้อเล็กน้อย */
+            width: 30px;
+            /* ปรับให้กว้างขึ้นเพื่อการจัดวางที่ดีขึ้น */
         }
 
         #sidebarMenu.collapsed .nav-link span,
@@ -159,8 +161,7 @@
             display: none;
         }
 
-        /* 🚩 END: Sidebar/Menu Alignment Fixes */
-
+        /* ปรับปรุงการแสดงผลของปุ่มในโหมด collapsed */
         #sidebarMenu.collapsed .border-top {
             padding: 0.5rem !important;
         }
@@ -169,49 +170,28 @@
             width: auto !important;
         }
 
-        /* CSS for Sidebar Toggle Icon based on state (moved from the general section) */
         #sidebarMenu.collapsed #sidebarToggle i {
-            transform: rotate(0deg);
-            /* When collapsed (default), the icon points right */
-            transition: transform 0.3s ease;
-        }
-
-        #sidebarMenu:not(.collapsed) #sidebarToggle i {
             transform: rotate(180deg);
-            /* When expanded, rotate 180 deg to point left */
             transition: transform 0.3s ease;
         }
 
-        /* NEW/ADJUSTED: Style for the non-FAB Toggle Button inside the sidebar */
-        #sidebarMenu #sidebarToggle {
-            border-radius: 4px;
-            /* ปรับให้เป็นสี่เหลี่ยมตามความกว้างของ Sidebar */
-            font-size: 1.2rem;
-            color: var(--text-light);
-            /* ใช้สีตามธีม */
-            transition: background-color 0.3s, color 0.3s;
+        #sidebarMenu #sidebarToggle i {
+            transition: transform 0.3s ease;
         }
 
-        #sidebarMenu #sidebarToggle:hover {
-            background-color: #e9ecef;
-            /* Light mode hover */
-        }
+        /* #mainContent {
+            overflow-y: auto;
+        } */
 
-        /* Dark Mode specific styles for the toggle button */
-        body.dark-mode #sidebarMenu #sidebarToggle {
-            color: var(--text-dark);
-        }
+            #mainContent {
+    overflow-y: visible; /* ให้การเลื่อนไปที่ Body/Window แทน */
+}
 
-        body.dark-mode #sidebarMenu #sidebarToggle:hover {
-            background-color: #2a2a2a;
-            /* Dark mode hover */
-        }
-        /* End of Sidebar Toggle Icon CSS */
-
-
-        #mainContent {
-            overflow-y: visible;
-        }
+/* และตรวจสอบ #mainLayout */
+#mainLayout {
+    flex-grow: 1;
+    overflow: visible; /* ต้องเป็น visible เช่นกัน */
+}
 
         /* CSS สำหรับ Dropdown ซ้อน Dropdown (Sub-Dropdown) */
         .dropdown-menu .dropend .dropdown-toggle {
@@ -226,16 +206,11 @@
             margin-right: 0.1rem;
         }
 
-        /* #miniCalendar {
+        #miniCalendar {
             max-width: 100%;
             margin: 20px auto;
-        } */
-
-            #miniCalendar {
-    max-width: 100%;
-    /* ลด Margin ด้านบนและล่างจาก 20px ให้เหลือ 0 */
-    margin: 15px auto 0 auto;
-}
+            /* font-size: 12px !important; */
+        }
 
         #miniCalendar .fc-scroller {
             overflow: visible !important;
@@ -255,11 +230,13 @@
 
 
         #miniCalendar .fc-toolbar-title {
+            /* font-size: 15px !important; */
             font-weight: 600;
+            /* text-transform: uppercase !important; */
         }
 
 
-        /* --- FAB Button styles (Restored to original positions/purposes) --- */
+        /* --- FAB Button styles --- */
         .fab {
             position: fixed;
             right: 30px;
@@ -278,32 +255,55 @@
         }
 
 
-        /* FAB Add (NEW: ย้ายไปตำแหน่งล่างสุด 30px) */
-        .fab-add-new {
+        /* FAB Sidebar Toggle (ใหม่) */
+        .fab-toggle {
             bottom: 30px;
+            background-color: #6c757d;
+            font-size: 20px;
+        }
+
+        .fab-toggle:hover {
+            background-color: #495057;
+        }
+
+        /* FAB Add (เลื่อนตำแหน่ง) */
+        .fab-add {
+            bottom: 100px;
             background-color: #0d6efd;
             font-size: 30px;
         }
 
-        .fab-add-new:hover {
+        .fab-add:hover {
             background-color: #0b5ed7;
         }
 
-        /* Toggle Table (ตำแหน่งใหม่: 100px) - เดิม 170px */
-        #toggleTable {
+        /* Theme Toggle (ตำแหน่งใหม่: 240px) */
+        #themeToggle {
             background-color: #6c757d;
             font-size: 20px;
-            bottom: 100px; /* Moved from 170px to 100px since sidebar toggle is gone */
+            bottom: 240px; /* <--- UPDATED POSITION */
+        }
+
+        #themeToggle:hover {
+            background-color: #495057;
+        }
+
+        /* Toggle Table (ตำแหน่งใหม่: 170px) */
+        #toggleTable {
+            background-color: #007bff;
+            font-size: 20px;
+            bottom: 170px; /* <--- UPDATED POSITION */
         }
 
         #toggleTable:hover {
-            background-color: #5c636a;
+            background-color: #0056b3;
         }
 
         #bookingTable thead th {
             text-align: center !important;
             vertical-align: middle;
             text-transform: uppercase !important;
+            /* 👈 บังคับให้เป็นตัวพิมพ์ใหญ่ทั้งหมด */
         }
 
 
@@ -455,12 +455,14 @@
 
         body.dark-mode .btn-close {
             filter: invert(1) grayscale(100%) brightness(200%);
+            /* ทำให้ไอคอนปิดเป็นสีขาว */
         }
 
         /* แก้ไข Input, Select, Textarea ภายใน Modal ให้เป็น Dark Mode ด้วย */
         body.dark-mode .form-control,
         body.dark-mode .form-select {
             background-color: #2a2a2a !important;
+            /* พื้นหลังมืดกว่าการ์ดเล็กน้อย */
             color: var(--text-dark) !important;
             border-color: #555 !important;
         }
@@ -470,6 +472,7 @@
             background-color: #2a2a2a !important;
             color: var(--text-dark) !important;
             border-color: #0d6efd !important;
+            /* ให้มีเส้นขอบสีน้ำเงินเมื่อโฟกัส */
             box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
         }
 
@@ -554,6 +557,7 @@
 
         body.dark-mode .fc-day-today {
             background-color: #2a2a2a !important;
+            /* ใช้สีที่เข้มกว่า var(--card-dark) (#1f1f1f) */
             border-radius: 0;
         }
 
@@ -562,7 +566,6 @@
             color: #fff !important;
         }
 
-        /* --- Dark Mode for DataTables --- */
         body.dark-mode table.dataTable {
             background-color: #1e1e1e;
             color: #e5e5e5;
@@ -605,29 +608,9 @@
             color: #ddd !important;
         }
 
-        /* --- Dark Mode Pagination (DataTables) --- */
         body.dark-mode .dataTables_wrapper .dataTables_paginate .paginate_button.current {
             background: #444 !important;
             color: #fff !important;
-        }
-
-        /* Override inline styles from applyPaginationTheme for consistency in Dark Mode */
-        body.dark-mode .dataTables_wrapper .dataTables_paginate .paginate_button.btn-dark {
-            background-color: #2a2a2a !important;
-            border-color: #555 !important;
-            color: #ddd !important;
-        }
-
-        body.dark-mode .dataTables_wrapper .dataTables_paginate .paginate_button.btn-dark.current {
-            background-color: #444 !important;
-            /* Force active color */
-            color: #fff !important;
-        }
-
-        body.dark-mode .dataTables_wrapper .dataTables_paginate .paginate_button.btn-dark.disabled {
-            background-color: #1f1f1f !important;
-            border-color: #333 !important;
-            color: #555 !important;
         }
 
         body.dark-mode .dataTables_wrapper .dataTables_info {
@@ -641,7 +624,9 @@
         /* --- Footer Styles --- */
         #mainFooter {
             flex-shrink: 0;
+            /* ป้องกันไม่ให้ Footer ยุบตัว */
             background-color: #f8f9fa;
+            /* Light Mode Default */
             transition: background-color 0.3s, border-color 0.3s;
         }
 
@@ -652,15 +637,18 @@
 
         body.dark-mode #mainFooter .text-muted {
             color: #bbb !important;
+            /* ปรับสีข้อความใน Dark Mode */
         }
 
         /* --- Logo Styles --- */
         .dark-mode-logo {
             display: none !important;
+            /* ซ่อน Dark Logo ใน Light Mode เริ่มต้น */
         }
 
         .light-mode-logo {
             display: inline-block !important;
+            /* แสดง Light Logo ใน Light Mode เริ่มต้น */
         }
 
         body.dark-mode .dark-mode-logo {
@@ -671,6 +659,14 @@
             display: none !important;
         }
 
+        /* .main-calendar-card {
+            min-height: 81vh;
+        }
+
+        #calendar {
+            height: 100%;
+        } */
+
         #calendar .fc-toolbar-chunk:last-child .btn-group {
             flex-wrap: wrap;
             justify-content: flex-end;
@@ -679,7 +675,26 @@
 
         #calendar .fc-toolbar-title {
             text-transform: uppercase !important;
+            /* บังคับให้เป็นตัวพิมพ์ใหญ่ทั้งหมด */
         }
+
+        /* พื้นหลังช่อง All-day */
+        /* .fc .fc-timegrid-all-day,
+.fc .fc-scrollgrid-section-sticky {
+	background-color: #1f1f1f;
+}
+
+.fc .fc-timegrid-axis,
+.fc .fc-timegrid-slot-label {
+	background-color: #1a1a1a;
+	color: #ccc;
+}
+
+.fc .fc-scrollgrid,
+.fc .fc-scrollgrid td,
+.fc .fc-scrollgrid th {
+	// border-color: #333;
+} */
 
         body.dark-mode .fc .fc-timegrid-all-day,
         body.dark-mode .fc .fc-scrollgrid-section-sticky {
@@ -691,6 +706,11 @@
             background-color: #181818;
             color: #bbb;
         }
+
+        /* .fc .fc-timegrid-all-day {
+	box-shadow: inset 0 -1px 0 #333;
+} */
+
 
         /* พื้นหลัง list view */
         body.dark-mode .fc-list {
@@ -731,6 +751,8 @@
         body.dark-mode .fc-theme-standard .fc-list-event:hover {
             background-color: inherit !important;
         }
+
+
 
         /* คำว่า all-day */
         body.dark-mode .fc-list-event-time {
@@ -847,11 +869,13 @@
 
         /* ===== Annual / Year View ===== */
 
+        /* กล่องรวมของ multi-month */
         body.dark-mode .fc-multimonth {
             background-color: transparent;
             border: none;
         }
 
+        /* แถบชื่อเดือน (January) */
         body.dark-mode .fc-multimonth-title {
             background-color: #1f1f1f;
             color: #e0e0e0;
@@ -916,23 +940,16 @@
             font-weight: 500;
         }
 
-
         /* กันกรณีถูก override */
         body.dark-mode .fc-theme-standard th {
             color: #e6e6e6;
-        }
-
-
-        .spacer-row {
-            margin-top: 16px;
         }
     </style>
 </head>
 
 <body class="p-0 light-mode">
 
-    <!-- <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm py-0 border-bottom"> -->
-    <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light shadow-sm py-0 border-bottom">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm py-0 border-bottom">
         <div class="container-fluid">
 
             <a class="navbar-brand py-2 me-4 d-flex align-items-center" href="#">
@@ -940,7 +957,7 @@
                     width="48px">
                 <img src="images/logo-white.png" alt="CMO Logo" class="me-1 rounded light-mode-logo d-none d-md-block"
                     width="48px">
-            </a>
+                </a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -950,7 +967,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                    </li>
+                        </li>
                 </ul>
 
                 <ul class="navbar-nav">
@@ -981,22 +998,22 @@
 
             <a class="h6 mt-2 mb-1 pb-1 collapsed-toggle" data-bs-toggle="collapse" href="#carMenu" role="button"
                 aria-expanded="true" aria-controls="carMenu">
-                <i class="bi bi-car-front me-1 "></i>
+                <i class="bi bi-car-front-fill me-1"></i>
                 <span>Car Center</span>
             </a>
 
             <ul id="carMenu" class="nav nav-pills flex-column collapse show">
                 <li class="nav-item"><a id="menu-car-center" href="#" class="nav-link"><i
-                            class="bi bi-ev-front"></i>
+                            class="bi bi-calendar-week"></i>
                         <span>All Booking</span></a></li>
                 <li class="nav-item"><a id="menu-car-reserve" href="#" class="nav-link"><i
-                            class="bi bi-ev-front-fill"></i>
+                            class="bi bi-calendar-check"></i>
                         <span>My Booking</span></a></li>
             </ul>
 
             <a class="h6 mt-1 mb-1 pb-1 collapsed-toggle" data-bs-toggle="collapse" href="#meetingMenu" role="button"
                 aria-expanded="true" aria-controls="meetingMenu">
-                <i class="bi bi-easel me-1 "></i>
+                <i class="bi bi-easel-fill me-1"></i>
                 <span>Meeting Room</span>
             </a>
 
@@ -1005,15 +1022,9 @@
                         <i class="bi bi-calendar-week"></i><span>All Booking</span></a></li>
                 <li class="nav-item">
                     <a id="menu-meeting-calendar" href="#" class="nav-link active" aria-current="page">
-                        <i class="bi bi-calendar-check-fill"></i><span>My Booking</span></a>
+                        <i class="bi bi-calendar-check"></i><span>My Booking</span></a>
                 </li>
-            </ul>
-
-            <div class="mt-auto border-top p-2 text-center">
-                <button id="sidebarToggle" class="btn btn-sm w-100 p-0 shadow-none">
-                    <i class="bi bi-arrow-right-circle-fill"></i>
-                </button>
-            </div>
+                </ul>
 
         </div>
 
@@ -1033,9 +1044,9 @@
 
 
                     <div class="col-md-4">
-                       <div class="card shadow mt-4">
+                        <div class="card shadow mt-4">
                             <div class="card-header text-end">Mini Calendar</div>
-                            <div class="card-body pt-0 "> 
+                            <div class="card-body pt-0">
                                 <div id="miniCalendar"></div>
                             </div>
                         </div>
@@ -1079,7 +1090,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="card-footer text-end">Select room to display</div>
+                            <div class="card-footer text-end">Select room to display in Main Calendar</div>
                         </div>
                     </div>
 
@@ -1091,7 +1102,7 @@
 
                         <div class="card p-3 mt-5 shadow" id="tableWrapper">
                             <div class="d-flex justify-content-between align-items-center mb-2">
-                                <h5>📋 Booking List</h5>
+                                <h5>📋 ตารางการจองทั้งหมด</h5>
                             </div>
 
                             <div>
@@ -1116,64 +1127,24 @@
                 </div>
             </div>
 
+            <button id="themeToggle" class="fab"><i class="bi bi-moon"></i></button>
             <button id="toggleTable" class="fab"><i class="bi bi-table"></i></button>
 
-            <button class="fab fab-add-new" data-bs-toggle="modal" data-bs-target="#bookingModal">
-                <i class="bi bi-plus"></i>
-            </button>
-
+            <button class="fab fab-add" data-bs-toggle="modal" data-bs-target="#bookingModal">
+                <i class="bi bi-plus"></i></button>
+            <button id="sidebarToggle" class="fab fab-toggle"><i class="bi bi-arrow-left-circle-fill"></i></button>
 
         </div>
     </div>
 
     <div class="modal fade" id="bookingModal" tabindex="-1">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog">
             <form id="bookingForm" class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Booking Form</h5>
+                    <h5 class="modal-title">จองห้องประชุม</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-
                 <div class="modal-body">
-                    <div class="mb-2">
-                        <label>Title</label>
-                        <input type="text" name="title" class="form-control" required />
-                    </div>
-                    <div class="mb-2">
-                        <label>Room</label>
-                        <select name="room" class="form-select" required>
-                            <option value="Meeting 1">Meeting 1</option>
-                            <option value="Meeting 2">Meeting 2</option>
-                            <option value="Meeting 3">Meeting 3</option>
-                            <option value="Training Room 1 (Floor 3)">Training Room 1 (Floor 3)</option>
-                            <option value="Training Room 3 (Floor 1)">Training Room 3 (Floor 1)</option>
-                            <option value="ห้องปูน (Floor 3)">Poon Room (Floor 3)</option>
-                        </select>
-                    </div>
-                    <div class="mb-2">
-                        <label>Subject</label>
-                        <input type="text" name="subject" class="form-control" required />
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <label>Start Date</label>
-                            <input type="text" id="start_time" name="start" class="form-control" required />
-                        </div>
-                        <div class="col">
-                            <label>End Date</label>
-                            <input type="text" id="end_time" name="end" class="form-control" required />
-                        </div>
-                    </div>
-                    <div class="mt-2">
-                        <label>Booked By</label>
-                        <input type="text" name="booked_by" class="form-control" required />
-                    </div>
-                    <div class="mt-2">
-                        <label>Note</label>
-                        <textarea name="note" class="form-control" rows="2"></textarea>
-                    </div>
-                </div>
-                <!-- <div class="modal-body">
                     <div class="mb-2">
                         <label>ชื่อการประชุม (Title)</label>
                         <input type="text" name="title" class="form-control" required />
@@ -1215,7 +1186,7 @@
                         <label>หมายเหตุ (Note)</label>
                         <textarea name="note" class="form-control" rows="2"></textarea>
                     </div>
-                </div> -->
+                </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
                     <button type="submit" class="btn btn-success">บันทึก</button>
@@ -1234,7 +1205,7 @@
     </footer>
 
     <div class="modal fade" id="detailModal" tabindex="-1">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">รายละเอียดการจอง</h5>
@@ -1263,13 +1234,8 @@
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
     <script src="https://cdn.datatables.net/2.1.4/js/dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/2.1.4/js/dataTables.bootstrap5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/3.0.0/js/dataTables.buttons.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/3.0.0/js/buttons.html5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/3.0.0/js/buttons.print.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/3.0.0/js/buttons.excelHtml5.min.js"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", function() {
             const roomColors = {
                 "Meeting 1": "#0d6efd",
                 "Meeting 2": "#198754",
@@ -1287,18 +1253,15 @@
             const MEETING_MENU_STATE = 'meetingMenuState';
             let calendar, miniCal, table;
             const DATA_URL = "data.json";
-
-            // 🚩 Initializations
             initTheme();
             initSidebar();
             loadCollapseMenuState();
             initActiveMenu();
             initNavbarActiveMenu();
             initPickers();
-            initCalendars();
+            initCalendars(); // 📌 แก้ไขส่วนนี้แล้ว
             initTable();
             initEventHandlers();
-
             const getStartDay = (datetime) => datetime ? datetime.substring(0, 10) : "";
 
             function initNavbarActiveMenu() {
@@ -1338,8 +1301,15 @@
 
             function initSidebar() {
                 applySidebarState(isSidebarCollapsed);
-                // **ลบ** โค้ด jQuery ที่ใช้ในการห่อหุ้มข้อความด้วย <span> เนื่องจาก HTML เดิมทำไว้แล้ว
-                // $("#sidebarMenu .nav-link").each(function() { ... });
+                $("#sidebarMenu .nav-link").each(function() {
+                    if ($(this).children("i").length > 0) {
+                        $(this).contents().filter(function() {
+                            return this.nodeType === 3 && $.trim(this.nodeValue).length > 0;
+                        }).each(function() {
+                            $(this).replaceWith('<span>' + this.nodeValue + '</span>');
+                        });
+                    }
+                });
             }
 
             function applySidebarState(isCollapsed) {
@@ -1350,7 +1320,6 @@
 
                 if (isCollapsed) {
                     sidebar.classList.add("collapsed");
-                    // เมื่อยุบ: ไอคอนควรชี้ไปทางขวา (bi-arrow-right-circle-fill) เพื่อเปิด
                     toggleIcon.classList.remove("bi-arrow-left-circle-fill");
                     toggleIcon.classList.add("bi-arrow-right-circle-fill");
 
@@ -1358,7 +1327,6 @@
                     contentContainer.classList.add("container-fluid");
                 } else {
                     sidebar.classList.remove("collapsed");
-                    // เมื่อขยาย: ไอคอนควรชี้ไปทางซ้าย (bi-arrow-left-circle-fill) เพื่อปิด
                     toggleIcon.classList.remove("bi-arrow-right-circle-fill");
                     toggleIcon.classList.add("bi-arrow-left-circle-fill");
 
@@ -1393,12 +1361,12 @@
 
             function saveRoomFilterState() {
                 const roomStates = {};
-                $(".room-filter").each(function () {
+                $(".room-filter").each(function() {
                     roomStates[$(this).val()] = $(this).is(":checked");
                 });
                 localStorage.setItem("roomFilterStates", JSON.stringify(roomStates));
             }
-
+            // 🚩 ปรับปรุงฟังก์ชัน loadRoomFilterState
             function loadRoomFilterState() {
                 const savedRoomStates = localStorage.getItem("roomFilterStates");
                 let selectedRooms = [];
@@ -1406,7 +1374,7 @@
                 if (savedRoomStates) {
                     try {
                         const roomStates = JSON.parse(savedRoomStates);
-                        $(".room-filter").each(function () {
+                        $(".room-filter").each(function() {
                             const roomName = $(this).val();
                             const isChecked = roomStates.hasOwnProperty(roomName) ? roomStates[
                                 roomName] : true;
@@ -1421,39 +1389,47 @@
                         shouldSaveDefaultState = true;
                     }
                 }
+                // 🚨 ถ้าไม่มีสถานะ (หรือมีข้อผิดพลาด) ให้บังคับติ๊กทั้งหมด
                 if (!savedRoomStates || shouldSaveDefaultState) {
                     $(".room-filter").prop("checked", true);
-                    selectedRooms = $(".room-filter").map(function () {
+                    selectedRooms = $(".room-filter").map(function() {
                         return this.value;
                     }).get();
-                    saveRoomFilterState();
+                    saveRoomFilterState(); // บันทึกสถานะเริ่มต้นใหม่
                 }
                 return selectedRooms;
             }
 
             function initTheme() {
                 applyTheme(darkMode);
+                document.getElementById("themeToggle").addEventListener("click", function() {
+                    darkMode = !darkMode;
+                    localStorage.setItem("darkMode", darkMode);
+                    applyTheme(darkMode);
+                });
             }
 
             function applyTheme(isDark) {
                 const body = document.body;
+                const toggleBtn = document.getElementById("themeToggle");
 
                 const profileThemeIcon = document.getElementById("profileThemeIcon");
                 const profileThemeText = document.querySelector("#nav-profile-theme span");
                 if (isDark) {
                     body.classList.add("dark-mode");
                     body.classList.remove("light-mode");
+                    toggleBtn.innerHTML = '<i class="bi bi-sun"></i>';
                     $('.light-mode-logo').css('display', 'none');
-                    $('.dark-mode-logo').css('display', 'inline-block');
+                    $('.dark-mode-logo').css('display', 'inline-block'); // หรือ 'block'
 
                     if (profileThemeIcon) profileThemeIcon.className = "bi bi-sun me-2";
                     if (profileThemeText) profileThemeText.textContent = "Switch to Light Mode";
                 } else {
                     body.classList.add("light-mode");
                     body.classList.remove("dark-mode");
-
+                    toggleBtn.innerHTML = '<i class="bi bi-moon"></i>';
                     $('.dark-mode-logo').css('display', 'none');
-                    $('.light-mode-logo').css('display', 'inline-block');
+                    $('.light-mode-logo').css('display', 'inline-block'); // หรือ 'block'
 
                     if (profileThemeIcon) profileThemeIcon.className = "bi bi-moon me-2";
                     if (profileThemeText) profileThemeText.textContent = "Switch to Dark Mode";
@@ -1473,71 +1449,39 @@
             }
 
             function initPickers() {
-    // ใช้งานสำหรับช่อง 'เวลาเริ่ม' และ 'เวลาสิ้นสุด' แทน
-    const flatpickrConfig = {
-        enableTime: true,
-        // ✅ เปลี่ยนเป็นรูปแบบ YYYY-MM-DD HH:MM:SS
-        dateFormat: "Y-m-d H:i", 
-        // เปิดใช้ปฏิทิน
-        noCalendar: false,
-        time_24hr: true,
-        onOpen: (selectedDates, dateStr, instance) => {
-            if (document.body.classList.contains('dark-mode')) {
-                instance.calendarContainer.classList.add('dark-mode');
-            } else {
-                instance.calendarContainer.classList.remove('dark-mode');
+                const fpConfig = {
+                    dateFormat: "Y-m-d",
+                    onOpen: (selectedDates, dateStr, instance) => {
+                        // เพิ่มคลาส dark-mode ถ้า body อยู่ใน dark-mode
+                        if (document.body.classList.contains('dark-mode')) {
+                            instance.calendarContainer.classList.add('dark-mode');
+                        } else {
+                            instance.calendarContainer.classList.remove('dark-mode');
+                        }
+                    }
+                };
+                flatpickr("#meeting_date", {
+                    dateFormat: "Y-m-d"
+                });
+                flatpickr("#start_time", {
+                    enableTime: true,
+                    noCalendar: true,
+                    dateFormat: "H:i:s"
+                });
+                flatpickr("#end_time", {
+                    enableTime: true,
+                    noCalendar: true,
+                    dateFormat: "H:i:s"
+                });
             }
-        }
-    };
-
-    // ใช้ config เดียวกันสำหรับ Start Time
-    flatpickr("#start_time", flatpickrConfig);
-    
-    // ใช้ config เดียวกันสำหรับ End Time
-    flatpickr("#end_time", flatpickrConfig);
-}
-
-// const formatTime = (datetime) => datetime ? datetime.substring(11) : "-";
-
-            // function initPickers() {
-            //     flatpickr("#meeting_date", {
-            //         dateFormat: "Y-m-d",
-            //         onOpen: (selectedDates, dateStr, instance) => {
-            //             if (document.body.classList.contains('dark-mode')) {
-            //                 instance.calendarContainer.classList.add('dark-mode');
-            //             } else {
-            //                 instance.calendarContainer.classList.remove('dark-mode');
-            //             }
-            //         }
-            //     });
-            //     flatpickr("#start_time", {
-            //         enableTime: true,
-            //         noCalendar: true,
-            //         dateFormat: "H:i:s",
-            //         onOpen: (selectedDates, dateStr, instance) => {
-            //             if (document.body.classList.contains('dark-mode')) {
-            //                 instance.calendarContainer.classList.add('dark-mode');
-            //             } else {
-            //                 instance.calendarContainer.classList.remove('dark-mode');
-            //             }
-            //         }
-            //     });
-            //     flatpickr("#end_time", {
-            //         enableTime: true,
-            //         noCalendar: true,
-            //         dateFormat: "H:i:s",
-            //         onOpen: (selectedDates, dateStr, instance) => {
-            //             if (document.body.classList.contains('dark-mode')) {
-            //                 instance.calendarContainer.classList.add('dark-mode');
-            //             } else {
-            //                 instance.calendarContainer.classList.remove('dark-mode');
-            //             }
-            //         }
-            //     });
-            // }
 
             function mapEventData(e) {
+                // หากไม่มีเวลาสิ้นสุดหรือเวลาเริ่มต้นกำหนด, ให้ถือว่าเป็น allDay
                 const isAllDay = !e.start.includes('T') && !e.end.includes('T');
+                // ถ้าเป็น AllDay, FullCalendar จะจัดการ End date ให้เป็นเที่ยงคืนของวันถัดไปโดยอัตโนมัติ
+                // สำหรับการจองห้องประชุมควรใช้เวลาเริ่มและเวลาสิ้นสุด
+                // ตรวจสอบว่าเป็นกิจกรรมหลายวันหรือไม่ (เช่น 2025-12-10T09:00:00 vs 2025-12-11T09:00:00)
+                const isMultiDay = (e.start && e.end) && (getStartDay(e.start) !== getStartDay(e.end));
                 return {
                     id: e.id,
                     title: e.title + " (" + e.room + ")",
@@ -1545,17 +1489,17 @@
                     end: e.end,
                     extendedProps: e,
                     color: roomColors[e.room],
-                    allDay: isAllDay,
+                    allDay: isAllDay, // ใช้ allDay จากข้อมูลจริง หากมี
                     display: 'auto',
-                    startEditable: false,
-                    durationEditable: false
+                    startEditable: false, // ปิดการแก้ไข
+                    durationEditable: false // ปิดการแก้ไข
                 };
             }
 
             function showEventDetails(info) {
                 let data = info.event.extendedProps;
                 const formatTime = (datetime) => datetime ? datetime.substring(11).substring(0, 5) :
-                    "-";
+                    "-"; // แสดงแค่ HH:mm
                 const startDate = getStartDay(data.start);
                 const startTime = formatTime(data.start);
                 const endDate = getStartDay(data.end);
@@ -1587,15 +1531,22 @@
                 const eventSourceConfig = {
                     url: DATA_URL,
                     method: 'GET',
-                    failure: function () {
+                    failure: function() {
                         console.error("Failed to fetch events from data.json");
                     },
-                    success: function (rawEvents) {
+                    // ใช้ success callback เพื่อ map ข้อมูลจาก JSON เป็นรูปแบบ Event ที่ต้องการ
+                    success: function(rawEvents) {
+                        // return rawEvents.map(mapEventData);
+                        // 1. Map ข้อมูลก่อน
                         const events = rawEvents.map(mapEventData);
+                        // 2. 🚨 สำคัญ: เรียก applyRoomFilter() ที่นี่เพื่อให้แน่ใจว่า FullCalendar
+                        // มี Event ในระบบแล้ว (ใช้ filterDataTableByRooms() แทน)
+                        // เนื่องจากเราจะใช้ filterDataTableByRooms() ใน initTable ให้เราใช้ตรรกะการกรองโดยตรง
                         const selectedRooms = initialRooms.length > 0 ? initialRooms : $(
-                            ".room-filter:checked").map(function () {
-                                return this.value;
-                            }).get();
+                            ".room-filter:checked").map(function() {
+                            return this.value;
+                        }).get();
+                        // กรอง Event ทันทีที่โหลด
                         return events.map(evt => {
                             const isVisible = selectedRooms.includes(evt.extendedProps.room);
                             evt.display = isVisible ? "auto" : "none";
@@ -1604,12 +1555,17 @@
                     }
                 };
 
+                // 🚩 ตรรกะการปรับ Header Toolbar ตามขนาดหน้าจอ (สำคัญมาก)
                 const isMobile = window.matchMedia("(max-width: 768px)").matches;
 
+                // 1. Config สำหรับ Main Calendar
                 const mainHeaderToolbar = isMobile ? {
+                    // สำหรับมือถือ: ลด View buttons, เน้น prev/next/title
                     left: "prev,next",
+                    // center: "title",
                     right: "dayGridMonth,timeGridWeek,timeGridDay,listMonth,multiMonthYear"
                 } : {
+                    // สำหรับ Desktop: แสดงปุ่มทั้งหมด
                     left: "prev,next today",
                     center: "title",
                     right: "dayGridMonth,timeGridWeek,timeGridDay,listMonth,multiMonthYear"
@@ -1631,12 +1587,21 @@
                     timeZone: 'local',
                     views: {
                         dayGridMonth: {
+                            // เรากำหนดให้แสดงเฉพาะ 'month' แบบยาว
                             titleFormat: {
                                 month: 'long'
                             }
                         },
+
+                        // หากปฏิทินของคุณใช้ชื่อมุมมองเป็น 'month' แทน 'dayGridMonth'
+                        // คุณสามารถลองใช้:
+                        /*
+                        month: {
+                        	titleFormat: { month: 'long' }
+                        }
+                        */
                     },
-                    events: eventSourceConfig,
+                    events: eventSourceConfig, // ใช้ Object Config
                     eventClick: showEventDetails
                 });
 
@@ -1656,7 +1621,7 @@
                     contentHeight: "auto",
                     expandRows: true,
                     headerToolbar: miniHeaderToolbar,
-                    events: eventSourceConfig,
+                    events: eventSourceConfig, // ใช้ Object Config
                     eventClick: showEventDetails,
                     selectable: true,
                     dateClick: info => calendar.gotoDate(info.dateStr)
@@ -1666,101 +1631,50 @@
             }
 
             function initTable() {
-
+                // 1. 🚨 เพิ่มบรรทัดนี้: โหลดสถานะ Checkbox ก่อน (บังคับติ๊กทั้งหมดถ้าเป็นครั้งแรก)
                 const initialRooms = loadRoomFilterState();
+                // 2. ซิงค์ Calendar ตามสถานะ Checkbox ที่เพิ่งโหลดมา
                 applyRoomFilter(false);
-
+                // ดึงข้อมูลและสร้างตาราง
                 table = $("#bookingTable").DataTable({
-
-                    dom:
-                        '<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6 d-flex align-items-center justify-content-end"fB>>' +
-                        '<"row spacer-row">' +
-                        '<"row"<"col-sm-12"t>>' +
-                        '<"row spacer-row">' +
-                        '<"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
-
-                    initComplete: function () {
-                        $(this.api().table().container()).find('.dt-buttons').css({
-                            'margin-left': '15px',
-                            'margin-bottom': '0'
-                        });
-
-                        $(this.api().table().container()).find('.dataTables_filter').css({
-                            'margin-right': '0',
-                            'margin-bottom': '0'
-                        });
-
-                        // 🚩 Apply theme immediately after init
-                        updateDatatableButtonTheme(darkMode);
-                    },
-
-                    buttons: [{
-                        extend: 'copyHtml5',
-                        text: '<i class="bi bi-files"></i>',
-                        className: 'btn btn-light btn-sm',
-                        exportOptions: {
-                            columns: ':visible'
-                        }
-                    },
-                    {
-                        extend: 'excelHtml5',
-                        text: '<i class="bi bi-file-earmark-excel"></i>',
-                        className: 'btn btn-light btn-sm',
-                        exportOptions: {
-                            columns: ':visible'
-                        }
-                    },
-                    {
-                        extend: 'csvHtml5',
-                        text: '<i class="bi bi-filetype-csv"></i>',
-                        className: 'btn btn-light btn-sm',
-                        exportOptions: {
-                            columns: ':visible'
-                        }
-                    },
-                    {
-                        extend: 'print',
-                        text: '<i class="bi bi-printer"></i>',
-                        className: 'btn btn-light btn-sm',
-                        exportOptions: {
-                            columns: ':visible'
-                        }
-                    }
-                    ],
-
                     ajax: {
                         url: DATA_URL,
                         dataSrc: ""
                     },
                     columns: [{
-                        data: "room"
-                    },
-                    {
-                        data: "title"
-                    },
-                    {
-                        data: "start",
-                        render: function (data, type, row) {
-                            return data.substring(0, 10);
+                            data: "room"
+                        },
+                        {
+                            data: "title"
+                        },
+                        {
+                            data: "start",
+                            render: function(data, type, row) {
+                                return data.substring(0, 10); // แสดงแค่วันที่
+                            }
+                        },
+                        {
+                            data: "end",
+                            render: function(data, type, row) {
+                                const startTime = row.start.substring(11, 16);
+                                const endTime = data.substring(11, 16);
+                                return `${startTime} - ${endTime}`;
+                            }
+                        },
+                        {
+                            data: "booked_by"
                         }
-                    },
-                    {
-                        data: "end",
-                        render: function (data, type, row) {
-                            const startTime = row.start.substring(11, 16);
-                            const endTime = data.substring(11, 16);
-                            return `${startTime} - ${endTime}`;
-                        }
-                    },
-                    {
-                        data: "booked_by"
-                    }
                     ],
+                    // เปิดใช้งานการจดจำสถานะ
                     stateSave: true
                 });
                 applyTableVisibility(isTableVisible);
-
-                table.on('init', function () {
+                // เมื่อ Datatable โหลดเสร็จแล้ว ให้โหลดและกรองตามสถานะ Checkbox ที่จำไว้
+                // table.on('init', function() {
+                //     loadRoomFilterState(true);
+                // });
+                table.on('init', function() {
+                    // สร้าง Regex แบบ Exact Match
                     let searchVal;
                     if (initialRooms.length === 0) {
                         searchVal = "^$";
@@ -1770,67 +1684,13 @@
                         });
                         searchVal = "^(" + escapedRooms.join("|") + ")$";
                     }
+                    // กรอง Datatable ด้วยสถานะที่โหลด
                     table.column(0).search(searchVal, true, false).draw();
-                });
-
-                // 🚩 Apply theme on every draw (e.g., page change, sort)
-                table.on('draw.dt', function () {
-                    applyPaginationTheme(darkMode);
-                });
-            }
-
-            function updateDatatableButtonTheme(isDark) {
-                if (!table) return;
-                const exportButtons = table.buttons().containers().find('.btn');
-
-                if (isDark) {
-                    exportButtons.removeClass('btn-light').addClass('btn-dark');
-                } else {
-                    exportButtons.removeClass('btn-dark').addClass('btn-light');
-                }
-
-                applyPaginationTheme(isDark);
-            }
-
-            function applyPaginationTheme(isDark) {
-                if (!table) return;
-
-                const paginateButtons = $(table.table().container()).find('.dataTables_paginate .paginate_button');
-
-                paginateButtons.removeClass('btn-light btn-dark btn-sm');
-                paginateButtons.addClass('btn btn-sm');
-
-                if (isDark) {
-                    paginateButtons.addClass('btn-dark');
-                    // DataTables Bootstrap CSS handles the .current and .disabled state
-                } else {
-                    paginateButtons.addClass('btn-light');
-                    // DataTables Bootstrap CSS handles the .current and .disabled state
-                    // We ensure current button gets the primary look in light mode
-                    paginateButtons.filter('.current').css({
-                        'background-color': '#0d6efd',
-                        'border-color': '#0d6efd',
-                        'color': '#fff'
-                    });
-                }
-
-                // Apply standard non-active styling (mainly for light mode border consistency)
-                paginateButtons.not('.current').css({
-                    'background-color': isDark ? '#2a2a2a' : 'transparent',
-                    'border-color': isDark ? '#555' : '#dee2e6',
-                    'color': isDark ? '#ddd' : '#0d6efd'
-                });
-
-                // Handle Disabled buttons (in-line override for better contrast in both themes)
-                paginateButtons.filter('.disabled').css({
-                    'background-color': isDark ? '#1f1f1f' : '#f8f9fa',
-                    'border-color': isDark ? '#333' : '#dee2e6',
-                    'color': isDark ? '#555' : '#ccc'
                 });
             }
 
             function initEventHandlers() {
-                $("#sidebarToggle").on("click", function () {
+                $("#sidebarToggle").on("click", function() {
                     isSidebarCollapsed = !isSidebarCollapsed;
                     localStorage.setItem("isSidebarCollapsed", isSidebarCollapsed);
                     applySidebarState(isSidebarCollapsed);
@@ -1840,38 +1700,33 @@
                     }, 300);
                 });
 
-                $("#nav-profile-theme").on("click", function (e) {
+                $("#nav-profile-theme").on("click", function(e) {
                     e.preventDefault();
+                    // เรียกใช้ฟังก์ชันเดียวกับ FAB theme toggle
                     darkMode = !darkMode;
                     localStorage.setItem("darkMode", darkMode);
                     applyTheme(darkMode);
-
-                    // Update DataTable theme and redraw pagination immediately
-                    updateDatatableButtonTheme(darkMode);
-                    if (table) {
-                        applyPaginationTheme(darkMode);
-                    }
                 });
 
-                $('#carMenu').on('hidden.bs.collapse', function () {
+                $('#carMenu').on('hidden.bs.collapse', function() {
                     localStorage.setItem(CAR_MENU_STATE, 'false');
                 });
-                $('#carMenu').on('shown.bs.collapse', function () {
+                $('#carMenu').on('shown.bs.collapse', function() {
                     localStorage.setItem(CAR_MENU_STATE, 'true');
                 });
-                $('#meetingMenu').on('hidden.bs.collapse', function () {
+                $('#meetingMenu').on('hidden.bs.collapse', function() {
                     localStorage.setItem(MEETING_MENU_STATE, 'false');
                 });
-                $('#meetingMenu').on('shown.bs.collapse', function () {
+                $('#meetingMenu').on('shown.bs.collapse', function() {
                     localStorage.setItem(MEETING_MENU_STATE, 'true');
                 });
-                $("#sidebarMenu .nav-link").on("click", function (e) {
+                $("#sidebarMenu .nav-link").on("click", function(e) {
                     e.preventDefault();
                     $("#sidebarMenu .nav-link").removeClass("active").removeAttr("aria-current");
                     $(this).addClass("active").attr("aria-current", "page");
                     localStorage.setItem(ACTIVE_MENU_KEY, this.id);
                 });
-                $('.navbar-nav .dropdown-item').on('click', function (e) {
+                $('.navbar-nav .dropdown-item').on('click', function(e) {
                     e.preventDefault();
                     const clickedId = $(this).attr('id');
                     $('.navbar-nav .nav-link, .navbar-nav .dropdown-item').removeClass('active');
@@ -1884,72 +1739,117 @@
                     dropendToggle.addClass('active');
                     localStorage.setItem(NAVBAR_ACTIVE_KEY, clickedId);
                 });
-
                 // Dropdown Sub-menu on Hover (for desktop)
-                $('.dropend').on('mouseenter', function () {
+                $('.dropend').on('mouseenter', function() {
                     var $el = $(this);
                     var $menu = $el.find('.dropdown-menu');
                     $menu.addClass('show');
                     if ($menu.offset().left + $menu.width() > $(window).width()) {
+                        // ถ้าเมนูจะล้นขวา ให้แสดงทางซ้าย
                         $menu.removeClass('dropdown-menu-end').addClass('dropdown-menu-start');
                     }
-                }).on('mouseleave', function () {
+                }).on('mouseleave', function() {
                     var $el = $(this);
                     var $menu = $el.find('.dropdown-menu');
                     $menu.removeClass('show');
+                    // รีเซ็ตคลาสเมื่อเมาส์ออก (เพื่อให้เปิดครั้งถัดไปถูกต้อง)
                     $menu.removeClass('dropdown-menu-start').addClass('dropdown-menu-end');
                 });
-
-                $(".room-filter").on("change", function () {
-                    applyRoomFilter(false);
-                    filterDataTableByRooms();
+                $(".room-filter").on("change", function() {
+                    applyRoomFilter(false); // ซิงค์ Calendar ก่อน
+                    filterDataTableByRooms(); // กรองตาราง
                     saveRoomFilterState();
                 });
-
+                // เมื่อมีการวาดตาราง (Search, Paging, Sort) ให้ซิงค์กับ Calendar
+                // table.on("draw.dt", function() {
+                //     syncCalendarWithDataTable();
+                //     updateRoomFilterByTable();
+                // });
                 $("#bookingForm").on("submit", handleBookingSubmit);
-
-                $("#toggleTable").on("click", function () {
+                $("#toggleTable").on("click", function() {
                     const tableWrapper = $("#tableWrapper");
                     const newState = !tableWrapper.is(":visible");
                     applyTableVisibility(newState);
                     localStorage.setItem("isTableVisible", newState);
                     if (newState) {
+                        // ถ้าตารางถูกเปิด ให้วาดใหม่เพื่อรีเฟรชข้อมูล/สถานะ
                         table.draw(false);
                     }
                 });
             }
 
             function filterDataTableByRooms() {
-                let selectedRooms = $(".room-filter:checked").map(function () {
+                let selectedRooms = $(".room-filter:checked").map(function() {
                     return this.value;
                 }).get();
-
+                // 1. สร้างค่า Regex สำหรับคอลัมน์ Room ที่บังคับการจับคู่แบบตรงตัว (ใช้ ^ และ $)
                 let searchVal;
                 if (selectedRooms.length === 0) {
+                    // หากไม่มีการเลือกห้องเลย ให้ค้นหาสตริงว่าง (ไม่มีรายการใดตรง)
                     searchVal = "^$";
                 } else {
+                    // สำคัญ: เพิ่ม ^ และ $ ให้ครอบชื่อห้องแต่ละชื่อ
+                    // เช่น: selectedRooms = ["Meeting 1", "Meeting 3"]
+                    // newRegex = "^(Meeting 1|Meeting 3)$"
                     const escapedRooms = selectedRooms.map(room => {
+                        // escape อักขระพิเศษในชื่อห้อง (ถ้ามี) เช่น วงเล็บ ( )
                         return room.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
                     });
                     searchVal = "^(" + escapedRooms.join("|") + ")$";
                 }
-
+                // 2. เคลียร์การค้นหาของคอลัมน์ 0 ก่อน
                 table.column(0).search('');
+                // 3. กรองคอลัมน์ 0 (Room) ด้วย Regex แบบ Exact Match
+                // (search, regex, smart, case_insensitive)
                 table.column(0).search(searchVal, true, false).draw();
+                // 4. บังคับซิงค์ Calendar ตามผลลัพธ์ใหม่ของตาราง
+                // (เนื่องจากการเรียก .draw() จะเรียก event 'draw.dt' และนำไปสู่ syncCalendarWithDataTable())
             }
 
             function applyRoomFilter(updateTable = true) {
-                let selectedRooms = $(".room-filter:checked").map(function () {
+                let selectedRooms = $(".room-filter:checked").map(function() {
                     return this.value;
                 }).get();
-
+                // 1. ตรรกะสำหรับ FullCalendar: แสดงเมื่อ Room อยู่ใน selectedRooms
                 const filterFunc = evt => selectedRooms.includes(evt.extendedProps.room) ? "auto" : "none";
-
+                // FullCalendar Filter
                 calendar.getEvents().forEach(evt => evt.setProp("display", filterFunc(evt)));
                 miniCal.getEvents().forEach(evt => evt.setProp("display", filterFunc(evt)));
-
                 if (updateTable) {
                     filterDataTableByRooms();
+                }
+            }
+
+            function syncCalendarWithDataTable() {
+                // รับ id ของรายการที่แสดงผลในตารางหลังการกรอง/ค้นหา
+                let visibleIds = table.rows({
+                    search: "applied"
+                }).data().toArray().map(item => String(item.id));
+                const syncFunc = evt => visibleIds.includes(String(evt.id)) ? "auto" : "none";
+                // ซ่อน Event ใน Calendar ที่ไม่อยู่ในตาราง
+                calendar.getEvents().forEach(evt => evt.setProp("display", syncFunc(evt)));
+                miniCal.getEvents().forEach(evt => evt.setProp("display", syncFunc(evt)));
+            }
+            let isTableSyncing = false;
+
+            function updateRoomFilterByTable() {
+                // ฟังก์ชันนี้ป้องกันการ Loop ระหว่าง Datatable search และ Room filter Checkbox
+                if (isTableSyncing) return;
+                let visibleData = table.rows({
+                    search: "applied"
+                }).data().toArray();
+                let rooms = [...new Set(visibleData.map(item => item.room))]; // ห้องที่แสดงอยู่ในตารางปัจจุบัน
+                if (table.search() === '' && table.column(0).search() === '') {
+                    // ถ้าไม่มีการค้นหาใด ๆ เลย ให้ใช้ค่าเดิมจาก Local Storage
+                    loadRoomFilterState(false);
+                } else {
+                    // ถ้ามีการค้นหา/กรองเกิดขึ้น ให้ซิงค์ Checkbox ตามผลลัพธ์ของตาราง
+                    isTableSyncing = true;
+                    $(".room-filter").each(function() {
+                        this.checked = rooms.includes(this.value);
+                    });
+                    saveRoomFilterState();
+                    isTableSyncing = false;
                 }
             }
 
@@ -1957,28 +1857,23 @@
                 e.preventDefault();
                 const formData = new FormData(e.target);
                 const bookingData = Object.fromEntries(formData.entries());
-
+                // จำลองการจอง (ในระบบจริงต้องส่งไป Server)
                 console.log("New Booking Data Submitted (Simulated):", bookingData);
                 alert(`จองห้อง "${bookingData.room}" สำเร็จ! (Title: ${bookingData.title})`);
-
                 bootstrap.Modal.getInstance(document.getElementById("bookingModal")).hide();
                 $("#bookingForm")[0].reset();
-
-                table.ajax.reload(function () {
+                // ในระบบจริง เมื่อ Server ตอบกลับสำเร็จ ค่อยเรียก reload
+                // ในโค้ดตัวอย่างนี้จะ reload เพื่อให้แสดงข้อมูลใหม่ (ถ้า data.json ถูกอัปเดต)
+                table.ajax.reload(function() {
+                    // เมื่อตารางโหลดเสร็จ ให้รีเฟรช Calendar
                     calendar.refetchEvents();
                     miniCal.refetchEvents();
+                    // นำไปยังวันที่เพิ่งจอง
                     calendar.gotoDate(bookingData.meeting_date);
+                    // กรองตารางใหม่เผื่อมีการเลือก Filter อยู่
                     filterDataTableByRooms();
                 }, false);
             }
-
-            // ตั้งค่าปีปัจจุบันและเวลาเข้าใช้งานครั้งล่าสุดใน Footer
-            document.getElementById("currentYear").textContent = new Date().getFullYear();
-            document.getElementById("currentTime").textContent = new Date().toLocaleTimeString('th-TH', {
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit'
-            });
         });
     </script>
 </body>
