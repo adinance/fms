@@ -1,0 +1,62 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><meta name=ProgId content=Excel.Sheet> <meta name=Generator content="Microsoft Excel 11"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>Expenses Report 2025</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>
+                                <thead>
+                                    <tr>
+                                        <th class="bold">Category</th>
+                                          <th class="bold">January</th>  <th class="bold">February</th>  <th class="bold">March</th>  <th class="bold">April</th>  <th class="bold">May</th>  <th class="bold">June</th>  <th class="bold">July</th>  <th class="bold">August</th>  <th class="bold">September</th>  <th class="bold">October</th>  <th class="bold">November</th>  <th class="bold">December</th>                                        <th class="bold"> Year (2025)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                                                        <tr>
+                                        <td class="bold">Cashier's check</td>
+                                        <td>฿0.00</td>                                        <td>฿0.00</td>                                        <td>฿0.00</td>                                        <td>฿0.00</td>                                        <td>฿0.00</td>                                        <td>฿0.00</td>                                        <td>฿0.00</td>                                        <td>฿0.00</td>                                        <td>฿0.00</td>                                        <td>฿0.00</td>                                        <td>฿0.00</td>                                        <td>฿0.00</td>                                                                                <td class="tw-bg-neutral-50">
+                                            ฿0.00                                        </td>
+                                    </tr>
+                                                                        <tr>
+                                        <td class="bold">Cheque</td>
+                                        <td>฿0.00</td>                                        <td>฿0.00</td>                                        <td>฿0.00</td>                                        <td>฿0.00</td>                                        <td>฿0.00</td>                                        <td>฿0.00</td>                                        <td>฿0.00</td>                                        <td>฿0.00</td>                                        <td>฿0.00</td>                                        <td>฿0.00</td>                                        <td>฿0.00</td>                                        <td>฿0.00</td>                                                                                <td class="tw-bg-neutral-50">
+                                            ฿0.00                                        </td>
+                                    </tr>
+                                                                        <tr>
+                                        <td class="bold">Transfer</td>
+                                        <td>฿0.00</td>                                        <td>฿0.00</td>                                        <td>฿0.00</td>                                        <td>฿0.00</td>                                        <td>฿0.00</td>                                        <td>฿0.00</td>                                        <td>฿0.00</td>                                        <td>฿0.00</td>                                        <td>฿0.00</td>                                        <td>฿0.00</td>                                        <td>฿0.00</td>                                        <td>฿0.00</td>                                                                                <td class="tw-bg-neutral-50">
+                                            ฿0.00                                        </td>
+                                    </tr>
+                                                                                                            <tr class="tw-bg-neutral-50">
+                                        <td class="bold text-info">
+                                            Net Amount (Subtotal)                                        </td>
+                                                                                                                        <td class="bold">
+                                            ฿0.00                                        </td>
+                                                                                <td class="bold">
+                                            ฿0.00                                        </td>
+                                                                                <td class="bold">
+                                            ฿0.00                                        </td>
+                                                                                <td class="bold">
+                                            ฿0.00                                        </td>
+                                                                                <td class="bold">
+                                            ฿0.00                                        </td>
+                                                                                <td class="bold">
+                                            ฿0.00                                        </td>
+                                                                                <td class="bold">
+                                            ฿0.00                                        </td>
+                                                                                <td class="bold">
+                                            ฿0.00                                        </td>
+                                                                                <td class="bold">
+                                            ฿0.00                                        </td>
+                                                                                <td class="bold">
+                                            ฿0.00                                        </td>
+                                                                                <td class="bold">
+                                            ฿0.00                                        </td>
+                                                                                <td class="bold">
+                                            ฿0.00                                        </td>
+                                                                                                                        <td class="bold tw-bg-neutral-50">
+                                            ฿0.00                                        </td>
+                                    </tr>
+                                    <tr class="tw-bg-neutral-50">
+                                        <td class="bold text-info">Total Tax</td>
+                                        <td class="bold">฿0.00</td><td class="bold">฿0.00</td><td class="bold">฿0.00</td><td class="bold">฿0.00</td><td class="bold">฿0.00</td><td class="bold">฿0.00</td><td class="bold">฿0.00</td><td class="bold">฿0.00</td><td class="bold">฿0.00</td><td class="bold">฿0.00</td><td class="bold">฿0.00</td><td class="bold">฿0.00</td><td class="bold tw-bg-neutral-50">฿0.00</td>                                    </tr>
+                                    <tr class="tw-bg-neutral-50">
+                                        <td class="bold text-info">
+                                            Total                                        </td>
+                                        <td class="bold">฿0.00</td><td class="bold">฿0.00</td><td class="bold">฿0.00</td><td class="bold">฿0.00</td><td class="bold">฿0.00</td><td class="bold">฿0.00</td><td class="bold">฿0.00</td><td class="bold">฿0.00</td><td class="bold">฿0.00</td><td class="bold">฿0.00</td><td class="bold">฿0.00</td><td class="bold">฿0.00</td><td class="bold tw-bg-neutral-50">฿0.00</td>                                    </tr>
+                                </tbody>
+                            </table></body></html>

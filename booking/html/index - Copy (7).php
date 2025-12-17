@@ -13,7 +13,920 @@
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet" />
     <link href="https://cdn.datatables.net/2.1.4/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
 
-    <link href="booking.css" rel="stylesheet" /> 
+    <style>
+        @import 'https://cdn.jsdelivr.net/gh/lazywasabi/thai-web-fonts@7/fonts/LINESeedSansTH/LINESeedSansTH.css';
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Quicksand:wght@300..700&display=swap');
+
+        :root {
+            --font-main: "Quicksand", "LINE Seed Sans TH", sans-serif;
+            --bg-light: #fff;
+            --text-light: #000;
+            --bg-dark: #121212;
+            --text-dark: #fff;
+            --card-dark: #1f1f1f;
+            --border-dark: #333;
+        }
+
+        html,
+        body {
+            height: 100%;
+        }
+
+        body {
+            font-family: var(--font-main);
+            transition: background-color 0.3s, color 0.3s;
+            display: flex;
+            flex-direction: column;
+
+        }
+
+        a {
+            text-decoration: none !important;
+        }
+
+        #mainLayout {
+            flex-grow: 1;
+            overflow: visible;
+        }
+
+        #sidebarMenu {
+            width: 280px;
+            transition: width 0.3s ease, margin 0.3s ease;
+            overflow-x: hidden;
+            flex-shrink: 0;
+            overflow-y: auto;
+        }
+
+        /* 🚩 START: Sidebar/Menu Alignment Fixes */
+
+        #sidebarMenu .nav-link {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            padding-left: 0.5rem;
+        }
+
+        /* NEW: สำหรับโหมดขยาย (กำหนดค่ามาตรฐานของไอคอน) */
+        #sidebarMenu:not(.collapsed) .nav-link i {
+            width: 22px;
+            margin-right: 8px;
+            text-align: center;
+            font-size: 1rem;
+            display: inline-block;
+            /* ให้ไอคอนอยู่บรรทัดเดียวกับข้อความ */
+        }
+
+        .collapse {
+            transition: height 0.4s ease-in-out !important;
+        }
+
+        .collapsing {
+            transition: height 0.4s ease-in-out !important;
+        }
+
+        #sidebarMenu .collapsed-toggle {
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-light);
+            padding-top: 5px;
+            padding-bottom: 5px;
+            margin-top: 5px;
+            transition: background-color 0.2s, color 0.2s;
+        }
+
+        #sidebarMenu .collapsed-toggle:hover {
+            background-color: #e9ecef;
+        }
+
+        #sidebarMenu .collapsed-toggle .toggle-icon {
+            transition: transform 0.3s ease;
+        }
+
+        /* สไตล์ของ Icon ในโหมดขยาย (เมนูหลัก/หัวข้อ) */
+        #sidebarMenu .collapsed-toggle i:not(.toggle-icon) {
+            margin-right: 8px;
+            width: 20px;
+            text-align: center;
+        }
+
+        #sidebarMenu .collapsed-toggle.collapsed .toggle-icon {
+            transform: rotate(-90deg);
+        }
+
+        #sidebarMenu.collapsed {
+            width: 60px !important;
+        }
+
+        /* 1. จัดวางองค์ประกอบในโหมดยุบให้อยู่ตรงกลาง (เมนูหลัก/หัวข้อ) */
+        #sidebarMenu.collapsed .collapsed-toggle {
+            text-align: center;
+            padding: 0.5rem 0.5rem !important;
+        }
+
+        /* 2. ปรับขนาดและจัดวางไอคอนหลักในโหมด collapsed */
+        #sidebarMenu.collapsed .collapsed-toggle i {
+            font-size: 1.2rem;
+            margin-right: 0;
+            width: 30px;
+            display: inline-block;
+        }
+
+        /* 3. ปรับเมนูย่อยในโหมด collapsed ให้อยู่ตรงกลาง */
+        #sidebarMenu.collapsed .nav-link {
+            padding: 0.5rem 0.5rem;
+            text-align: center;
+            /* 🚩 FIX: จัดเนื้อหา nav-link ให้อยู่ตรงกลาง */
+        }
+
+        /* 4. ปรับขนาดไอคอนเมนูย่อยในโหมด collapsed ให้อยู่ตรงกลาง */
+        #sidebarMenu.collapsed .nav-link i {
+            margin-right: 0;
+            font-size: 1.1rem;
+            width: 100%;
+            /* 🚩 FIX: ให้ไอคอนใช้ความกว้างเต็มที่ */
+            display: block;
+            /* 🚩 FIX: ให้ไอคอนอยู่บรรทัดแยกจากข้อความ (ซึ่งซ่อนอยู่) */
+            text-align: center;
+            /* 🚩 FIX: บังคับไอคอนให้อยู่ตรงกลาง */
+        }
+
+        #sidebarMenu.collapsed .nav-link span,
+        #sidebarMenu.collapsed .collapsed-toggle span,
+        #sidebarMenu.collapsed .collapsed-toggle .toggle-icon,
+        #sidebarMenu.collapsed .sidebar-label,
+        #sidebarMenu.collapsed hr {
+            display: none;
+        }
+
+        /* 🚩 END: Sidebar/Menu Alignment Fixes */
+
+        #sidebarMenu.collapsed .border-top {
+            padding: 0.5rem !important;
+        }
+
+        #sidebarMenu.collapsed .border-top .w-100 {
+            width: auto !important;
+        }
+
+        /* CSS for Sidebar Toggle Icon based on state (moved from the general section) */
+        #sidebarMenu.collapsed #sidebarToggle i {
+            transform: rotate(0deg);
+            /* When collapsed (default), the icon points right */
+            transition: transform 0.3s ease;
+        }
+
+        #sidebarMenu:not(.collapsed) #sidebarToggle i {
+            transform: rotate(180deg);
+            /* When expanded, rotate 180 deg to point left */
+            transition: transform 0.3s ease;
+        }
+
+        /* NEW/ADJUSTED: Style for the non-FAB Toggle Button inside the sidebar */
+        #sidebarMenu #sidebarToggle {
+            border-radius: 4px;
+            /* ปรับให้เป็นสี่เหลี่ยมตามความกว้างของ Sidebar */
+            font-size: 1.2rem;
+            color: var(--text-light);
+            /* ใช้สีตามธีม */
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        #sidebarMenu #sidebarToggle:hover {
+            background-color: #e9ecef;
+            /* Light mode hover */
+        }
+
+        /* Dark Mode specific styles for the toggle button */
+        body.dark-mode #sidebarMenu #sidebarToggle {
+            color: var(--text-dark);
+        }
+
+        body.dark-mode #sidebarMenu #sidebarToggle:hover {
+            background-color: #2a2a2a;
+            /* Dark mode hover */
+        }
+        /* End of Sidebar Toggle Icon CSS */
+
+
+        #mainContent {
+            overflow-y: visible;
+        }
+
+        /* CSS สำหรับ Dropdown ซ้อน Dropdown (Sub-Dropdown) */
+        .dropdown-menu .dropend .dropdown-toggle {
+            padding-right: 1.5rem;
+        }
+
+        .dropdown-menu .dropend .dropdown-menu {
+            position: absolute;
+            left: 100%;
+            top: 0;
+            margin-left: 0.1rem;
+            margin-right: 0.1rem;
+        }
+
+        /* #miniCalendar {
+            max-width: 100%;
+            margin: 20px auto;
+        } */
+
+            #miniCalendar {
+    max-width: 100%;
+    /* ลด Margin ด้านบนและล่างจาก 20px ให้เหลือ 0 */
+    margin: 15px auto 0 auto;
+}
+
+        #miniCalendar .fc-scroller {
+            overflow: visible !important;
+        }
+
+        #miniCalendar .fc-daygrid-body {
+            max-height: none !important;
+        }
+
+        #miniCalendar .fc-daygrid-body-unbalanced .fc-daygrid-day-events {
+            min-height: 0 !important;
+        }
+
+        #miniCalendar .fc-daygrid-day-frame {
+            padding: 3px !important;
+        }
+
+
+        #miniCalendar .fc-toolbar-title {
+            font-weight: 600;
+        }
+
+
+        /* --- FAB Button styles (Restored to original positions/purposes) --- */
+        .fab {
+            position: fixed;
+            right: 30px;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+
+        /* FAB Add (NEW: ย้ายไปตำแหน่งล่างสุด 30px) */
+        .fab-add-new {
+            bottom: 30px;
+            background-color: #0d6efd;
+            font-size: 30px;
+        }
+
+        .fab-add-new:hover {
+            background-color: #0b5ed7;
+        }
+
+        /* Toggle Table (ตำแหน่งใหม่: 100px) - เดิม 170px */
+        #toggleTable {
+            background-color: #6c757d;
+            font-size: 20px;
+            bottom: 100px; /* Moved from 170px to 100px since sidebar toggle is gone */
+        }
+
+        #toggleTable:hover {
+            background-color: #5c636a;
+        }
+
+        #bookingTable thead th {
+            text-align: center !important;
+            vertical-align: middle;
+            text-transform: uppercase !important;
+        }
+
+
+        /* Light Mode Styles (Standard) */
+        body.light-mode {
+            background-color: var(--bg-light);
+            color: var(--text-light);
+        }
+
+        body.light-mode .fc-col-header,
+        body.light-mode .fc-event,
+        body.light-mode .fc-daygrid-day-number {
+            color: #000 !important;
+        }
+
+        body.light-mode .nav-link {
+            color: #000;
+        }
+
+        body.light-mode #sidebarMenu {
+            background-color: #f8f9fa !important;
+        }
+
+        body.light-mode .navbar {
+            background-color: #f8f9fa !important;
+        }
+
+        body.light-mode #sidebarMenu .collapsed-toggle {
+            color: #000;
+        }
+
+        body.light-mode #sidebarMenu .border-top {
+            border-color: #e9ecef !important;
+        }
+
+
+        body.light-mode .navbar-nav .nav-link.active {
+            background-color: #e9ecef !important;
+            color: #0d6efd !important;
+            border-radius: 6px;
+        }
+
+        body.light-mode #sidebarMenu .nav-link.active {
+            background-color: #0d6efd !important;
+            color: #fff !important;
+            border-radius: 6px;
+        }
+
+        body.light-mode .dropdown-menu .dropdown-item.active {
+            background-color: #0d6efd !important;
+            color: #fff !important;
+        }
+
+        body.light-mode .fc-day-today {
+            background-color: #e9ecef !important;
+            border-radius: 0;
+        }
+
+        body.light-mode .fc-col-header-cell {
+            background-color: #f8f9fa !important;
+            color: #000 !important;
+        }
+
+        /* --- Dark Mode Styles --- */
+        body.dark-mode {
+            background-color: var(--bg-dark);
+            color: var(--text-dark);
+        }
+
+        body.dark-mode .navbar,
+        body.dark-mode #sidebarMenu {
+            background-color: var(--card-dark) !important;
+            border-color: var(--border-dark) !important;
+        }
+
+        body.dark-mode .navbar-brand,
+        body.dark-mode .nav-link {
+            color: var(--text-dark) !important;
+        }
+
+        body.dark-mode #sidebarMenu .collapsed-toggle {
+            color: var(--text-dark);
+        }
+
+        body.dark-mode #sidebarMenu .border-top {
+            border-color: var(--border-dark) !important;
+        }
+
+        body.dark-mode #sidebarMenu .collapsed-toggle:hover {
+            background-color: #2a2a2a;
+        }
+
+        body.dark-mode .navbar-nav .nav-link.active {
+            background-color: #444 !important;
+            color: #fff !important;
+            border-radius: 6px;
+        }
+
+        body.dark-mode #sidebarMenu .nav-link.active {
+            background-color: #2a2a2a !important;
+            color: #fff !important;
+            border-radius: 6px;
+        }
+
+        body.dark-mode .dropdown-menu {
+            background-color: var(--card-dark) !important;
+            border-color: var(--border-dark) !important;
+        }
+
+        body.dark-mode .dropdown-menu .dropdown-item {
+            color: var(--text-dark) !important;
+        }
+
+        body.dark-mode .dropdown-menu .dropdown-item:hover,
+        body.dark-mode .dropdown-menu .dropdown-item:focus,
+        body.dark-mode .dropdown-menu .dropend>.dropdown-toggle:hover,
+        body.dark-mode .dropdown-menu .dropdown-item.active,
+        body.dark-mode .dropdown-menu .dropdown-item:active {
+            background-color: var(--card-dark) !important;
+            color: #fff !important;
+            background-image: none !important;
+        }
+
+        body.dark-mode .dropdown-menu .dropdown-item.dropdown-toggle {
+            color: var(--text-dark) !important;
+        }
+
+        body.dark-mode .dropdown-menu .dropdown-item.dropdown-toggle:hover,
+        body.dark-mode .dropdown-menu .dropdown-item.dropdown-toggle.active {
+            color: #fff !important;
+        }
+
+        body.dark-mode .card {
+            background-color: var(--card-dark) !important;
+            border-color: var(--border-dark) !important;
+            color: var(--text-dark) !important;
+        }
+
+        /* --- Dark Mode Styles for Modals & Forms --- */
+        body.dark-mode .modal-content {
+            background-color: var(--card-dark) !important;
+            color: var(--text-dark) !important;
+        }
+
+        body.dark-mode .modal-header,
+        body.dark-mode .modal-footer {
+            border-color: var(--border-dark) !important;
+        }
+
+        body.dark-mode .btn-close {
+            filter: invert(1) grayscale(100%) brightness(200%);
+        }
+
+        /* แก้ไข Input, Select, Textarea ภายใน Modal ให้เป็น Dark Mode ด้วย */
+        body.dark-mode .form-control,
+        body.dark-mode .form-select {
+            background-color: #2a2a2a !important;
+            color: var(--text-dark) !important;
+            border-color: #555 !important;
+        }
+
+        body.dark-mode .form-control:focus,
+        body.dark-mode .form-select:focus {
+            background-color: #2a2a2a !important;
+            color: var(--text-dark) !important;
+            border-color: #0d6efd !important;
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        }
+
+        /* แก้ไข Flatpickr Input ใน Dark Mode (ถ้าต้องการ) */
+        body.dark-mode .flatpickr-input {
+            background-color: #2a2a2a !important;
+            color: var(--text-dark) !important;
+            border-color: #555 !important;
+        }
+
+        /* Flatpickr Calendar Theme (ภายนอก Modal) */
+        .flatpickr-calendar.open.dark-mode {
+            background: var(--bg-dark);
+            border: 1px solid var(--border-dark);
+        }
+
+        .flatpickr-calendar.open.dark-mode .flatpickr-day,
+        .flatpickr-calendar.open.dark-mode .flatpickr-months .flatpickr-month {
+            color: var(--text-dark);
+        }
+
+        .flatpickr-calendar.open.dark-mode .flatpickr-day.selected,
+        .flatpickr-calendar.open.dark-mode .flatpickr-day.selected:hover {
+            background: #0d6efd;
+            border-color: #0d6efd;
+        }
+
+        .flatpickr-calendar.open.dark-mode .flatpickr-day.today {
+            border-color: #0d6efd;
+        }
+
+        body.dark-mode #calendar {
+            background: var(--card-dark);
+            border-color: var(--border-dark);
+        }
+
+        body.dark-mode .fc-multimonth-month,
+        body.dark-mode .fc-multimonth-header-table thead th,
+        body.dark-mode .fc-multimonth-daygrid-table,
+        body.dark-mode .fc-multimonth-daygrid-table td,
+        body.dark-mode .fc-multimonth-daygrid-table .fc-daygrid-day {
+            background-color: var(--card-dark) !important;
+            border-color: var(--border-dark) !important;
+            color: var(--text-dark) !important;
+        }
+
+        body.dark-mode #calendar table,
+        body.dark-mode #calendar th,
+        body.dark-mode #calendar td,
+        body.dark-mode .fc-view-harness table,
+        body.dark-mode .fc-scrollgrid table,
+        body.dark-mode .fc-daygrid-body table,
+        body.dark-mode .fc-scrollgrid-section,
+        body.dark-mode .fc-daygrid-body,
+        body.dark-mode .fc-col-header {
+            border-color: var(--border-dark) !important;
+        }
+
+        body.dark-mode #miniCalendar table,
+        body.dark-mode #miniCalendar th,
+        body.dark-mode #miniCalendar td,
+        body.dark-mode #miniCalendar .fc-col-header,
+        body.dark-mode #miniCalendar .fc-scrollgrid-table,
+        body.dark-mode #miniCalendar .fc-daygrid-day {
+            border-color: var(--border-dark) !important;
+        }
+
+        body.dark-mode #miniCalendar .fc-scrollgrid-table {
+            border-right-width: 0px !important;
+        }
+
+        body.dark-mode #miniCalendar .fc-col-header-cell:last-child,
+        body.dark-mode .fc-daygrid-day:last-child {
+            border-right-width: 0px !important;
+        }
+
+        body.dark-mode .fc-col-header,
+        body.dark-mode .fc-event,
+        body.dark-mode .fc-daygrid-day-number {
+            color: #fff !important;
+        }
+
+        body.dark-mode .fc-day-today {
+            background-color: #2a2a2a !important;
+            border-radius: 0;
+        }
+
+        body.dark-mode .fc-col-header-cell {
+            background-color: var(--card-dark) !important;
+            color: #fff !important;
+        }
+
+        /* --- Dark Mode for DataTables --- */
+        body.dark-mode table.dataTable {
+            background-color: #1e1e1e;
+            color: #e5e5e5;
+        }
+
+        body.dark-mode table.dataTable,
+        body.dark-mode table.dataTable thead th,
+        body.dark-mode table.dataTable tbody td {
+            border-color: var(--border-dark) !important;
+        }
+
+        body.dark-mode table.dataTable thead th {
+            background-color: #2a2a2a !important;
+            color: #f1f1f1 !important;
+        }
+
+        body.dark-mode table.dataTable tbody td {
+            background-color: #1e1e1e !important;
+            color: #e5e5e5 !important;
+        }
+
+        body.dark-mode table.dataTable.stripe tbody tr.odd,
+        body.dark-mode table.dataTable.display tbody tr.odd {
+            background-color: #242424 !important;
+        }
+
+        body.dark-mode table.dataTable.stripe tbody tr.even,
+        body.dark-mode table.dataTable.display tbody tr.even {
+            background-color: #1c1c1c !important;
+        }
+
+        body.dark-mode .dataTables_wrapper .dataTables_filter input,
+        body.dark-mode .dataTables_wrapper .dataTables_length select {
+            background: #2a2a2a;
+            color: #fff;
+            border: 1px solid #555;
+        }
+
+        body.dark-mode .dataTables_wrapper .dataTables_paginate .paginate_button {
+            color: #ddd !important;
+        }
+
+        /* --- Dark Mode Pagination (DataTables) --- */
+        body.dark-mode .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+            background: #444 !important;
+            color: #fff !important;
+        }
+
+        /* Override inline styles from applyPaginationTheme for consistency in Dark Mode */
+        body.dark-mode .dataTables_wrapper .dataTables_paginate .paginate_button.btn-dark {
+            background-color: #2a2a2a !important;
+            border-color: #555 !important;
+            color: #ddd !important;
+        }
+
+        body.dark-mode .dataTables_wrapper .dataTables_paginate .paginate_button.btn-dark.current {
+            background-color: #444 !important;
+            /* Force active color */
+            color: #fff !important;
+        }
+
+        body.dark-mode .dataTables_wrapper .dataTables_paginate .paginate_button.btn-dark.disabled {
+            background-color: #1f1f1f !important;
+            border-color: #333 !important;
+            color: #555 !important;
+        }
+
+        body.dark-mode .dataTables_wrapper .dataTables_info {
+            color: #ccc !important;
+        }
+
+        body.dark-mode .form-check-label {
+            color: var(--text-dark);
+        }
+
+        /* --- Footer Styles --- */
+        #mainFooter {
+            flex-shrink: 0;
+            background-color: #f8f9fa;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        body.dark-mode #mainFooter {
+            background-color: var(--card-dark) !important;
+            border-color: var(--border-dark) !important;
+        }
+
+        body.dark-mode #mainFooter .text-muted {
+            color: #bbb !important;
+        }
+
+        /* --- Logo Styles --- */
+        .dark-mode-logo {
+            display: none !important;
+        }
+
+        .light-mode-logo {
+            display: inline-block !important;
+        }
+
+        body.dark-mode .dark-mode-logo {
+            display: inline-block !important;
+        }
+
+        body.dark-mode .light-mode-logo {
+            display: none !important;
+        }
+
+        #calendar .fc-toolbar-chunk:last-child .btn-group {
+            flex-wrap: wrap;
+            justify-content: flex-end;
+
+        }
+
+        #calendar .fc-toolbar-title {
+            text-transform: uppercase !important;
+        }
+
+        body.dark-mode .fc .fc-timegrid-all-day,
+        body.dark-mode .fc .fc-scrollgrid-section-sticky {
+            background-color: #1f1f1f;
+        }
+
+        body.dark-mode .fc .fc-timegrid-axis,
+        body.dark-mode .fc .fc-timegrid-slot-label {
+            background-color: #181818;
+            color: #bbb;
+        }
+
+        /* พื้นหลัง list view */
+        body.dark-mode .fc-list {
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+        }
+
+        /* แถววันที่ (December 16, 2025) */
+        body.dark-mode .fc-list-day-cushion {
+            background-color: #262626;
+            color: #9ecbff;
+            border-color: #333;
+        }
+
+        /* ชื่อวัน (Tuesday) */
+        body.dark-mode .fc-list-day-text,
+        body.dark-mode .fc-list-day-side-text {
+            color: #9ecbff;
+            font-weight: 500;
+        }
+
+        /* แถว event */
+        body.dark-mode .fc-list-event {
+            background-color: #1f1f1f;
+            border-color: #333;
+        }
+
+        /* hover event */
+        body.dark-mode .fc-list-event:hover,
+        body.dark-mode .fc-list-event.fc-event-forced-url:hover {
+            background-color: inherit !important;
+        }
+
+        body.dark-mode .fc-list-event:hover {
+            cursor: pointer;
+        }
+
+        body.dark-mode .fc-theme-standard .fc-list-event:hover {
+            background-color: inherit !important;
+        }
+
+        /* คำว่า all-day */
+        body.dark-mode .fc-list-event-time {
+            color: #9e9e9e;
+        }
+
+        /* ชื่อ event */
+        body.dark-mode .fc-list-event-title {
+            color: #eaeaea;
+        }
+
+        /* เส้นคั่น */
+        body.dark-mode .fc-list-event td {
+            border-color: #333;
+        }
+
+
+        /* เอากรอบนอกสุดออก */
+        body.dark-mode .fc-list {
+            border: none;
+            outline: none;
+        }
+
+        /* เอากรอบ table ออก */
+        body.dark-mode .fc-list-table,
+        body.dark-mode .fc-list-table td,
+        body.dark-mode .fc-list-table th {
+            border: none;
+        }
+
+        /* เอาเส้นขอบ scrollgrid ออก */
+        body.dark-mode .fc-scrollgrid,
+        body.dark-mode .fc-scrollgrid-section,
+        body.dark-mode .fc-scrollgrid-section table {
+            border: none;
+        }
+
+        /* กันเส้นขาวแฝง */
+        body.dark-mode .fc * {
+            box-shadow: none;
+        }
+
+
+        /* พื้นหลังรวมของ Annual */
+        body.dark-mode .fc-multimonth {
+            background-color: transparent;
+            border: none;
+        }
+
+        /* กล่องแต่ละเดือน */
+        body.dark-mode .fc-multimonth-month {
+            background-color: #1f1f1f;
+            border: none;
+            box-shadow: none;
+            border-radius: 8px;
+        }
+
+        /* หัวเดือน (January, February...) */
+        body.dark-mode .fc-multimonth-title {
+            color: #9ecbff;
+            font-weight: 500;
+        }
+
+        /* ตารางวัน */
+        body.dark-mode .fc-daygrid {
+            background-color: transparent;
+        }
+
+        /* ช่องวัน */
+        body.dark-mode .fc-daygrid-day-frame {
+            background-color: #1f1f1f;
+        }
+
+        /* เส้นตาราง (เอาขาวออก) */
+        body.dark-mode .fc-scrollgrid,
+        body.dark-mode .fc-scrollgrid td,
+        body.dark-mode .fc-scrollgrid th {
+            border-color: #2f2f2f;
+        }
+
+        /* เอากรอบนอกสุดออก */
+        body.dark-mode .fc-scrollgrid {
+            border: none;
+        }
+
+        /* ตัวเลขวัน */
+        body.dark-mode .fc-daygrid-day-number {
+            color: #cfcfcf;
+        }
+
+        /* วันนอกเดือน */
+        body.dark-mode .fc-day-other .fc-daygrid-day-number {
+            color: #666;
+        }
+
+
+        /* ปิด hover ทั้ง tr และ a ใน List mode */
+        body.dark-mode .fc-list-table tr.fc-list-event:hover,
+        body.dark-mode .fc-list-table tr.fc-list-event:hover td,
+        body.dark-mode .fc-list-table tr.fc-list-event:hover a {
+            background-color: transparent !important;
+        }
+
+        /* กรณี FullCalendar บังคับสี */
+        body.dark-mode .fc-theme-standard .fc-list-event:hover {
+            background-color: transparent !important;
+        }
+
+        /* ปิด hover จาก Bootstrap link */
+        body.dark-mode .fc-list-event a:hover {
+            background-color: transparent !important;
+        }
+
+
+        /* ===== Annual / Year View ===== */
+
+        body.dark-mode .fc-multimonth {
+            background-color: transparent;
+            border: none;
+        }
+
+        body.dark-mode .fc-multimonth-title {
+            background-color: #1f1f1f;
+            color: #e0e0e0;
+            padding: 12px 0;
+            border: none;
+        }
+
+        /* กันพื้นขาวที่ซ่อนอยู่ */
+        body.dark-mode .fc-multimonth-header {
+            background-color: #1f1f1f;
+            border: none;
+        }
+
+        /* ตารางเดือน */
+        body.dark-mode .fc-multimonth-month {
+            background-color: #1e1e1e;
+            border: none;
+            box-shadow: none;
+        }
+
+        /* หัววัน (Sun Mon Tue...) */
+        body.dark-mode .fc-col-header-cell {
+            background-color: #1e1e1e;
+            color: #4dabf7;
+            border-color: #2f2f2f;
+        }
+
+        /* ช่องวัน */
+        body.dark-mode .fc-daygrid-day-frame {
+            background-color: #1e1e1e;
+        }
+
+        /* ตัวเลขวัน */
+        body.dark-mode .fc-daygrid-day-number {
+            color: #e0e0e0;
+        }
+
+        /* วันนอกเดือน */
+        body.dark-mode .fc-day-other .fc-daygrid-day-number {
+            color: #666;
+        }
+
+        /* เส้นกริด */
+        body.dark-mode .fc-scrollgrid,
+        body.dark-mode .fc-scrollgrid td,
+        body.dark-mode .fc-scrollgrid th {
+            border-color: #2f2f2f;
+        }
+
+        /* เอากรอบนอกสุดออก */
+        body.dark-mode .fc-scrollgrid {
+            border: none;
+        }
+
+        body.dark-mode .fc-multimonth .fc-col-header-cell-cushion {
+            color: #e6e6e6;
+        }
+
+        /* Month / Week / Day */
+        body.dark-mode .fc-col-header-cell-cushion {
+            color: #e6e6e6;
+            font-weight: 500;
+        }
+
+
+        /* กันกรณีถูก override */
+        body.dark-mode .fc-theme-standard th {
+            color: #e6e6e6;
+        }
+
+
+        .spacer-row {
+            margin-top: 16px;
+        }
+    </style>
 </head>
 
 <body class="p-0 light-mode">
@@ -73,7 +986,8 @@
             </a>
 
             <ul id="carMenu" class="nav nav-pills flex-column collapse show">
-                <li class="nav-item"><a id="menu-car-center" href="#" class="nav-link"><i class="bi bi-ev-front"></i>
+                <li class="nav-item"><a id="menu-car-center" href="#" class="nav-link"><i
+                            class="bi bi-ev-front"></i>
                         <span>All Booking</span></a></li>
                 <li class="nav-item"><a id="menu-car-reserve" href="#" class="nav-link"><i
                             class="bi bi-ev-front-fill"></i>
@@ -112,16 +1026,16 @@
                             <div class="card-body pt-4 pb-5 ">
                                 <div id="calendar"></div>
                             </div>
-                            <div class="card-footer">* คุณสามารถ กดเลือกรายการที่ Hiligh เพื่อดูรายละเอียดการจอง หรือ
-                                กดปุ่ม
+                            <div class="card-footer">* คุณสามารถ กดเลือกรายการที่ Hiligh เพื่อดูรายละเอียดการจอง หรือ กดปุ่ม
                                 + ข้างหน้าจอ เพื่อทำการจอง</div>
                         </div>
                     </div>
 
+
                     <div class="col-md-4">
-                        <div class="card shadow mt-4">
+                       <div class="card shadow mt-4">
                             <div class="card-header text-end">Mini Calendar</div>
-                            <div class="card-body pt-0 ">
+                            <div class="card-body pt-0 "> 
                                 <div id="miniCalendar"></div>
                             </div>
                         </div>
@@ -131,42 +1045,36 @@
                                 <div class="row gx-0">
                                     <div class="col-sm-4">
                                         <div class="form-check mb-2">
-                                            <input type="checkbox" class="form-check-input room-filter"
-                                                id="filter_room_1" value="Meeting 1" checked>
-                                            <label class="form-check-label" for="filter_room_1"
-                                                style="white-space: nowrap;"> Meeting 1</label>
+                                            <input type="checkbox" class="form-check-input room-filter" id="filter_room_1"
+                                                value="Meeting 1" checked>
+                                            <label class="form-check-label" for="filter_room_1" style="white-space: nowrap;"> Meeting 1</label>
                                         </div>
                                         <div class="form-check mb-2">
-                                            <input type="checkbox" class="form-check-input room-filter"
-                                                id="filter_room_2" value="Meeting 2" checked>
-                                            <label class="form-check-label" for="filter_room_2"
-                                                style="white-space: nowrap;"> Meeting 2</label>
+                                            <input type="checkbox" class="form-check-input room-filter" id="filter_room_2"
+                                                value="Meeting 2" checked>
+                                            <label class="form-check-label" for="filter_room_2" style="white-space: nowrap;"> Meeting 2</label>
                                         </div>
                                         <div class="form-check mb-2">
-                                            <input type="checkbox" class="form-check-input room-filter"
-                                                id="filter_room_3" value="Meeting 3" checked>
-                                            <label class="form-check-label" for="filter_room_3"
-                                                style="white-space: nowrap;"> Meeting 3</label>
+                                            <input type="checkbox" class="form-check-input room-filter" id="filter_room_3"
+                                                value="Meeting 3" checked>
+                                            <label class="form-check-label" for="filter_room_3" style="white-space: nowrap;"> Meeting 3</label>
                                         </div>
                                     </div>
                                     <div class="col-sm-8">
                                         <div class="form-check mb-2">
-                                            <input type="checkbox" class="form-check-input room-filter"
-                                                id="filter_room_4" value="Training Room 1 (Floor 3)" checked>
-                                            <label class="form-check-label" for="filter_room_4"
-                                                style="white-space: nowrap;"> Training Room 1 (Floor 3)</label>
+                                            <input type="checkbox" class="form-check-input room-filter" id="filter_room_4"
+                                                value="Training Room 1 (Floor 3)" checked>
+                                            <label class="form-check-label" for="filter_room_4" style="white-space: nowrap;"> Training Room 1 (Floor 3)</label>
                                         </div>
                                         <div class="form-check mb-2">
-                                            <input type="checkbox" class="form-check-input room-filter"
-                                                id="filter_room_5" value="Training Room 3 (Floor 1)" checked>
-                                            <label class="form-check-label" for="filter_room_5"
-                                                style="white-space: nowrap;"> Training Room 3 (Floor 1)</label>
+                                            <input type="checkbox" class="form-check-input room-filter" id="filter_room_5"
+                                                value="Training Room 3 (Floor 1)" checked>
+                                            <label class="form-check-label" for="filter_room_5" style="white-space: nowrap;"> Training Room 3 (Floor 1)</label>
                                         </div>
                                         <div class="form-check mb-2">
-                                            <input type="checkbox" class="form-check-input room-filter"
-                                                id="filter_room_6" value="ห้องปูน (Floor 3)" checked>
-                                            <label class="form-check-label" for="filter_room_6"
-                                                style="white-space: nowrap;"> ห้องปูน (Floor 3)</label>
+                                            <input type="checkbox" class="form-check-input room-filter" id="filter_room_6"
+                                                value="ห้องปูน (Floor 3)" checked>
+                                            <label class="form-check-label" for="filter_room_6" style="white-space: nowrap;"> ห้องปูน (Floor 3)</label>
                                         </div>
                                     </div>
                                 </div>
@@ -174,6 +1082,7 @@
                             <div class="card-footer text-end">Select room to display</div>
                         </div>
                     </div>
+
 
                 </div>
 
@@ -200,7 +1109,9 @@
                             </div>
                         </div>
 
+
                     </div>
+
 
                 </div>
             </div>
@@ -210,6 +1121,7 @@
             <button class="fab fab-add-new" data-bs-toggle="modal" data-bs-target="#bookingModal">
                 <i class="bi bi-plus"></i>
             </button>
+
 
         </div>
     </div>
@@ -357,7 +1269,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/3.0.0/js/buttons.excelHtml5.min.js"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", function () {
             const roomColors = {
                 "Meeting 1": "#0d6efd",
                 "Meeting 2": "#198754",
@@ -375,6 +1287,7 @@
             const MEETING_MENU_STATE = 'meetingMenuState';
             let calendar, miniCal, table;
             const DATA_URL = "data.json";
+
             // 🚩 Initializations
             initTheme();
             initSidebar();
@@ -385,6 +1298,7 @@
             initCalendars();
             initTable();
             initEventHandlers();
+
             const getStartDay = (datetime) => datetime ? datetime.substring(0, 10) : "";
 
             function initNavbarActiveMenu() {
@@ -431,12 +1345,15 @@
             function applySidebarState(isCollapsed) {
                 const sidebar = document.getElementById("sidebarMenu");
                 const toggleIcon = document.querySelector("#sidebarToggle i");
+
                 const contentContainer = document.getElementById("contentContainer");
+
                 if (isCollapsed) {
                     sidebar.classList.add("collapsed");
                     // เมื่อยุบ: ไอคอนควรชี้ไปทางขวา (bi-arrow-right-circle-fill) เพื่อเปิด
                     toggleIcon.classList.remove("bi-arrow-left-circle-fill");
                     toggleIcon.classList.add("bi-arrow-right-circle-fill");
+
                     contentContainer.classList.remove("container");
                     contentContainer.classList.add("container-fluid");
                 } else {
@@ -444,6 +1361,7 @@
                     // เมื่อขยาย: ไอคอนควรชี้ไปทางซ้าย (bi-arrow-left-circle-fill) เพื่อปิด
                     toggleIcon.classList.remove("bi-arrow-right-circle-fill");
                     toggleIcon.classList.add("bi-arrow-left-circle-fill");
+
                     contentContainer.classList.remove("container-fluid");
                     contentContainer.classList.add("container");
                 }
@@ -475,7 +1393,7 @@
 
             function saveRoomFilterState() {
                 const roomStates = {};
-                $(".room-filter").each(function() {
+                $(".room-filter").each(function () {
                     roomStates[$(this).val()] = $(this).is(":checked");
                 });
                 localStorage.setItem("roomFilterStates", JSON.stringify(roomStates));
@@ -488,7 +1406,7 @@
                 if (savedRoomStates) {
                     try {
                         const roomStates = JSON.parse(savedRoomStates);
-                        $(".room-filter").each(function() {
+                        $(".room-filter").each(function () {
                             const roomName = $(this).val();
                             const isChecked = roomStates.hasOwnProperty(roomName) ? roomStates[
                                 roomName] : true;
@@ -505,7 +1423,7 @@
                 }
                 if (!savedRoomStates || shouldSaveDefaultState) {
                     $(".room-filter").prop("checked", true);
-                    selectedRooms = $(".room-filter").map(function() {
+                    selectedRooms = $(".room-filter").map(function () {
                         return this.value;
                     }).get();
                     saveRoomFilterState();
@@ -519,6 +1437,7 @@
 
             function applyTheme(isDark) {
                 const body = document.body;
+
                 const profileThemeIcon = document.getElementById("profileThemeIcon");
                 const profileThemeText = document.querySelector("#nav-profile-theme span");
                 if (isDark) {
@@ -526,13 +1445,16 @@
                     body.classList.remove("light-mode");
                     $('.light-mode-logo').css('display', 'none');
                     $('.dark-mode-logo').css('display', 'inline-block');
+
                     if (profileThemeIcon) profileThemeIcon.className = "bi bi-sun me-2";
                     if (profileThemeText) profileThemeText.textContent = "Switch to Light Mode";
                 } else {
                     body.classList.add("light-mode");
                     body.classList.remove("dark-mode");
+
                     $('.dark-mode-logo').css('display', 'none');
                     $('.light-mode-logo').css('display', 'inline-block');
+
                     if (profileThemeIcon) profileThemeIcon.className = "bi bi-moon me-2";
                     if (profileThemeText) profileThemeText.textContent = "Switch to Dark Mode";
                 }
@@ -551,28 +1473,32 @@
             }
 
             function initPickers() {
-                // ใช้งานสำหรับช่อง 'เวลาเริ่ม' และ 'เวลาสิ้นสุด' แทน
-                const flatpickrConfig = {
-                    enableTime: true,
-                    // ✅ เปลี่ยนเป็นรูปแบบ YYYY-MM-DD HH:MM:SS
-                    dateFormat: "Y-m-d H:i",
-                    // เปิดใช้ปฏิทิน
-                    noCalendar: false,
-                    time_24hr: true,
-                    onOpen: (selectedDates, dateStr, instance) => {
-                        if (document.body.classList.contains('dark-mode')) {
-                            instance.calendarContainer.classList.add('dark-mode');
-                        } else {
-                            instance.calendarContainer.classList.remove('dark-mode');
-                        }
-                    }
-                };
-                // ใช้ config เดียวกันสำหรับ Start Time
-                flatpickr("#start_time", flatpickrConfig);
-                // ใช้ config เดียวกันสำหรับ End Time
-                flatpickr("#end_time", flatpickrConfig);
+    // ใช้งานสำหรับช่อง 'เวลาเริ่ม' และ 'เวลาสิ้นสุด' แทน
+    const flatpickrConfig = {
+        enableTime: true,
+        // ✅ เปลี่ยนเป็นรูปแบบ YYYY-MM-DD HH:MM:SS
+        dateFormat: "Y-m-d H:i", 
+        // เปิดใช้ปฏิทิน
+        noCalendar: false,
+        time_24hr: true,
+        onOpen: (selectedDates, dateStr, instance) => {
+            if (document.body.classList.contains('dark-mode')) {
+                instance.calendarContainer.classList.add('dark-mode');
+            } else {
+                instance.calendarContainer.classList.remove('dark-mode');
             }
-            // const formatTime = (datetime) => datetime ? datetime.substring(11) : "-";
+        }
+    };
+
+    // ใช้ config เดียวกันสำหรับ Start Time
+    flatpickr("#start_time", flatpickrConfig);
+    
+    // ใช้ config เดียวกันสำหรับ End Time
+    flatpickr("#end_time", flatpickrConfig);
+}
+
+// const formatTime = (datetime) => datetime ? datetime.substring(11) : "-";
+
             // function initPickers() {
             //     flatpickr("#meeting_date", {
             //         dateFormat: "Y-m-d",
@@ -609,6 +1535,7 @@
             //         }
             //     });
             // }
+
             function mapEventData(e) {
                 const isAllDay = !e.start.includes('T') && !e.end.includes('T');
                 return {
@@ -660,15 +1587,15 @@
                 const eventSourceConfig = {
                     url: DATA_URL,
                     method: 'GET',
-                    failure: function() {
+                    failure: function () {
                         console.error("Failed to fetch events from data.json");
                     },
-                    success: function(rawEvents) {
+                    success: function (rawEvents) {
                         const events = rawEvents.map(mapEventData);
                         const selectedRooms = initialRooms.length > 0 ? initialRooms : $(
-                            ".room-filter:checked").map(function() {
-                            return this.value;
-                        }).get();
+                            ".room-filter:checked").map(function () {
+                                return this.value;
+                            }).get();
                         return events.map(evt => {
                             const isVisible = selectedRooms.includes(evt.extendedProps.room);
                             evt.display = isVisible ? "auto" : "none";
@@ -676,7 +1603,9 @@
                         });
                     }
                 };
+
                 const isMobile = window.matchMedia("(max-width: 768px)").matches;
+
                 const mainHeaderToolbar = isMobile ? {
                     left: "prev,next",
                     right: "dayGridMonth,timeGridWeek,timeGridDay,listMonth,multiMonthYear"
@@ -685,6 +1614,7 @@
                     center: "title",
                     right: "dayGridMonth,timeGridWeek,timeGridDay,listMonth,multiMonthYear"
                 };
+
                 calendar = new FullCalendar.Calendar(document.getElementById("calendar"), {
                     themeSystem: 'bootstrap5',
                     initialView: "dayGridMonth",
@@ -709,6 +1639,7 @@
                     events: eventSourceConfig,
                     eventClick: showEventDetails
                 });
+
                 const miniHeaderToolbar = isMobile ? {
                     left: "prev",
                     center: "title",
@@ -718,6 +1649,7 @@
                     center: "title",
                     right: "next"
                 };
+
                 miniCal = new FullCalendar.Calendar(document.getElementById("miniCalendar"), {
                     initialView: "dayGridMonth",
                     height: "auto",
@@ -734,91 +1666,101 @@
             }
 
             function initTable() {
+
                 const initialRooms = loadRoomFilterState();
                 applyRoomFilter(false);
+
                 table = $("#bookingTable").DataTable({
-                    dom: '<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6 d-flex align-items-center justify-content-end"fB>>' +
+
+                    dom:
+                        '<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6 d-flex align-items-center justify-content-end"fB>>' +
                         '<"row spacer-row">' +
                         '<"row"<"col-sm-12"t>>' +
                         '<"row spacer-row">' +
                         '<"row"<"col-sm-12 col-md-5"i><"col-sm-12 col-md-7"p>>',
-                    initComplete: function() {
+
+                    initComplete: function () {
                         $(this.api().table().container()).find('.dt-buttons').css({
                             'margin-left': '15px',
                             'margin-bottom': '0'
                         });
+
                         $(this.api().table().container()).find('.dataTables_filter').css({
                             'margin-right': '0',
                             'margin-bottom': '0'
                         });
+
                         // 🚩 Apply theme immediately after init
                         updateDatatableButtonTheme(darkMode);
                     },
+
                     buttons: [{
-                            extend: 'copyHtml5',
-                            text: '<i class="bi bi-files"></i>',
-                            className: 'btn btn-light btn-sm',
-                            exportOptions: {
-                                columns: ':visible'
-                            }
-                        },
-                        {
-                            extend: 'excelHtml5',
-                            text: '<i class="bi bi-file-earmark-excel"></i>',
-                            className: 'btn btn-light btn-sm',
-                            exportOptions: {
-                                columns: ':visible'
-                            }
-                        },
-                        {
-                            extend: 'csvHtml5',
-                            text: '<i class="bi bi-filetype-csv"></i>',
-                            className: 'btn btn-light btn-sm',
-                            exportOptions: {
-                                columns: ':visible'
-                            }
-                        },
-                        {
-                            extend: 'print',
-                            text: '<i class="bi bi-printer"></i>',
-                            className: 'btn btn-light btn-sm',
-                            exportOptions: {
-                                columns: ':visible'
-                            }
+                        extend: 'copyHtml5',
+                        text: '<i class="bi bi-files"></i>',
+                        className: 'btn btn-light btn-sm',
+                        exportOptions: {
+                            columns: ':visible'
                         }
+                    },
+                    {
+                        extend: 'excelHtml5',
+                        text: '<i class="bi bi-file-earmark-excel"></i>',
+                        className: 'btn btn-light btn-sm',
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                    {
+                        extend: 'csvHtml5',
+                        text: '<i class="bi bi-filetype-csv"></i>',
+                        className: 'btn btn-light btn-sm',
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                    {
+                        extend: 'print',
+                        text: '<i class="bi bi-printer"></i>',
+                        className: 'btn btn-light btn-sm',
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    }
                     ],
+
                     ajax: {
                         url: DATA_URL,
                         dataSrc: ""
                     },
                     columns: [{
-                            data: "room"
-                        },
-                        {
-                            data: "title"
-                        },
-                        {
-                            data: "start",
-                            render: function(data, type, row) {
-                                return data.substring(0, 10);
-                            }
-                        },
-                        {
-                            data: "end",
-                            render: function(data, type, row) {
-                                const startTime = row.start.substring(11, 16);
-                                const endTime = data.substring(11, 16);
-                                return `${startTime} - ${endTime}`;
-                            }
-                        },
-                        {
-                            data: "booked_by"
+                        data: "room"
+                    },
+                    {
+                        data: "title"
+                    },
+                    {
+                        data: "start",
+                        render: function (data, type, row) {
+                            return data.substring(0, 10);
                         }
+                    },
+                    {
+                        data: "end",
+                        render: function (data, type, row) {
+                            const startTime = row.start.substring(11, 16);
+                            const endTime = data.substring(11, 16);
+                            return `${startTime} - ${endTime}`;
+                        }
+                    },
+                    {
+                        data: "booked_by"
+                    }
                     ],
                     stateSave: true
                 });
                 applyTableVisibility(isTableVisible);
-                table.on('init', function() {
+
+                table.on('init', function () {
                     let searchVal;
                     if (initialRooms.length === 0) {
                         searchVal = "^$";
@@ -830,8 +1772,9 @@
                     }
                     table.column(0).search(searchVal, true, false).draw();
                 });
+
                 // 🚩 Apply theme on every draw (e.g., page change, sort)
-                table.on('draw.dt', function() {
+                table.on('draw.dt', function () {
                     applyPaginationTheme(darkMode);
                 });
             }
@@ -839,20 +1782,24 @@
             function updateDatatableButtonTheme(isDark) {
                 if (!table) return;
                 const exportButtons = table.buttons().containers().find('.btn');
+
                 if (isDark) {
                     exportButtons.removeClass('btn-light').addClass('btn-dark');
                 } else {
                     exportButtons.removeClass('btn-dark').addClass('btn-light');
                 }
+
                 applyPaginationTheme(isDark);
             }
 
             function applyPaginationTheme(isDark) {
                 if (!table) return;
-                const paginateButtons = $(table.table().container()).find(
-                    '.dataTables_paginate .paginate_button');
+
+                const paginateButtons = $(table.table().container()).find('.dataTables_paginate .paginate_button');
+
                 paginateButtons.removeClass('btn-light btn-dark btn-sm');
                 paginateButtons.addClass('btn btn-sm');
+
                 if (isDark) {
                     paginateButtons.addClass('btn-dark');
                     // DataTables Bootstrap CSS handles the .current and .disabled state
@@ -866,12 +1813,14 @@
                         'color': '#fff'
                     });
                 }
+
                 // Apply standard non-active styling (mainly for light mode border consistency)
                 paginateButtons.not('.current').css({
                     'background-color': isDark ? '#2a2a2a' : 'transparent',
                     'border-color': isDark ? '#555' : '#dee2e6',
                     'color': isDark ? '#ddd' : '#0d6efd'
                 });
+
                 // Handle Disabled buttons (in-line override for better contrast in both themes)
                 paginateButtons.filter('.disabled').css({
                     'background-color': isDark ? '#1f1f1f' : '#f8f9fa',
@@ -881,7 +1830,7 @@
             }
 
             function initEventHandlers() {
-                $("#sidebarToggle").on("click", function() {
+                $("#sidebarToggle").on("click", function () {
                     isSidebarCollapsed = !isSidebarCollapsed;
                     localStorage.setItem("isSidebarCollapsed", isSidebarCollapsed);
                     applySidebarState(isSidebarCollapsed);
@@ -890,36 +1839,39 @@
                         miniCal.updateSize();
                     }, 300);
                 });
-                $("#nav-profile-theme").on("click", function(e) {
+
+                $("#nav-profile-theme").on("click", function (e) {
                     e.preventDefault();
                     darkMode = !darkMode;
                     localStorage.setItem("darkMode", darkMode);
                     applyTheme(darkMode);
+
                     // Update DataTable theme and redraw pagination immediately
                     updateDatatableButtonTheme(darkMode);
                     if (table) {
                         applyPaginationTheme(darkMode);
                     }
                 });
-                $('#carMenu').on('hidden.bs.collapse', function() {
+
+                $('#carMenu').on('hidden.bs.collapse', function () {
                     localStorage.setItem(CAR_MENU_STATE, 'false');
                 });
-                $('#carMenu').on('shown.bs.collapse', function() {
+                $('#carMenu').on('shown.bs.collapse', function () {
                     localStorage.setItem(CAR_MENU_STATE, 'true');
                 });
-                $('#meetingMenu').on('hidden.bs.collapse', function() {
+                $('#meetingMenu').on('hidden.bs.collapse', function () {
                     localStorage.setItem(MEETING_MENU_STATE, 'false');
                 });
-                $('#meetingMenu').on('shown.bs.collapse', function() {
+                $('#meetingMenu').on('shown.bs.collapse', function () {
                     localStorage.setItem(MEETING_MENU_STATE, 'true');
                 });
-                $("#sidebarMenu .nav-link").on("click", function(e) {
+                $("#sidebarMenu .nav-link").on("click", function (e) {
                     e.preventDefault();
                     $("#sidebarMenu .nav-link").removeClass("active").removeAttr("aria-current");
                     $(this).addClass("active").attr("aria-current", "page");
                     localStorage.setItem(ACTIVE_MENU_KEY, this.id);
                 });
-                $('.navbar-nav .dropdown-item').on('click', function(e) {
+                $('.navbar-nav .dropdown-item').on('click', function (e) {
                     e.preventDefault();
                     const clickedId = $(this).attr('id');
                     $('.navbar-nav .nav-link, .navbar-nav .dropdown-item').removeClass('active');
@@ -932,27 +1884,31 @@
                     dropendToggle.addClass('active');
                     localStorage.setItem(NAVBAR_ACTIVE_KEY, clickedId);
                 });
+
                 // Dropdown Sub-menu on Hover (for desktop)
-                $('.dropend').on('mouseenter', function() {
+                $('.dropend').on('mouseenter', function () {
                     var $el = $(this);
                     var $menu = $el.find('.dropdown-menu');
                     $menu.addClass('show');
                     if ($menu.offset().left + $menu.width() > $(window).width()) {
                         $menu.removeClass('dropdown-menu-end').addClass('dropdown-menu-start');
                     }
-                }).on('mouseleave', function() {
+                }).on('mouseleave', function () {
                     var $el = $(this);
                     var $menu = $el.find('.dropdown-menu');
                     $menu.removeClass('show');
                     $menu.removeClass('dropdown-menu-start').addClass('dropdown-menu-end');
                 });
-                $(".room-filter").on("change", function() {
+
+                $(".room-filter").on("change", function () {
                     applyRoomFilter(false);
                     filterDataTableByRooms();
                     saveRoomFilterState();
                 });
+
                 $("#bookingForm").on("submit", handleBookingSubmit);
-                $("#toggleTable").on("click", function() {
+
+                $("#toggleTable").on("click", function () {
                     const tableWrapper = $("#tableWrapper");
                     const newState = !tableWrapper.is(":visible");
                     applyTableVisibility(newState);
@@ -964,9 +1920,10 @@
             }
 
             function filterDataTableByRooms() {
-                let selectedRooms = $(".room-filter:checked").map(function() {
+                let selectedRooms = $(".room-filter:checked").map(function () {
                     return this.value;
                 }).get();
+
                 let searchVal;
                 if (selectedRooms.length === 0) {
                     searchVal = "^$";
@@ -976,17 +1933,21 @@
                     });
                     searchVal = "^(" + escapedRooms.join("|") + ")$";
                 }
+
                 table.column(0).search('');
                 table.column(0).search(searchVal, true, false).draw();
             }
 
             function applyRoomFilter(updateTable = true) {
-                let selectedRooms = $(".room-filter:checked").map(function() {
+                let selectedRooms = $(".room-filter:checked").map(function () {
                     return this.value;
                 }).get();
+
                 const filterFunc = evt => selectedRooms.includes(evt.extendedProps.room) ? "auto" : "none";
+
                 calendar.getEvents().forEach(evt => evt.setProp("display", filterFunc(evt)));
                 miniCal.getEvents().forEach(evt => evt.setProp("display", filterFunc(evt)));
+
                 if (updateTable) {
                     filterDataTableByRooms();
                 }
@@ -996,17 +1957,21 @@
                 e.preventDefault();
                 const formData = new FormData(e.target);
                 const bookingData = Object.fromEntries(formData.entries());
+
                 console.log("New Booking Data Submitted (Simulated):", bookingData);
                 alert(`จองห้อง "${bookingData.room}" สำเร็จ! (Title: ${bookingData.title})`);
+
                 bootstrap.Modal.getInstance(document.getElementById("bookingModal")).hide();
                 $("#bookingForm")[0].reset();
-                table.ajax.reload(function() {
+
+                table.ajax.reload(function () {
                     calendar.refetchEvents();
                     miniCal.refetchEvents();
                     calendar.gotoDate(bookingData.meeting_date);
                     filterDataTableByRooms();
                 }, false);
             }
+
             // ตั้งค่าปีปัจจุบันและเวลาเข้าใช้งานครั้งล่าสุดใน Footer
             document.getElementById("currentYear").textContent = new Date().getFullYear();
             document.getElementById("currentTime").textContent = new Date().toLocaleTimeString('th-TH', {

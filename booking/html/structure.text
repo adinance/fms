@@ -1,0 +1,18 @@
+/meeting-booking/
+│
+├── index.html                (หน้าหลัก - แสดง calendar & datatable)
+├── add_booking.php           (รับข้อมูลจากฟอร์มจอง)
+├── fetch_events.php          (ดึงข้อมูล event สำหรับ FullCalendar)
+├── fetch_bookings.php        (ดึงข้อมูลตารางจองสำหรับ DataTables)
+├── assets/
+│   ├── css/
+│   │   ├── bootstrap.min.css
+│   │   ├── flatpickr.min.css
+│   │   └── fullcalendar.min.css
+│   └── js/
+│       ├── bootstrap.bundle.min.js
+│       ├── flatpickr.min.js
+│       ├── fullcalendar.min.js
+│       ├── jquery.min.js
+│       ├── datatables.min.js
+│       └── main.js
