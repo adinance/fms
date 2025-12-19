@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Meeting Room Booking</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/2.1.4/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/buttons/3.0.0/css/buttons.bootstrap5.min.css" rel="stylesheet" />
+
+    <style>
+        @import 'https://cdn.jsdelivr.net/gh/lazywasabi/thai-web-fonts@7/fonts/LINESeedSansTH/LINESeedSansTH.css';
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Quicksand:wght@300..700&display=swap');
+
+        :root {
+            --font-main: "Quicksand", "LINE Seed Sans TH", sans-serif;
+            --bg-light: #f8f9fa;
+            --bg-dark: #121212;
+            --card-dark: #1f1f1f;
+            --border-dark: #333;
+        }
+
+        body { font-family: var(--font-main); transition: 0.3s; min-height: 100vh; background-color: var(--bg-light); }
+        body.dark-mode { background-color: var(--bg-dark); color: #fff; }
+
+        #mainLayout { display: flex; flex-grow: 1; }
+        #sidebarMenu { width: 280px; transition: 0.3s; background: white; flex-shrink: 0; }
+        #sidebarMenu.collapsed { width: 60px; }
+        #sidebarMenu.collapsed .sidebar-label, #sidebarMenu.collapsed span { display: none; }
+
+        .room-tag { padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; color: white; font-weight: 600; }
+        
+        /* Dark Mode Table Styling */
+        body.dark-mode .card, body.dark-mode #sidebarMenu, body.dark-mode .navbar { 
+            background: var(--card-dark) !important; border-color: var(--border-dark) !important; color: white !important; 
+        }
+        body.dark-mode table.dataTable, body.dark-mode table.dataTable th, body.dark-mode table.dataTable td {
+            border-color: var(--border-dark) !important; color: #ddd !important;
+        }
+        body.dark-mode .form-control, body.dark-mode .form-select { background: #2a2a2a !important; color: white !important; border-color: #444 !important; }
+        
+        .dt-buttons { margin-bottom: 1rem; }
+    </style>
+</head>
+
+<body class="light-mode">
+
+    <nav class="navbar sticky-top navbar-expand-lg border-bottom shadow-sm">
+        <div class="container-fluid">
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <i class="bi bi-calendar-check-fill text-primary me-2"></i>
+                <span class="fw-bold small">BOOKING SYSTEM</span>
+            </a>
+            <button class="btn btn-sm" id="themeToggle"><i class="bi bi-moon-stars" id="themeIcon"></i></button>
+        </div>
+    </nav>
+
+    <div id="mainLayout">
+        <div id="sidebarMenu" class="border-end p-2 d-flex flex-column">
+            <div class="p-2 small fw-bold text-uppercase text-muted sidebar-label">Main Navigation</div>
+            <ul class="nav nav-pills flex-column mb-auto">
+                <li class="nav-item"><a href="#" class="nav-link active"><i class="bi bi-table me-2"></i><span>Booking Table</span></a></li>
+            </ul>
+            <div class="mt-auto border-top p-2 text-center">
+                <button id="sidebarToggle" class="btn btn-sm w-100 shadow-none"><i class="bi bi-arrow-left-circle-fill" id="toggleIcon"></i></button>
+            </div>
+        </div>
+
+        <div id="mainContent" class="flex-grow-1 p-4">
+            <div class="card shadow-sm border-0 mb-4">
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-md-3">
+                            <label class="fw-bold small text-uppercase text-muted mb-2">Operating Unit</label>
+                            <select id="unitFilter" class="form-select">
+                                <option value="">All Units</option>
+                                <option value="Information Technology">Information Technology</option>
+                                <option value="Human Resources">Human Resources</option>
+                                <option value="Marketing">Marketing</option>
+                                <option value="Operations">Operations</option>
+                                <option value="Finance">Finance</option>
+                            </select>
+                        </div>
+                        <div class="col-md-9">
+                            <label class="fw-bold small text-uppercase text-muted mb-2">Room Filter</label>
+                            <div id="roomCheckboxContainer" class="d-flex flex-wrap gap-3"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <table id="bookingTable" class="table w-100">
+                        <thead>
+                            <tr>
+                                <th>Room</th>
+                                <th>Meeting Title</th>
+                                <th>Start Date</th>
+                                <th>Time Range</th>
+                                <th>Booked By</th>
+                                <th>Unit</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/2.1.4/js/dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/2.1.4/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.0.0/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.0.0/js/buttons.bootstrap5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.0.0/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.0.0/js/buttons.print.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            const roomColors = {
+                "Meeting 1": "#0d6efd", "Meeting 2": "#198754", "Meeting 3": "#fd7e14",
+                "Training Room 1 (Floor 3)": "#6f42c1", "Training Room 3 (Floor 1)": "#dc3545", "ห้องปูน (Floor 3)": "#20c997"
+            };
+
+            // 1. Load Persistence States
+            const savedRooms = JSON.parse(localStorage.getItem('filter_rooms')) || Object.keys(roomColors);
+            const savedUnit = localStorage.getItem('filter_unit') || "";
+            const isDark = localStorage.getItem('darkMode') === 'true';
+
+            // Initial UI Setup
+            if(isDark) $('body').addClass('dark-mode');
+            $("#unitFilter").val(savedUnit);
+
+            // Render Checkboxes
+            Object.keys(roomColors).forEach((room, i) => {
+                const isChecked = savedRooms.includes(room) ? 'checked' : '';
+                $("#roomCheckboxContainer").append(`
+                    <div class="form-check">
+                        <input class="form-check-input room-filter" type="checkbox" value="${room}" id="rm${i}" ${isChecked}>
+                        <label class="form-check-label small" for="rm${i}">${room}</label>
+                    </div>
+                `);
+            });
+
+            // 2. Initialize DataTable with Export Buttons and StateSave
+            const table = $('#bookingTable').DataTable({
+                ajax: { url: 'data.json', dataSrc: '' },
+                stateSave: true, // หัวใจสำคัญในการจำคำที่พิมพ์ในช่อง Search
+                stateDuration: -1, // จำจนกว่าจะปิด Browser
+                columns: [
+                    { data: 'room', render: d => `<span class="room-tag" style="background:${roomColors[d] || '#666'}">${d}</span>` },
+                    { data: 'title', className: 'fw-bold' },
+                    { data: 'start', render: d => d.substring(0, 10) },
+                    { data: 'end', render: (d, t, r) => `${r.start.substring(11, 16)} - ${d.substring(11, 16)}` },
+                    { data: 'booked_by' },
+                    { data: 'operating_unit', className: 'small' }
+                ],
+                // คืนค่า Export Buttons จากต้นฉบับ
+                layout: {
+                    topStart: {
+                        buttons: [
+                            { extend: 'copy', className: 'btn btn-sm btn-outline-secondary' },
+                            { extend: 'excel', className: 'btn btn-sm btn-outline-success' },
+                            { extend: 'print', className: 'btn btn-sm btn-outline-info' }
+                        ]
+                    }
+                },
+                initComplete: function() {
+                    applyFilters(); // กรองตาม Checkbox/Unit ที่โหลดมาจาก LocalStorage
+                }
+            });
+
+            // 3. Filter Logic
+            function applyFilters() {
+                const selectedRooms = $(".room-filter:checked").map(function() { return $(this).val(); }).get();
+                const unit = $("#unitFilter").val();
+
+                // Save filters to LocalStorage
+                localStorage.setItem('filter_rooms', JSON.stringify(selectedRooms));
+                localStorage.setItem('filter_unit', unit);
+
+                // Build Regex
+                const roomRegex = selectedRooms.length > 0 
+                    ? selectedRooms.map(r => `^${r.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')}$`).join('|') 
+                    : "^$";
+                
+                table.column(0).search(roomRegex, true, false);
+                table.column(5).search(unit ? `^${unit}$` : '', true, false);
+                table.draw();
+            }
+
+            // 4. Events
+            $(document).on('change', '.room-filter, #unitFilter', applyFilters);
+
+            $("#sidebarToggle").click(() => {
+                $("#sidebarMenu").toggleClass("collapsed");
+                const isCollapsed = $("#sidebarMenu").hasClass("collapsed");
+                $("#toggleIcon").toggleClass("bi-arrow-right-circle-fill", isCollapsed).toggleClass("bi-arrow-left-circle-fill", !isCollapsed);
+                localStorage.setItem('sidebarCollapsed', isCollapsed);
+            });
+
+            $("#themeToggle").click(() => {
+                $('body').toggleClass('dark-mode');
+                localStorage.setItem('darkMode', $('body').hasClass('dark-mode'));
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1013 @@
+@import "https://cdn.jsdelivr.net/gh/lazywasabi/thai-web-fonts@7/fonts/LINESeedSansTH/LINESeedSansTH.css";
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Quicksand:wght@300..700&display=swap");
+
+:root {
+  --font-main: "Quicksand", "LINE Seed Sans TH", sans-serif;
+  --bg-light: #fff;
+  --text-light: #000;
+  --bg-dark: #121212;
+  --text-dark: #fff;
+  --card-dark: #1f1f1f;
+  --border-dark: #333;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-main);
+  transition: background-color 0.3s, color 0.3s;
+  display: flex;
+  flex-direction: column;
+}
+
+a {
+  text-decoration: none !important;
+}
+
+#mainLayout {
+  flex-grow: 1;
+  overflow: visible;
+}
+
+#sidebarMenu {
+  width: 280px;
+  transition: width 0.3s ease, margin 0.3s ease;
+  overflow-x: hidden;
+  flex-shrink: 0;
+  overflow-y: auto;
+}
+
+/* 🚩 START: Sidebar/Menu Alignment Fixes */
+
+#sidebarMenu .nav-link {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-left: 0.5rem;
+}
+
+/* NEW: สำหรับโหมดขยาย (กำหนดค่ามาตรฐานของไอคอน) */
+#sidebarMenu:not(.collapsed) .nav-link i {
+  width: 22px;
+  margin-right: 8px;
+  text-align: center;
+  font-size: 1rem;
+  display: inline-block;
+  /* ให้ไอคอนอยู่บรรทัดเดียวกับข้อความ */
+}
+
+.collapse {
+  transition: height 0.4s ease-in-out !important;
+}
+
+.collapsing {
+  transition: height 0.4s ease-in-out !important;
+}
+
+#sidebarMenu .collapsed-toggle {
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-light);
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin-top: 5px;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+#sidebarMenu .collapsed-toggle:hover {
+  background-color: #e9ecef;
+}
+
+#sidebarMenu .collapsed-toggle .toggle-icon {
+  transition: transform 0.3s ease;
+}
+
+/* สไตล์ของ Icon ในโหมดขยาย (เมนูหลัก/หัวข้อ) */
+#sidebarMenu .collapsed-toggle i:not(.toggle-icon) {
+  margin-right: 8px;
+  width: 20px;
+  text-align: center;
+}
+
+#sidebarMenu .collapsed-toggle.collapsed .toggle-icon {
+  transform: rotate(-90deg);
+}
+
+#sidebarMenu.collapsed {
+  width: 60px !important;
+}
+
+/* 1. จัดวางองค์ประกอบในโหมดยุบให้อยู่ตรงกลาง (เมนูหลัก/หัวข้อ) */
+#sidebarMenu.collapsed .collapsed-toggle {
+  text-align: center;
+  padding: 0.5rem 0.5rem !important;
+}
+
+/* 2. ปรับขนาดและจัดวางไอคอนหลักในโหมด collapsed */
+#sidebarMenu.collapsed .collapsed-toggle i {
+  font-size: 1.2rem;
+  margin-right: 0;
+  width: 30px;
+  display: inline-block;
+}
+
+/* 3. ปรับเมนูย่อยในโหมด collapsed ให้อยู่ตรงกลาง */
+#sidebarMenu.collapsed .nav-link {
+  padding: 0.5rem 0.5rem;
+  text-align: center;
+  /* 🚩 FIX: จัดเนื้อหา nav-link ให้อยู่ตรงกลาง */
+}
+
+/* 4. ปรับขนาดไอคอนเมนูย่อยในโหมด collapsed ให้อยู่ตรงกลาง */
+#sidebarMenu.collapsed .nav-link i {
+  margin-right: 0;
+  font-size: 1.1rem;
+  width: 100%;
+  /* 🚩 FIX: ให้ไอคอนใช้ความกว้างเต็มที่ */
+  display: block;
+  /* 🚩 FIX: ให้ไอคอนอยู่บรรทัดแยกจากข้อความ (ซึ่งซ่อนอยู่) */
+  text-align: center;
+  /* 🚩 FIX: บังคับไอคอนให้อยู่ตรงกลาง */
+}
+
+#sidebarMenu.collapsed .nav-link span,
+#sidebarMenu.collapsed .collapsed-toggle span,
+#sidebarMenu.collapsed .collapsed-toggle .toggle-icon,
+#sidebarMenu.collapsed .sidebar-label,
+#sidebarMenu.collapsed hr {
+  display: none;
+}
+
+/* 🚩 END: Sidebar/Menu Alignment Fixes */
+
+#sidebarMenu.collapsed .border-top {
+  padding: 0.5rem !important;
+}
+
+#sidebarMenu.collapsed .border-top .w-100 {
+  width: auto !important;
+}
+
+/* CSS for Sidebar Toggle Icon based on state (moved from the general section) */
+#sidebarMenu.collapsed #sidebarToggle i {
+  transform: rotate(0deg);
+  /* When collapsed (default), the icon points right */
+  transition: transform 0.3s ease;
+}
+
+#sidebarMenu:not(.collapsed) #sidebarToggle i {
+  transform: rotate(180deg);
+  /* When expanded, rotate 180 deg to point left */
+  transition: transform 0.3s ease;
+}
+
+/* NEW/ADJUSTED: Style for the non-FAB Toggle Button inside the sidebar */
+#sidebarMenu #sidebarToggle {
+  border-radius: 4px;
+  /* ปรับให้เป็นสี่เหลี่ยมตามความกว้างของ Sidebar */
+  font-size: 1.2rem;
+  color: var(--text-light);
+  /* ใช้สีตามธีม */
+  transition: background-color 0.3s, color 0.3s;
+}
+
+#sidebarMenu #sidebarToggle:hover {
+  background-color: #e9ecef;
+  /* Light mode hover */
+}
+
+/* Dark Mode specific styles for the toggle button */
+body.dark-mode #sidebarMenu #sidebarToggle {
+  color: var(--text-dark);
+}
+
+body.dark-mode #sidebarMenu #sidebarToggle:hover {
+  background-color: #2a2a2a;
+  /* Dark mode hover */
+}
+
+/* End of Sidebar Toggle Icon CSS */
+
+#mainContent {
+  overflow-y: visible;
+}
+
+/* CSS สำหรับ Dropdown ซ้อน Dropdown (Sub-Dropdown) */
+.dropdown-menu .dropend .dropdown-toggle {
+  padding-right: 1.5rem;
+}
+
+.dropdown-menu .dropend .dropdown-menu {
+  position: absolute;
+  left: 100%;
+  top: 0;
+  margin-left: 0.1rem;
+  margin-right: 0.1rem;
+}
+
+/* #miniCalendar {
+            max-width: 100%;
+            margin: 20px auto;
+        } */
+
+#miniCalendar {
+  max-width: 100%;
+  /* ลด Margin ด้านบนและล่างจาก 20px ให้เหลือ 0 */
+  margin: 15px auto 0 auto;
+}
+
+#miniCalendar .fc-scroller {
+  overflow: visible !important;
+}
+
+#miniCalendar .fc-daygrid-body {
+  max-height: none !important;
+}
+
+#miniCalendar .fc-daygrid-body-unbalanced .fc-daygrid-day-events {
+  min-height: 0 !important;
+}
+
+#miniCalendar .fc-daygrid-day-frame {
+  padding: 3px !important;
+}
+
+#miniCalendar .fc-toolbar-title {
+  font-weight: 600;
+}
+
+/* --- FAB Button styles (Restored to original positions/purposes) --- */
+.fab {
+  position: fixed;
+  right: 30px;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  font-size: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  z-index: 1000;
+}
+
+/* FAB Add (NEW: ย้ายไปตำแหน่งล่างสุด 30px) */
+.fab-add-new {
+  bottom: 30px;
+  background-color: #0d6efd;
+  font-size: 30px;
+}
+
+.fab-add-new:hover {
+  background-color: #0b5ed7;
+}
+
+/* Toggle Table (ตำแหน่งใหม่: 100px) - เดิม 170px */
+#toggleTable {
+  background-color: #6c757d;
+  font-size: 20px;
+  bottom: 100px;
+  /* Moved from 170px to 100px since sidebar toggle is gone */
+}
+
+#toggleTable:hover {
+  background-color: #5c636a;
+}
+
+#bookingTable thead th {
+  text-align: center !important;
+  vertical-align: middle;
+  text-transform: uppercase !important;
+}
+
+/* Light Mode Styles (Standard) */
+body.light-mode {
+  background-color: var(--bg-light);
+  color: var(--text-light);
+}
+
+body.light-mode .fc-col-header,
+body.light-mode .fc-event,
+body.light-mode .fc-daygrid-day-number {
+  color: #000 !important;
+}
+
+body.light-mode .nav-link {
+  color: #000;
+}
+
+body.light-mode #sidebarMenu {
+  background-color: #f8f9fa !important;
+}
+
+body.light-mode .navbar {
+  background-color: #f8f9fa !important;
+}
+
+body.light-mode #sidebarMenu .collapsed-toggle {
+  color: #000;
+}
+
+body.light-mode #sidebarMenu .border-top {
+  border-color: #e9ecef !important;
+}
+
+body.light-mode .navbar-nav .nav-link.active {
+  background-color: #e9ecef !important;
+  color: #0d6efd !important;
+  border-radius: 6px;
+}
+
+body.light-mode #sidebarMenu .nav-link.active {
+  background-color: #0d6efd !important;
+  color: #fff !important;
+  border-radius: 6px;
+}
+
+body.light-mode .dropdown-menu .dropdown-item.active {
+  background-color: #0d6efd !important;
+  color: #fff !important;
+}
+
+body.light-mode .fc-day-today {
+  background-color: #e9ecef !important;
+  border-radius: 0;
+}
+
+body.light-mode .fc-col-header-cell {
+  background-color: #f8f9fa !important;
+  color: #000 !important;
+}
+
+/* --- Dark Mode Styles --- */
+body.dark-mode {
+  background-color: var(--bg-dark);
+  color: var(--text-dark);
+}
+
+body.dark-mode .navbar,
+body.dark-mode #sidebarMenu {
+  background-color: var(--card-dark) !important;
+  border-color: var(--border-dark) !important;
+}
+
+body.dark-mode .navbar-brand,
+body.dark-mode .nav-link {
+  color: var(--text-dark) !important;
+}
+
+body.dark-mode #sidebarMenu .collapsed-toggle {
+  color: var(--text-dark);
+}
+
+body.dark-mode #sidebarMenu .border-top {
+  border-color: var(--border-dark) !important;
+}
+
+body.dark-mode #sidebarMenu .collapsed-toggle:hover {
+  background-color: #2a2a2a;
+}
+
+body.dark-mode .navbar-nav .nav-link.active {
+  background-color: #444 !important;
+  color: #fff !important;
+  border-radius: 6px;
+}
+
+body.dark-mode #sidebarMenu .nav-link.active {
+  background-color: #2a2a2a !important;
+  color: #fff !important;
+  border-radius: 6px;
+}
+
+body.dark-mode .dropdown-menu {
+  background-color: var(--card-dark) !important;
+  border-color: var(--border-dark) !important;
+}
+
+body.dark-mode .dropdown-menu .dropdown-item {
+  color: var(--text-dark) !important;
+}
+
+body.dark-mode .dropdown-menu .dropdown-item:hover,
+body.dark-mode .dropdown-menu .dropdown-item:focus,
+body.dark-mode .dropdown-menu .dropend > .dropdown-toggle:hover,
+body.dark-mode .dropdown-menu .dropdown-item.active,
+body.dark-mode .dropdown-menu .dropdown-item:active {
+  background-color: var(--card-dark) !important;
+  color: #fff !important;
+  background-image: none !important;
+}
+
+body.dark-mode .dropdown-menu .dropdown-item.dropdown-toggle {
+  color: var(--text-dark) !important;
+}
+
+body.dark-mode .dropdown-menu .dropdown-item.dropdown-toggle:hover,
+body.dark-mode .dropdown-menu .dropdown-item.dropdown-toggle.active {
+  color: #fff !important;
+}
+
+body.dark-mode .card {
+  background-color: var(--card-dark) !important;
+  border-color: var(--border-dark) !important;
+  color: var(--text-dark) !important;
+}
+
+/* --- Dark Mode Styles for Modals & Forms --- */
+body.dark-mode .modal-content {
+  background-color: var(--card-dark) !important;
+  color: var(--text-dark) !important;
+}
+
+body.dark-mode .modal-header,
+body.dark-mode .modal-footer {
+  border-color: var(--border-dark) !important;
+}
+
+body.dark-mode .btn-close {
+  filter: invert(1) grayscale(100%) brightness(200%);
+}
+
+/* แก้ไข Input, Select, Textarea ภายใน Modal ให้เป็น Dark Mode ด้วย */
+body.dark-mode .form-control,
+body.dark-mode .form-select {
+  background-color: #2a2a2a !important;
+  color: var(--text-dark) !important;
+  border-color: #555 !important;
+}
+
+body.dark-mode .form-control:focus,
+body.dark-mode .form-select:focus {
+  background-color: #2a2a2a !important;
+  color: var(--text-dark) !important;
+  border-color: #0d6efd !important;
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+/* แก้ไข Flatpickr Input ใน Dark Mode (ถ้าต้องการ) */
+body.dark-mode .flatpickr-input {
+  background-color: #2a2a2a !important;
+  color: var(--text-dark) !important;
+  border-color: #555 !important;
+}
+
+/* Flatpickr Calendar Theme (ภายนอก Modal) */
+.flatpickr-calendar.open.dark-mode {
+  background: var(--bg-dark);
+  border: 1px solid var(--border-dark);
+}
+
+.flatpickr-calendar.open.dark-mode .flatpickr-day,
+.flatpickr-calendar.open.dark-mode .flatpickr-months .flatpickr-month {
+  color: var(--text-dark);
+}
+
+.flatpickr-calendar.open.dark-mode .flatpickr-day.selected,
+.flatpickr-calendar.open.dark-mode .flatpickr-day.selected:hover {
+  background: #0d6efd;
+  border-color: #0d6efd;
+}
+
+.flatpickr-calendar.open.dark-mode .flatpickr-day.today {
+  border-color: #0d6efd;
+}
+
+body.dark-mode #calendar {
+  background: var(--card-dark);
+  border-color: var(--border-dark);
+}
+
+body.dark-mode .fc-multimonth-month,
+body.dark-mode .fc-multimonth-header-table thead th,
+body.dark-mode .fc-multimonth-daygrid-table,
+body.dark-mode .fc-multimonth-daygrid-table td,
+body.dark-mode .fc-multimonth-daygrid-table .fc-daygrid-day {
+  background-color: var(--card-dark) !important;
+  border-color: var(--border-dark) !important;
+  color: var(--text-dark) !important;
+}
+
+body.dark-mode #calendar table,
+body.dark-mode #calendar th,
+body.dark-mode #calendar td,
+body.dark-mode .fc-view-harness table,
+body.dark-mode .fc-scrollgrid table,
+body.dark-mode .fc-daygrid-body table,
+body.dark-mode .fc-scrollgrid-section,
+body.dark-mode .fc-daygrid-body,
+body.dark-mode .fc-col-header {
+  border-color: var(--border-dark) !important;
+}
+
+body.dark-mode #miniCalendar table,
+body.dark-mode #miniCalendar th,
+body.dark-mode #miniCalendar td,
+body.dark-mode #miniCalendar .fc-col-header,
+body.dark-mode #miniCalendar .fc-scrollgrid-table,
+body.dark-mode #miniCalendar .fc-daygrid-day {
+  border-color: var(--border-dark) !important;
+}
+
+body.dark-mode #miniCalendar .fc-scrollgrid-table {
+  border-right-width: 0px !important;
+}
+
+body.dark-mode #miniCalendar .fc-col-header-cell:last-child,
+body.dark-mode .fc-daygrid-day:last-child {
+  border-right-width: 0px !important;
+}
+
+body.dark-mode .fc-col-header,
+body.dark-mode .fc-event,
+body.dark-mode .fc-daygrid-day-number {
+  color: #fff !important;
+}
+
+body.dark-mode .fc-day-today {
+  background-color: #2a2a2a !important;
+  border-radius: 0;
+}
+
+body.dark-mode .fc-col-header-cell {
+  background-color: var(--card-dark) !important;
+  color: #fff !important;
+}
+
+/* --- Dark Mode for DataTables --- */
+body.dark-mode table.dataTable {
+  background-color: #1e1e1e;
+  color: #e5e5e5;
+}
+
+body.dark-mode table.dataTable,
+body.dark-mode table.dataTable thead th,
+body.dark-mode table.dataTable tbody td {
+  border-color: var(--border-dark) !important;
+}
+
+body.dark-mode table.dataTable thead th {
+  background-color: #2a2a2a !important;
+  color: #f1f1f1 !important;
+}
+
+body.dark-mode table.dataTable tbody td {
+  background-color: #1e1e1e !important;
+  color: #e5e5e5 !important;
+}
+
+body.dark-mode table.dataTable.stripe tbody tr.odd,
+body.dark-mode table.dataTable.display tbody tr.odd {
+  background-color: #242424 !important;
+}
+
+body.dark-mode table.dataTable.stripe tbody tr.even,
+body.dark-mode table.dataTable.display tbody tr.even {
+  background-color: #1c1c1c !important;
+}
+
+body.dark-mode .dataTables_wrapper .dataTables_filter input,
+body.dark-mode .dataTables_wrapper .dataTables_length select {
+  background: #2a2a2a;
+  color: #fff;
+  border: 1px solid #555;
+}
+
+body.dark-mode .dataTables_wrapper .dataTables_paginate .paginate_button {
+  color: #ddd !important;
+}
+
+/* --- Dark Mode Pagination (DataTables) --- */
+body.dark-mode
+  .dataTables_wrapper
+  .dataTables_paginate
+  .paginate_button.current {
+  background: #444 !important;
+  color: #fff !important;
+}
+
+/* Override inline styles from applyPaginationTheme for consistency in Dark Mode */
+body.dark-mode
+  .dataTables_wrapper
+  .dataTables_paginate
+  .paginate_button.btn-dark {
+  background-color: #2a2a2a !important;
+  border-color: #555 !important;
+  color: #ddd !important;
+}
+
+body.dark-mode
+  .dataTables_wrapper
+  .dataTables_paginate
+  .paginate_button.btn-dark.current {
+  background-color: #444 !important;
+  /* Force active color */
+  color: #fff !important;
+}
+
+body.dark-mode
+  .dataTables_wrapper
+  .dataTables_paginate
+  .paginate_button.btn-dark.disabled {
+  background-color: #1f1f1f !important;
+  border-color: #333 !important;
+  color: #555 !important;
+}
+
+body.dark-mode .dataTables_wrapper .dataTables_info {
+  color: #ccc !important;
+}
+
+body.dark-mode .form-check-label {
+  color: var(--text-dark);
+}
+
+/* --- Footer Styles --- */
+#mainFooter {
+  flex-shrink: 0;
+  background-color: #f8f9fa;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+body.dark-mode #mainFooter {
+  background-color: var(--card-dark) !important;
+  border-color: var(--border-dark) !important;
+}
+
+body.dark-mode #mainFooter .text-muted {
+  color: #bbb !important;
+}
+
+/* --- Logo Styles --- */
+.dark-mode-logo {
+  display: none !important;
+}
+
+.light-mode-logo {
+  display: inline-block !important;
+}
+
+body.dark-mode .dark-mode-logo {
+  display: inline-block !important;
+}
+
+body.dark-mode .light-mode-logo {
+  display: none !important;
+}
+
+#calendar .fc-toolbar-chunk:last-child .btn-group {
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+#calendar .fc-toolbar-title {
+  text-transform: uppercase !important;
+}
+
+body.dark-mode .fc .fc-timegrid-all-day,
+body.dark-mode .fc .fc-scrollgrid-section-sticky {
+  background-color: #1f1f1f;
+}
+
+body.dark-mode .fc .fc-timegrid-axis,
+body.dark-mode .fc .fc-timegrid-slot-label {
+  background-color: #181818;
+  color: #bbb;
+}
+
+/* พื้นหลัง list view */
+body.dark-mode .fc-list {
+  background-color: #1e1e1e;
+  color: #e0e0e0;
+}
+
+/* แถววันที่ (December 16, 2025) */
+body.dark-mode .fc-list-day-cushion {
+  background-color: #262626;
+  color: #9ecbff;
+  border-color: #333;
+}
+
+/* ชื่อวัน (Tuesday) */
+body.dark-mode .fc-list-day-text,
+body.dark-mode .fc-list-day-side-text {
+  color: #9ecbff;
+  font-weight: 500;
+}
+
+/* แถว event */
+body.dark-mode .fc-list-event {
+  background-color: #1f1f1f;
+  border-color: #333;
+}
+
+/* hover event */
+body.dark-mode .fc-list-event:hover,
+body.dark-mode .fc-list-event.fc-event-forced-url:hover {
+  background-color: inherit !important;
+}
+
+body.dark-mode .fc-list-event:hover {
+  cursor: pointer;
+}
+
+body.dark-mode .fc-theme-standard .fc-list-event:hover {
+  background-color: inherit !important;
+}
+
+/* คำว่า all-day */
+body.dark-mode .fc-list-event-time {
+  color: #9e9e9e;
+}
+
+/* ชื่อ event */
+body.dark-mode .fc-list-event-title {
+  color: #eaeaea;
+}
+
+/* เส้นคั่น */
+body.dark-mode .fc-list-event td {
+  border-color: #333;
+}
+
+/* เอากรอบนอกสุดออก */
+body.dark-mode .fc-list {
+  border: none;
+  outline: none;
+}
+
+/* เอากรอบ table ออก */
+body.dark-mode .fc-list-table,
+body.dark-mode .fc-list-table td,
+body.dark-mode .fc-list-table th {
+  border: none;
+}
+
+/* เอาเส้นขอบ scrollgrid ออก */
+body.dark-mode .fc-scrollgrid,
+body.dark-mode .fc-scrollgrid-section,
+body.dark-mode .fc-scrollgrid-section table {
+  border: none;
+}
+
+/* กันเส้นขาวแฝง */
+body.dark-mode .fc * {
+  box-shadow: none;
+}
+
+/* พื้นหลังรวมของ Annual */
+body.dark-mode .fc-multimonth {
+  background-color: transparent;
+  border: none;
+}
+
+/* กล่องแต่ละเดือน */
+body.dark-mode .fc-multimonth-month {
+  background-color: #1f1f1f;
+  border: none;
+  box-shadow: none;
+  border-radius: 8px;
+}
+
+/* หัวเดือน (January, February...) */
+body.dark-mode .fc-multimonth-title {
+  color: #9ecbff;
+  font-weight: 500;
+}
+
+/* ตารางวัน */
+body.dark-mode .fc-daygrid {
+  background-color: transparent;
+}
+
+/* ช่องวัน */
+body.dark-mode .fc-daygrid-day-frame {
+  background-color: #1f1f1f;
+}
+
+/* เส้นตาราง (เอาขาวออก) */
+body.dark-mode .fc-scrollgrid,
+body.dark-mode .fc-scrollgrid td,
+body.dark-mode .fc-scrollgrid th {
+  border-color: #2f2f2f;
+}
+
+/* เอากรอบนอกสุดออก */
+body.dark-mode .fc-scrollgrid {
+  border: none;
+}
+
+/* ตัวเลขวัน */
+body.dark-mode .fc-daygrid-day-number {
+  color: #cfcfcf;
+}
+
+/* วันนอกเดือน */
+body.dark-mode .fc-day-other .fc-daygrid-day-number {
+  color: #666;
+}
+
+/* ปิด hover ทั้ง tr และ a ใน List mode */
+body.dark-mode .fc-list-table tr.fc-list-event:hover,
+body.dark-mode .fc-list-table tr.fc-list-event:hover td,
+body.dark-mode .fc-list-table tr.fc-list-event:hover a {
+  background-color: transparent !important;
+}
+
+/* กรณี FullCalendar บังคับสี */
+body.dark-mode .fc-theme-standard .fc-list-event:hover {
+  background-color: transparent !important;
+}
+
+/* ปิด hover จาก Bootstrap link */
+body.dark-mode .fc-list-event a:hover {
+  background-color: transparent !important;
+}
+
+/* ===== Annual / Year View ===== */
+
+body.dark-mode .fc-multimonth {
+  background-color: transparent;
+  border: none;
+}
+
+body.dark-mode .fc-multimonth-title {
+  background-color: #1f1f1f;
+  color: #e0e0e0;
+  padding: 12px 0;
+  border: none;
+}
+
+/* กันพื้นขาวที่ซ่อนอยู่ */
+body.dark-mode .fc-multimonth-header {
+  background-color: #1f1f1f;
+  border: none;
+}
+
+/* ตารางเดือน */
+body.dark-mode .fc-multimonth-month {
+  background-color: #1e1e1e;
+  border: none;
+  box-shadow: none;
+}
+
+/* หัววัน (Sun Mon Tue...) */
+body.dark-mode .fc-col-header-cell {
+  background-color: #1e1e1e;
+  color: #4dabf7;
+  border-color: #2f2f2f;
+}
+
+/* ช่องวัน */
+body.dark-mode .fc-daygrid-day-frame {
+  background-color: #1e1e1e;
+}
+
+/* ตัวเลขวัน */
+body.dark-mode .fc-daygrid-day-number {
+  color: #e0e0e0;
+}
+
+/* วันนอกเดือน */
+body.dark-mode .fc-day-other .fc-daygrid-day-number {
+  color: #666;
+}
+
+/* เส้นกริด */
+body.dark-mode .fc-scrollgrid,
+body.dark-mode .fc-scrollgrid td,
+body.dark-mode .fc-scrollgrid th {
+  border-color: #2f2f2f;
+}
+
+/* เอากรอบนอกสุดออก */
+body.dark-mode .fc-scrollgrid {
+  border: none;
+}
+
+body.dark-mode .fc-multimonth .fc-col-header-cell-cushion {
+  color: #e6e6e6;
+}
+
+/* Month / Week / Day */
+body.dark-mode .fc-col-header-cell-cushion {
+  color: #e6e6e6;
+  font-weight: 500;
+}
+
+/* กันกรณีถูก override */
+body.dark-mode .fc-theme-standard th {
+  color: #e6e6e6;
+}
+
+.spacer-row {
+  margin-top: 16px;
+}
+
+/* --- Flatpickr Dark Mode Customization (Month/Year Dropdown) --- */
+body.dark-mode .flatpickr-calendar.dark-mode {
+  background: #1f1f1f !important;
+  border-color: #333 !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+/* สีพื้นหลังของ Dropdown เลือกเดือน */
+body.dark-mode .flatpickr-calendar.dark-mode .flatpickr-month {
+  background: #1f1f1f !important;
+  color: #fff !important;
+  fill: #fff !important;
+}
+
+/* ปรับสีตัวเลือกเดือน (Dropdown) */
+body.dark-mode .flatpickr-calendar.dark-mode .flatpickr-monthDropdown-months {
+  background: #2a2a2a !important;
+  color: #fff !important;
+}
+
+/* ปรับสีช่องใส่ตัวเลขปี */
+body.dark-mode .flatpickr-calendar.dark-mode .numInputWrapper span:hover {
+  background: #333 !important;
+}
+
+body.dark-mode .flatpickr-calendar.dark-mode input.cur-year {
+  color: #fff !important;
+}
+
+/* สีของวันในสัปดาห์ (Mon, Tue...) */
+body.dark-mode .flatpickr-calendar.dark-mode span.flatpickr-weekday {
+  background: #1f1f1f !important;
+  color: #9ecbff !important;
+}
+
+/* ส่วนของเวลา (Time Picker) ใน Dark Mode */
+body.dark-mode .flatpickr-calendar.dark-mode .flatpickr-time {
+  border-top: 1px solid #333 !important;
+  background: #1f1f1f !important;
+}
+
+body.dark-mode .flatpickr-calendar.dark-mode .flatpickr-time input {
+  color: #fff !important;
+}
+
+body.dark-mode .flatpickr-calendar.dark-mode .flatpickr-time .flatpickr-am-pm {
+  color: #fff !important;
+}
+
+/* ปรับสีตอน Hover เหนือปุ่มเลื่อนเดือน */
+body.dark-mode .flatpickr-calendar.dark-mode .flatpickr-prev-month:hover,
+body.dark-mode .flatpickr-calendar.dark-mode .flatpickr-next-month:hover {
+  background: #333 !important;
+}
+
+/* --- Flatpickr Time Picker Dark Mode --- */
+
+/* พื้นหลังส่วนเลือกเวลา */
+body.dark-mode .flatpickr-time {
+    background-color: #1f1f1f !important;
+    border-top: 1px solid #333 !important;
+}
+
+/* ช่องกรอกชั่วโมง และ นาที */
+body.dark-mode .flatpickr-time input.flatpickr-hour,
+body.dark-mode .flatpickr-time input.flatpickr-minute {
+    background-color: #2a2a2a !important;
+    color: #fff !important;
+    border: 1px solid #444 !important;
+    border-radius: 4px;
+}
+
+/* เครื่องหมาย : คั่นกลาง */
+body.dark-mode .flatpickr-time .flatpickr-time-separator {
+    color: #fff !important;
+}
+
+/* ปุ่มลูกศร ขึ้น-ลง (Arrow buttons) */
+body.dark-mode .flatpickr-time .numInputWrapper span {
+    border-left: 1px solid #444 !important;
+}
+
+body.dark-mode .flatpickr-time .numInputWrapper span:hover {
+    background-color: #444 !important;
+}
+
+/* สีลูกศร (SVG) */
+body.dark-mode .flatpickr-time .numInputWrapper span.arrowUp:after {
+    border-bottom-color: #fff !important;
+}
+
+body.dark-mode .flatpickr-time .numInputWrapper span.arrowDown:after {
+    border-top-color: #fff !important;
+}
+
+/* เมื่อ Focus ที่ช่องเวลา */
+body.dark-mode .flatpickr-time input:focus {
+    background-color: #333 !important;
+    border-color: #0d6efd !important;
+}
