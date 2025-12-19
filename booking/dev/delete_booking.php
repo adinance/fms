@@ -1,6 +1,6 @@
 <?php
 header('Content-Type: application/json');
-require_once 'db.php'; // เรียกใช้ connection PDO เดิม
+require_once 'db.php'; 
 
 $id = isset($_POST['id']) ? $_POST['id'] : '';
 
